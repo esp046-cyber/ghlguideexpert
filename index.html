@@ -1242,354 +1242,6 @@ html, body {
   100% { opacity: 0; }
 }
 
-/* ===== STREAK TRACKER ===== */
-.streak-bar {
-  display: flex;
-  align-items: center;
-  gap: var(--s2);
-  background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(239,68,68,0.06));
-  border: 1px solid rgba(245,158,11,0.25);
-  border-radius: 14px;
-  padding: var(--s2);
-  margin-bottom: var(--s2);
-  position: relative;
-  overflow: hidden;
-}
-.streak-bar::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent4), #ef4444);
-}
-.streak-flame {
-  font-size: 36px;
-  line-height: 1;
-  animation: flicker 1.8s ease-in-out infinite alternate;
-  flex-shrink: 0;
-}
-@keyframes flicker {
-  0%   { transform: scale(1) rotate(-3deg); }
-  50%  { transform: scale(1.08) rotate(2deg); }
-  100% { transform: scale(0.96) rotate(-1deg); }
-}
-.streak-count {
-  font-family: var(--font-display);
-  font-size: var(--size-xl);
-  font-weight: 700;
-  color: var(--accent4);
-  line-height: 1;
-}
-.streak-label { font-size: var(--size-xs); color: var(--text2); margin-top: 2px; }
-.streak-days {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-  margin-top: var(--s1);
-}
-.streak-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  background: var(--bg3);
-  transition: all 0.3s;
-}
-.streak-dot.active {
-  background: var(--accent4);
-  border-color: var(--accent4);
-  box-shadow: 0 0 6px rgba(245,158,11,0.5);
-}
-.streak-dot.today {
-  border-color: var(--accent);
-  box-shadow: 0 0 8px rgba(79,142,247,0.6);
-  animation: pulseDot 1.5s ease infinite;
-}
-@keyframes pulseDot {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-}
-
-/* ===== FLASHCARD REVIEW OVERLAY ===== */
-#flashcard-view {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 110;
-  flex-direction: column;
-  overflow: hidden;
-}
-#flashcard-view.active { display: flex; }
-#fc-header {
-  flex-shrink: 0;
-  padding: var(--s2) var(--s3);
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: var(--s2);
-  min-height: 56px;
-}
-#fc-back {
-  width: 36px; height: 36px;
-  border-radius: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-size: 18px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  min-height: 36px; min-width: 36px;
-  flex-shrink: 0;
-}
-#fc-back:hover { border-color: var(--accent); color: var(--accent); }
-#fc-title { flex: 1; font-size: var(--size-sm); font-weight: 700; color: var(--text); }
-#fc-counter { font-size: var(--size-xs); color: var(--text3); }
-#fc-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--s3) var(--s2);
-  overflow: hidden;
-}
-.flashcard {
-  width: 100%;
-  max-width: 400px;
-  perspective: 1000px;
-  cursor: pointer;
-  user-select: none;
-}
-.flashcard-inner {
-  position: relative;
-  width: 100%;
-  min-height: 240px;
-  transform-style: preserve-3d;
-  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  border-radius: 20px;
-}
-.flashcard.flipped .flashcard-inner {
-  transform: rotateY(180deg);
-}
-.flashcard-front, .flashcard-back {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  padding: var(--s3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-.flashcard-front {
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-.flashcard-back {
-  background: linear-gradient(135deg, rgba(79,142,247,0.12), rgba(124,58,237,0.1));
-  border: 1px solid rgba(79,142,247,0.3);
-  transform: rotateY(180deg);
-}
-.fc-tag {
-  font-size: var(--size-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: var(--s2);
-  color: var(--accent);
-}
-.fc-term {
-  font-family: var(--font-display);
-  font-size: var(--size-lg);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.3;
-}
-.fc-hint {
-  font-size: var(--size-xs);
-  color: var(--text3);
-  margin-top: var(--s2);
-}
-.fc-def {
-  font-size: 15px;
-  color: var(--text2);
-  line-height: 1.7;
-}
-.fc-tap-hint {
-  font-size: var(--size-xs);
-  color: var(--text3);
-  margin-top: var(--s2);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-#fc-nav {
-  flex-shrink: 0;
-  display: flex;
-  gap: var(--s1);
-  padding: var(--s2);
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-}
-#fc-progress-wrap {
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: var(--s2);
-}
-.fc-result-row {
-  display: flex;
-  gap: var(--s1);
-  margin-top: var(--s2);
-  width: 100%;
-  max-width: 400px;
-  justify-content: center;
-}
-
-/* ===== MODULE ILLUSTRATION HEADERS ===== */
-.module-illustration {
-  width: 100%;
-  height: 90px;
-  border-radius: 12px 12px 0 0;
-  margin: -var(--s2) -var(--s2) var(--s2);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.module-illu-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.module-illu-label {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-display);
-  font-size: var(--size-xl);
-  font-weight: 700;
-  color: rgba(255,255,255,0.9);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
-  letter-spacing: -1px;
-}
-
-/* ===== GLOSSARY SCREEN ===== */
-#screen-glossary { padding-bottom: calc(var(--nav-h) + var(--s2)); }
-.glossary-search-wrap {
-  position: relative;
-  margin-bottom: var(--s2);
-}
-.glossary-search-wrap .search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text3);
-  font-size: 16px;
-  pointer-events: none;
-}
-#glossary-search {
-  width: 100%;
-  min-height: 48px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0 var(--s2) 0 44px;
-  font-family: var(--font-body);
-  font-size: var(--size-sm);
-  color: var(--text);
-  transition: border-color 0.2s;
-}
-#glossary-search:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(79,142,247,0.15);
-}
-#glossary-search::placeholder { color: var(--text3); }
-.glossary-letter {
-  font-family: var(--font-display);
-  font-size: var(--size-lg);
-  font-weight: 700;
-  color: var(--accent);
-  margin: var(--s2) 0 var(--s1);
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--border);
-}
-.glossary-item {
-  padding: var(--s2) 0;
-  border-bottom: 1px solid rgba(42,54,96,0.5);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.glossary-item:last-child { border-bottom: none; }
-.glossary-term {
-  font-size: var(--size-sm);
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.glossary-def {
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.65;
-  display: none;
-}
-.glossary-def.open { display: block; }
-.glossary-cat {
-  font-size: var(--size-xs);
-  padding: 2px 8px;
-  border-radius: 99px;
-  font-weight: 700;
-}
-.glossary-no-results {
-  text-align: center;
-  padding: var(--s5) var(--s2);
-  color: var(--text3);
-  font-size: var(--size-sm);
-}
-
-/* ===== SETTINGS UPGRADE — Streak in settings ===== */
-.settings-streak-card {
-  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(239,68,68,0.04));
-  border: 1px solid rgba(245,158,11,0.2);
-  border-radius: 14px;
-  padding: var(--s2);
-  margin-bottom: var(--s2);
-  display: flex;
-  align-items: center;
-  gap: var(--s2);
-}
-.settings-context-card {
-  background: linear-gradient(135deg, rgba(79,142,247,0.07), rgba(124,58,237,0.05));
-  border: 1px solid rgba(79,142,247,0.2);
-  border-radius: 12px;
-  padding: var(--s2);
-  margin-bottom: var(--s2);
-}
-.context-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: var(--size-sm);
-  border-bottom: 1px solid rgba(42,54,96,0.4);
-}
-.context-row:last-child { border-bottom: none; }
-.context-label { color: var(--text3); }
-.context-val { color: var(--text); font-weight: 700; }
-
-/* nav 6-slot shrink */
-#nav .nav-btn { font-size: 10px; }
-
 /* Responsive */
 @media (max-width: 480px) {
   #app { max-width: 100%; }
@@ -1648,22 +1300,9 @@ html, body {
 
     <!-- ===== DASHBOARD ===== -->
     <section class="screen active" id="screen-dashboard" aria-label="Dashboard">
-      <div style="margin-bottom:var(--s2);">
-        <div class="section-title" id="dash-greeting">Welcome Back</div>
+      <div style="margin-bottom:var(--s3);">
+        <div class="section-title">Welcome Back</div>
         <div class="section-sub">Track your progress to GHL mastery.</div>
-      </div>
-
-      <!-- STREAK BAR -->
-      <div class="streak-bar" id="streak-bar">
-        <div class="streak-flame">🔥</div>
-        <div style="flex:1;">
-          <div style="display:flex;align-items:baseline;gap:6px;">
-            <div class="streak-count" id="streak-count">0</div>
-            <div style="font-size:var(--size-sm);color:var(--text2);font-weight:700;">day streak</div>
-          </div>
-          <div class="streak-label" id="streak-label">Open the app daily to build your streak</div>
-          <div class="streak-days" id="streak-dots"></div>
-        </div>
       </div>
 
       <div class="stats-row">
@@ -1955,30 +1594,7 @@ html, body {
     <!-- ===== SETTINGS ===== -->
     <section class="screen" id="screen-settings" aria-label="Settings">
       <div class="section-title">Settings</div>
-      <div class="section-sub">Your learning profile and preferences.</div>
-
-      <!-- Streak card in settings -->
-      <div class="settings-streak-card">
-        <div style="font-size:40px;animation:flicker 1.8s ease-in-out infinite alternate;">🔥</div>
-        <div style="flex:1;">
-          <div style="display:flex;align-items:baseline;gap:6px;">
-            <div style="font-family:var(--font-display);font-size:var(--size-xl);font-weight:700;color:var(--accent4);" id="set-streak-count">0</div>
-            <div style="font-size:var(--size-sm);color:var(--text2);font-weight:700;">day streak</div>
-          </div>
-          <div style="font-size:var(--size-xs);color:var(--text3);" id="set-streak-msg">Start your streak — open the app daily</div>
-        </div>
-      </div>
-
-      <!-- Context card (live stats) -->
-      <div class="settings-context-card" id="set-context-card">
-        <div style="font-size:var(--size-xs);color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:var(--s1);">Your Learning Context</div>
-        <div class="context-row"><span class="context-label">Name</span><span class="context-val" id="ctx-name">—</span></div>
-        <div class="context-row"><span class="context-label">Goal</span><span class="context-val" id="ctx-goal">—</span></div>
-        <div class="context-row"><span class="context-label">Daily Target</span><span class="context-val" id="ctx-pace">—</span></div>
-        <div class="context-row"><span class="context-label">Lessons Done</span><span class="context-val" id="ctx-lessons">0</span></div>
-        <div class="context-row"><span class="context-label">Quizzes Passed</span><span class="context-val" id="ctx-quizzes">0</span></div>
-        <div class="context-row"><span class="context-label">Notes Saved</span><span class="context-val" id="ctx-notes">0</span></div>
-      </div>
+      <div class="section-sub">Customize your learning experience.</div>
 
       <div class="card" style="margin-bottom:var(--s2);">
         <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s2);">Learning Profile</div>
@@ -1991,10 +1607,10 @@ html, body {
           <div class="select-wrap">
             <select class="form-select" id="set-goal">
               <option value="">Select goal...</option>
-              <option value="Freelancer / Agency Owner">Freelancer / Agency Owner</option>
-              <option value="GHL Platform Employee">GHL Platform Employee</option>
-              <option value="In-house Marketer">In-house Marketer</option>
-              <option value="SaaS Reseller">SaaS Reseller</option>
+              <option value="freelancer">Freelancer / Agency Owner</option>
+              <option value="employee">GHL Platform Employee</option>
+              <option value="internal">In-house Marketer</option>
+              <option value="saas">SaaS Reseller</option>
             </select>
           </div>
         </div>
@@ -2002,10 +1618,10 @@ html, body {
           <label class="form-label" for="set-pace">Daily Study Time</label>
           <div class="select-wrap">
             <select class="form-select" id="set-pace">
-              <option value="30 min">30 minutes</option>
-              <option value="1 hour" selected>1 hour</option>
-              <option value="1.5 hours">1.5 hours</option>
-              <option value="2+ hours">2+ hours</option>
+              <option value="30">30 minutes</option>
+              <option value="60" selected>1 hour</option>
+              <option value="90">1.5 hours</option>
+              <option value="120">2+ hours</option>
             </select>
           </div>
         </div>
@@ -2018,29 +1634,14 @@ html, body {
         <button class="btn btn-secondary btn-full" id="install-btn" onclick="installPWA()">Install on This Device</button>
       </div>
 
-      <div class="card" style="margin-bottom:var(--s2);">
+      <div class="card">
         <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s1);">About</div>
         <div style="font-size:var(--size-sm);color:var(--text2);line-height:1.7;">
-          GHL Academy v2.0<br>
+          GHL Academy v1.0<br>
           A structured learning app for GoHighLevel mastery.<br>
           <span style="color:var(--text3);">All data stored locally. No account required.</span>
         </div>
       </div>
-
-      <div>
-        <button class="btn btn-secondary btn-full" onclick="resetProgress()" style="color:var(--danger);border-color:var(--danger);">Reset All Progress</button>
-      </div>
-    </section>
-
-    <!-- ===== GLOSSARY ===== -->
-    <section class="screen" id="screen-glossary" aria-label="GHL Glossary">
-      <div class="section-title">GHL Glossary</div>
-      <div class="section-sub">47 essential GoHighLevel terms. Tap any to expand.</div>
-      <div class="glossary-search-wrap">
-        <span class="search-icon">⌕</span>
-        <input type="text" id="glossary-search" placeholder="Search terms…" oninput="filterGlossary(this.value)" autocomplete="off" spellcheck="false" aria-label="Search glossary">
-      </div>
-      <div id="glossary-list"></div>
     </section>
 
   </main><!-- end content -->
@@ -2057,7 +1658,7 @@ html, body {
       <div class="nav-icon-wrap">
         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       </div>
-      Learn
+      Modules
     </button>
     <button class="nav-btn" id="nav-lab" onclick="navigate('lab')" aria-label="Practice Lab">
       <div class="nav-icon-wrap">
@@ -2065,15 +1666,9 @@ html, body {
       </div>
       Lab
     </button>
-    <button class="nav-btn" id="nav-glossary" onclick="navigate('glossary')" aria-label="Glossary">
-      <div class="nav-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-      </div>
-      Glossary
-    </button>
     <button class="nav-btn" id="nav-notes" onclick="navigate('notes')" aria-label="Notes">
       <div class="nav-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
       </div>
       Notes
     </button>
@@ -2100,51 +1695,8 @@ html, body {
   </footer>
 </div>
 
-<!-- Flashcard Quick Review Overlay -->
-<div id="flashcard-view" role="dialog" aria-modal="true" aria-label="Quick Review">
-  <header id="fc-header">
-    <button id="fc-back" onclick="closeFlashcards()" aria-label="Close review">←</button>
-    <div id="fc-title">Quick Review</div>
-    <span id="fc-counter" style="font-size:var(--size-xs);color:var(--text3);"></span>
-  </header>
-  <div id="fc-body">
-    <div id="fc-progress-wrap">
-      <div class="progress-wrap"><div class="progress-bar" id="fc-progress-bar" style="width:0%"></div></div>
-    </div>
-    <div class="flashcard" id="fc-card" onclick="flipCard()">
-      <div class="flashcard-inner" id="fc-inner">
-        <div class="flashcard-front">
-          <div class="fc-tag" id="fc-tag">Term</div>
-          <div class="fc-term" id="fc-term">Loading...</div>
-          <div class="fc-hint">tap to reveal</div>
-        </div>
-        <div class="flashcard-back">
-          <div class="fc-tag" style="color:var(--accent3);">Definition</div>
-          <div class="fc-def" id="fc-def"></div>
-          <div class="fc-tap-hint">↺ tap to flip back</div>
-        </div>
-      </div>
-    </div>
-    <div class="fc-result-row" id="fc-result-row" style="display:none;">
-      <button class="btn btn-secondary" onclick="fcRate('again')" style="flex:1;flex-direction:column;gap:3px;height:52px;">
-        <span style="font-size:18px;">🔁</span><span style="font-size:10px;">Again</span>
-      </button>
-      <button class="btn btn-secondary" onclick="fcRate('hard')" style="flex:1;flex-direction:column;gap:3px;height:52px;border-color:rgba(239,68,68,0.4);color:#f87171;">
-        <span style="font-size:18px;">😓</span><span style="font-size:10px;">Hard</span>
-      </button>
-      <button class="btn btn-secondary" onclick="fcRate('good')" style="flex:1;flex-direction:column;gap:3px;height:52px;border-color:rgba(79,142,247,0.4);color:var(--accent);">
-        <span style="font-size:18px;">👍</span><span style="font-size:10px;">Good</span>
-      </button>
-      <button class="btn btn-secondary" onclick="fcRate('easy')" style="flex:1;flex-direction:column;gap:3px;height:52px;border-color:rgba(16,185,129,0.4);color:var(--accent3);">
-        <span style="font-size:18px;">⚡</span><span style="font-size:10px;">Easy</span>
-      </button>
-    </div>
-  </div>
-  <footer id="fc-nav">
-    <button class="btn btn-secondary" onclick="fcPrev()" id="fc-prev" style="flex:1;">← Prev</button>
-    <button class="btn btn-primary" onclick="fcNext()" id="fc-next" style="flex:2;">Next →</button>
-  </footer>
-</div>
+<script>
+// ==================== DATA ====================
 const MODULES = [
   {
     id: 1, title: "GHL Ecosystem", color: "#4f8ef7",
@@ -2680,8 +2232,8 @@ function navigate(screen, fromQuickNav) {
   if (screen === 'dashboard') updateDashboard();
 }
 function updateHeader(screen) {
-  const titles = { dashboard:'GHL Academy', modules:'Curriculum', lab:'Practice Lab', notes:'Notes', progress:'Progress', settings:'Settings', glossary:'GHL Glossary' };
-  const subs = { dashboard:'GoHighLevel Mastery', modules:'13 Core Modules', lab:'Hands-On Exercises', notes:'Study Notes', progress:'Your Journey', settings:'Profile & Preferences', glossary:'47 Essential Terms' };
+  const titles = { dashboard:'GHL Academy', modules:'Curriculum', lab:'Practice Lab', notes:'Notes', progress:'Progress', settings:'Settings' };
+  const subs = { dashboard:'GoHighLevel Mastery', modules:'13 Core Modules', lab:'Hands-On Exercises', notes:'Study Notes', progress:'Your Journey', settings:'Preferences' };
   document.querySelector('#header h1').textContent = titles[screen] || 'GHL Academy';
   document.getElementById('header-sub').textContent = subs[screen] || '';
 }
@@ -2693,37 +2245,15 @@ function renderModulesList() {
   list.innerHTML = MODULES.map(m => {
     const done = Object.keys(state.completedLessons).filter(k => k.startsWith('m' + m.id + '_')).length;
     const pct = Math.round((done / m.lessons.length) * 100);
-    const illu = getModuleIllustration(m);
-    return `<div class="card" style="padding:0;overflow:hidden;margin-bottom:var(--s2);">
-      <div style="position:relative;height:72px;overflow:hidden;">
-        ${illu}
-        <div style="position:absolute;bottom:10px;left:var(--s2);display:flex;align-items:center;gap:var(--s1);">
-          <div style="width:32px;height:32px;border-radius:8px;background:${m.color}33;border:1px solid ${m.color}55;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:var(--size-md);font-weight:700;color:${m.color};">${m.id}</div>
-          <div>
-            <div style="font-size:var(--size-sm);font-weight:700;color:var(--text);">${m.title}</div>
-            <div style="font-size:var(--size-xs);color:var(--text3);">${m.desc}</div>
-          </div>
-        </div>
-        <div style="position:absolute;top:10px;right:var(--s2);">
-          <span class="badge badge-blue" style="font-size:9px;">${m.badge}</span>
-        </div>
+    return `<button class="module-item" onclick="openModule(${m.id})" aria-label="Open module ${m.id}: ${m.title}">
+      <div class="module-num" style="background:${m.color}22;color:${m.color};border:1px solid ${m.color}44;">${m.id}</div>
+      <div>
+        <div class="module-title">${m.title}</div>
+        <div class="module-sub">${m.lessons.length} lessons · ${pct}% done</div>
+        <div class="progress-wrap" style="margin-top:4px;"><div class="progress-bar" style="width:${pct}%;background:${m.color};box-shadow:none;"></div></div>
       </div>
-      <div style="padding:var(--s2);">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-          <span style="font-size:var(--size-xs);color:var(--text3);">${m.lessons.length} lessons · ${done} done</span>
-          <span style="font-size:var(--size-xs);font-weight:700;color:${m.color};">${pct}%</span>
-        </div>
-        <div class="progress-wrap" style="margin-bottom:var(--s2);"><div class="progress-bar" style="width:${pct}%;background:${m.color};box-shadow:none;"></div></div>
-        <div style="display:flex;gap:var(--s1);">
-          <button class="btn btn-primary" style="flex:2;background:${m.color};box-shadow:none;" onclick="openModule(${m.id})">
-            ${pct === 0 ? 'Start →' : pct === 100 ? 'Review ✓' : 'Continue →'}
-          </button>
-          <button class="btn btn-secondary" style="flex:1;" onclick="openFlashcards(${m.id})" title="Quick Review flashcards">
-            🃏 Cards
-          </button>
-        </div>
-      </div>
-    </div>`;
+      <div class="module-chevron">›</div>
+    </button>`;
   }).join('');
 }
 
@@ -2891,9 +2421,6 @@ function updateDashboard() {
     return done2 < m.lessons.length;
   });
   if (nextMod) document.getElementById('continue-module').textContent = `Module ${nextMod.id}: ${nextMod.title}`;
-
-  updateStreakUI();
-  updateSettingsContext();
 }
 
 // ==================== PROGRESS ====================
@@ -3054,40 +2581,17 @@ function toggleCheck(item) {
 }
 
 // ==================== SETTINGS ====================
-const GOAL_LABELS = { 'Freelancer / Agency Owner':'Freelancer / Agency Owner', 'GHL Platform Employee':'GHL Platform Employee', 'In-house Marketer':'In-house Marketer', 'SaaS Reseller':'SaaS Reseller' };
 function saveSettings() {
-  state.settings.name = document.getElementById('set-name').value.trim();
+  state.settings.name = document.getElementById('set-name').value;
   state.settings.goal = document.getElementById('set-goal').value;
   state.settings.pace = document.getElementById('set-pace').value;
   saveState();
-  updateSettingsContext();
-  const name = state.settings.name;
-  showToast(name ? `Profile saved. Welcome, ${name}!` : 'Profile saved.');
+  showToast('Profile saved.');
 }
 function loadSettings() {
   if (state.settings.name) document.getElementById('set-name').value = state.settings.name;
   if (state.settings.goal) document.getElementById('set-goal').value = state.settings.goal;
   if (state.settings.pace) document.getElementById('set-pace').value = state.settings.pace;
-  updateSettingsContext();
-}
-function updateSettingsContext() {
-  const s = state.settings;
-  const done = Object.keys(state.completedLessons).length;
-  let correct = 0;
-  Object.entries(state.quizScores).forEach(([qid, chosen]) => {
-    const parts = qid.split('_');
-    const mod = MODULES.find(m => m.id == parts[1]);
-    const lesson = mod?.lessons[parts[2]];
-    if (lesson?.quiz && chosen === lesson.quiz.answer) correct++;
-  });
-  if (document.getElementById('ctx-name')) {
-    document.getElementById('ctx-name').textContent = s.name || '—';
-    document.getElementById('ctx-goal').textContent = s.goal || '—';
-    document.getElementById('ctx-pace').textContent = s.pace || '—';
-    document.getElementById('ctx-lessons').textContent = done;
-    document.getElementById('ctx-quizzes').textContent = correct;
-    document.getElementById('ctx-notes').textContent = (state.notes||[]).length;
-  }
 }
 
 // ==================== RESET ====================
@@ -3102,7 +2606,6 @@ function resetProgress() {
   renderModulesList();
   renderNotes();
   renderProgress();
-  updateStreakUI();
   showToast('Progress reset.');
 }
 
@@ -3137,287 +2640,11 @@ document.addEventListener('click', e => {
   if (trigger) {
     trigger.classList.toggle('open');
     const content = trigger.nextElementSibling;
-    if (content && content.classList.contains('expand-content')) content.classList.toggle('open');
+    if (content && content.classList.contains('expand-content')) {
+      content.classList.toggle('open');
+    }
   }
 });
-
-// ==================== 6. STREAK TRACKER ====================
-function getTodayKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-function getYesterdayKey() {
-  const d = new Date(); d.setDate(d.getDate()-1);
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-function updateStreak() {
-  const today = getTodayKey();
-  const yesterday = getYesterdayKey();
-  if (!state.streak) state.streak = { count: 0, lastDay: null, history: [] };
-  if (state.streak.lastDay === today) return; // already logged today
-  if (state.streak.lastDay === yesterday) {
-    state.streak.count++;
-  } else if (state.streak.lastDay !== today) {
-    state.streak.count = 1;
-  }
-  state.streak.lastDay = today;
-  if (!state.streak.history.includes(today)) state.streak.history.push(today);
-  if (state.streak.history.length > 30) state.streak.history = state.streak.history.slice(-30);
-  saveState();
-}
-function updateStreakUI() {
-  if (!state.streak) state.streak = { count: 0, lastDay: null, history: [] };
-  const count = state.streak.count || 0;
-  // Dashboard streak
-  const sc = document.getElementById('streak-count');
-  const sl = document.getElementById('streak-label');
-  const sd = document.getElementById('streak-dots');
-  if (sc) sc.textContent = count;
-  if (sl) sl.textContent = count === 0 ? 'Open the app daily to build your streak' : count === 1 ? 'Great start! Come back tomorrow.' : `${count} days strong — keep it up!`;
-  // 14-day dot grid
-  if (sd) {
-    const today = getTodayKey();
-    const dots = [];
-    for (let i = 13; i >= 0; i--) {
-      const d = new Date(); d.setDate(d.getDate()-i);
-      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-      const isToday = key === today;
-      const active = state.streak.history && state.streak.history.includes(key);
-      dots.push(`<div class="streak-dot ${active ? 'active' : ''} ${isToday ? 'today' : ''}" title="${key}"></div>`);
-    }
-    sd.innerHTML = dots.join('');
-  }
-  // Settings streak
-  const ssc = document.getElementById('set-streak-count');
-  const ssm = document.getElementById('set-streak-msg');
-  if (ssc) ssc.textContent = count;
-  if (ssm) ssm.textContent = count >= 7 ? '🏆 7+ day streak — you are consistent!' : count > 0 ? `${count} day${count>1?'s':''} — keep the momentum` : 'Start your streak — open the app daily';
-  // Dashboard greeting with name
-  const g = document.getElementById('dash-greeting');
-  if (g && state.settings && state.settings.name) g.textContent = `Welcome back, ${state.settings.name.split(' ')[0]}`;
-}
-
-// ==================== 7. FLASHCARD SYSTEM ====================
-// Flashcard data — one per module keyed to key concepts
-const FLASHCARDS = [
-  { mod:1, tag:'Platform', term:'GoHighLevel (GHL)', def:'An all-in-one CRM, funnel builder, and marketing automation platform built for digital agencies. Replaces tools like Clickfunnels, ActiveCampaign, and Calendly in a single white-labeled platform.' },
-  { mod:1, tag:'Account', term:'Sub-Account', def:'An isolated client workspace inside your Agency Account. Each sub-account has its own contacts, funnels, automations, pipelines, and calendar. Also called a "Location".' },
-  { mod:1, tag:'Feature', term:'Snapshot', def:'A blueprint of a complete GHL sub-account setup (funnels, automations, pipelines) that can be instantly applied to a new client sub-account. Your core delivery speed tool.' },
-  { mod:1, tag:'Business', term:'SaaS Mode', def:'A GHL feature (Unlimited/Pro plans) that lets agencies automatically provision sub-accounts and charge clients recurring fees, creating a fully automated SaaS billing system.' },
-  { mod:2, tag:'Interface', term:'Unified Conversations Inbox', def:'GHL\'s single inbox that consolidates SMS, email, Facebook Messenger, Instagram DMs, Google My Business, and WhatsApp messages into one threaded view per contact.' },
-  { mod:2, tag:'CRM', term:'Smart Lists', def:'Dynamic, auto-updating contact segments in GHL based on tags, custom fields, pipeline stage, or activity. Smart Lists feed directly into automation triggers and bulk actions.' },
-  { mod:3, tag:'Funnel', term:'Funnel Step', def:'A single page within a GHL funnel. Each step is a distinct URL and can have its own layout, tracking, and automation triggers. Steps are ordered and visitors progress linearly.' },
-  { mod:3, tag:'Design', term:'Opt-In Rate', def:'The percentage of page visitors who complete the lead capture form. Formula: Leads ÷ Visitors × 100. A well-optimized opt-in page targeting warm traffic achieves 30–50%.' },
-  { mod:3, tag:'Builder', term:'Page Builder Row', def:'The top-level structural container in GHL\'s page builder. Rows span full width and control background, padding, and visibility. Columns and elements nest inside rows.' },
-  { mod:4, tag:'CRO', term:'Above the Fold', def:'The portion of a web page visible without scrolling. This zone contains your highest-impact elements: headline, subheadline, and primary CTA. Most visitors never scroll past it.' },
-  { mod:4, tag:'CRO', term:'F-Pattern Scanning', def:'Eye-tracking research shows users scan pages in an F-shape: strong attention on the first horizontal line, moderate on the second, then a vertical scan down the left edge.' },
-  { mod:5, tag:'Code', term:'Custom HTML Block', def:'A GHL page builder element that accepts raw HTML/CSS/JS. Used to create complex layouts, embed third-party widgets, or add custom interactive sections beyond the drag-and-drop builder\'s capabilities.' },
-  { mod:5, tag:'Code', term:'Page Header Code Injection', def:'A GHL field in funnel/page settings that injects code into the <head> of every page. Used for global CSS overrides, meta tags, tracking pixels, and font imports.' },
-  { mod:6, tag:'Automation', term:'Workflow Trigger', def:'The event that enrolls a contact into a GHL workflow. Includes Form Submitted, Tag Added, Appointment Booked, Pipeline Stage Changed, and 30+ other event types.' },
-  { mod:6, tag:'Automation', term:'If/Else Condition', def:'A workflow branching node that checks a condition (e.g., "has tag X?", "appointment status = confirmed?") and routes contacts down different action paths based on true/false.' },
-  { mod:6, tag:'Automation', term:'Voicemail Drop', def:'A GHL workflow action that delivers a pre-recorded audio message directly to a contact\'s voicemail without ringing their phone. Requires Twilio integration.' },
-  { mod:7, tag:'Integration', term:'Twilio', def:'The telephony provider integrated with GHL for SMS sending/receiving and phone calls. Required for outbound calling, A2P 10DLC messaging compliance, and voicemail drops.' },
-  { mod:7, tag:'Technical', term:'Webhook', def:'An HTTP POST request GHL sends to an external URL when a specified event occurs. The payload contains contact and event data in JSON format. Used to connect GHL to any external system.' },
-  { mod:7, tag:'Technical', term:'A2P 10DLC', def:'Application-to-Person 10-Digit Long Code. The US carrier framework requiring SMS senders to register their brand and campaigns. Required for compliant bulk SMS via Twilio/GHL.' },
-  { mod:8, tag:'CRM', term:'Pipeline', def:'A visual Kanban-style board in GHL showing deal stages for opportunities. Each column is a stage (e.g., New Lead → Contacted → Proposal → Won). Tracks revenue and conversion rates.' },
-  { mod:8, tag:'CRM', term:'Opportunity', def:'A deal record in GHL\'s pipeline. Linked to a contact, assigned a monetary value and pipeline stage. Moving opportunities through stages triggers automation and revenue reporting.' },
-  { mod:8, tag:'CRM', term:'Custom Fields', def:'User-defined data fields attached to contact records in GHL. Types include text, number, date, checkbox, dropdown. Used for segmentation, personalization tokens, and reporting.' },
-  { mod:9, tag:'Calendar', term:'Round Robin Calendar', def:'A GHL calendar type that distributes incoming bookings evenly across multiple team members based on availability. Prevents one person from being overloaded with appointments.' },
-  { mod:9, tag:'Calendar', term:'Calendar Widget', def:'An embeddable booking page or iframe generated by GHL. Can be added to any funnel page, website, or shared as a standalone URL for direct booking.' },
-  { mod:10, tag:'Analytics', term:'Attribution', def:'The process of crediting a revenue source or conversion to the correct traffic channel or campaign. GHL tracks source attribution at the contact level through UTM parameters and lead source fields.' },
-  { mod:10, tag:'Analytics', term:'Show Rate', def:'The percentage of booked appointments where the contact actually attended. Formula: Attended ÷ Booked × 100. Industry benchmark is 70%+. Improved by reminder automations.' },
-  { mod:11, tag:'Strategy', term:'Value Equation', def:'Alex Hormozi\'s framework: Value = (Dream Outcome × Perceived Likelihood) ÷ (Time Delay × Effort). Increasing the numerator or decreasing the denominator increases offer value without changing price.' },
-  { mod:11, tag:'Strategy', term:'Lead Magnet', def:'A free, high-value resource offered in exchange for contact information. Effective lead magnets are specific, immediately useful, and directly related to the paid offer.' },
-  { mod:12, tag:'Capstone', term:'Funnel Architecture Document', def:'A deliverable that maps out all funnel steps, page URLs, automation sequences, CRM pipelines, and KPIs for a client project. Professional agencies always produce this before building.' },
-  { mod:13, tag:'Delivery', term:'Onboarding SOP', def:'A Standard Operating Procedure document that guides the setup of a new GHL client sub-account from kickoff call through launch. Reduces errors, sets client expectations, and scales delivery.' },
-  { mod:13, tag:'Business', term:'Setup Fee', def:'A one-time payment charged to cover the initial GHL build (funnel, automations, CRM, calendar). Non-negotiable in professional agency engagements. Typically $500–$3,000.' },
-  { mod:13, tag:'Business', term:'Monthly Retainer', def:'Recurring monthly payment for ongoing GHL management, optimization, reporting, and support. Typically $200–$1,500/mo depending on scope and deliverables.' },
-];
-
-let fcIndex = 0;
-let fcFlipped = false;
-let fcRatings = {};
-let fcModuleFilter = null;
-
-function openFlashcards(modId) {
-  fcModuleFilter = modId || null;
-  fcIndex = 0;
-  fcFlipped = false;
-  fcRatings = {};
-  document.getElementById('flashcard-view').classList.add('active');
-  document.getElementById('fc-title').textContent = modId ? `Module ${modId} Review` : 'Full Review';
-  renderFlashcard();
-}
-function closeFlashcards() {
-  document.getElementById('flashcard-view').classList.remove('active');
-}
-function getFCCards() {
-  return fcModuleFilter ? FLASHCARDS.filter(c => c.mod === fcModuleFilter) : FLASHCARDS;
-}
-function renderFlashcard() {
-  const cards = getFCCards();
-  if (!cards.length) return;
-  const card = cards[fcIndex];
-  fcFlipped = false;
-  document.getElementById('fc-inner').style.transform = '';
-  document.getElementById('fc-card').classList.remove('flipped');
-  document.getElementById('fc-term').textContent = card.term;
-  document.getElementById('fc-def').textContent = card.def;
-  document.getElementById('fc-tag').textContent = `${card.tag} · Module ${card.mod}`;
-  document.getElementById('fc-counter').textContent = `${fcIndex+1} / ${cards.length}`;
-  document.getElementById('fc-progress-bar').style.width = `${((fcIndex+1)/cards.length)*100}%`;
-  document.getElementById('fc-result-row').style.display = 'none';
-  document.getElementById('fc-next').style.opacity = '1';
-  document.getElementById('fc-prev').style.opacity = fcIndex === 0 ? '0.3' : '1';
-  document.getElementById('fc-prev').disabled = fcIndex === 0;
-}
-function flipCard() {
-  fcFlipped = !fcFlipped;
-  document.getElementById('fc-card').classList.toggle('flipped', fcFlipped);
-  if (fcFlipped) document.getElementById('fc-result-row').style.display = 'flex';
-}
-function fcRate(rating) {
-  const cards = getFCCards();
-  fcRatings[fcIndex] = rating;
-  if (fcIndex < cards.length - 1) {
-    fcIndex++;
-    renderFlashcard();
-  } else {
-    // Session complete
-    const easy = Object.values(fcRatings).filter(r=>r==='easy').length;
-    const good = Object.values(fcRatings).filter(r=>r==='good').length;
-    document.getElementById('fc-card').innerHTML = `<div class="flashcard-inner" style="min-height:200px;background:var(--surface);border:1px solid var(--border);border-radius:20px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:var(--s2);padding:var(--s3);">
-      <div style="font-size:48px;">🧠</div>
-      <div style="font-family:var(--font-display);font-size:var(--size-lg);font-weight:700;color:var(--text);">Review Complete!</div>
-      <div style="font-size:var(--size-sm);color:var(--text2);text-align:center;">Easy: ${easy} · Good: ${good} · Hard: ${Object.values(fcRatings).filter(r=>r==='hard').length} · Again: ${Object.values(fcRatings).filter(r=>r==='again').length}</div>
-      <button class="btn btn-primary" onclick="openFlashcards(${fcModuleFilter||'null'})" style="margin-top:var(--s1);">Review Again</button>
-    </div>`;
-    document.getElementById('fc-result-row').style.display = 'none';
-  }
-}
-function fcNext() {
-  const cards = getFCCards();
-  if (!fcFlipped) { flipCard(); return; }
-  if (fcIndex < cards.length - 1) { fcIndex++; renderFlashcard(); }
-}
-function fcPrev() {
-  if (fcIndex > 0) { fcIndex--; renderFlashcard(); }
-}
-
-// ==================== 3. MODULE ILLUSTRATIONS (SVG) ====================
-function getModuleIllustration(mod) {
-  const svgs = {
-    1: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1a2240"/></linearGradient></defs><rect width="400" height="90" fill="url(#g1)"/><circle cx="320" cy="20" r="40" fill="none" stroke="#4f8ef744" stroke-width="1"/><circle cx="320" cy="20" r="60" fill="none" stroke="#4f8ef722" stroke-width="1"/><rect x="30" y="25" width="50" height="40" rx="6" fill="#4f8ef722" stroke="#4f8ef744" stroke-width="1"/><rect x="95" y="30" width="50" height="35" rx="6" fill="#7c3aed22" stroke="#7c3aed44" stroke-width="1"/><rect x="160" y="20" width="50" height="45" rx="6" fill="#10b98122" stroke="#10b98144" stroke-width="1"/><line x1="80" y1="45" x2="95" y2="47" stroke="#4f8ef755" stroke-width="1.5"/><line x1="145" y1="47" x2="160" y2="42" stroke="#7c3aed55" stroke-width="1.5"/></svg>`,
-    2: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1a1a40"/></linearGradient></defs><rect width="400" height="90" fill="url(#g2)"/><rect x="20" y="10" width="100" height="70" rx="8" fill="#7c3aed11" stroke="#7c3aed33" stroke-width="1"/><rect x="28" y="18" width="84" height="8" rx="3" fill="#7c3aed33"/><rect x="28" y="30" width="60" height="4" rx="2" fill="#4a5a80"/><rect x="28" y="38" width="74" height="4" rx="2" fill="#4a5a80"/><rect x="28" y="46" width="50" height="4" rx="2" fill="#4a5a80"/><circle cx="290" cy="45" r="28" fill="none" stroke="#7c3aed33" stroke-width="1"/><circle cx="290" cy="45" r="18" fill="none" stroke="#7c3aed55" stroke-width="1"/><circle cx="290" cy="45" r="5" fill="#7c3aed"/></svg>`,
-    3: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#0e2018"/></linearGradient></defs><rect width="400" height="90" fill="url(#g3)"/><polygon points="40,75 80,15 120,75" fill="#10b98111" stroke="#10b98133" stroke-width="1.5"/><polygon points="130,75 165,25 200,75" fill="#10b98111" stroke="#10b98155" stroke-width="1.5"/><polygon points="210,75 240,35 270,75" fill="#10b98122" stroke="#10b98177" stroke-width="2"/><line x1="40" y1="75" x2="270" y2="75" stroke="#10b98133" stroke-width="1"/></svg>`,
-    4: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#201808"/></linearGradient></defs><rect width="400" height="90" fill="url(#g4)"/><circle cx="80" cy="45" r="30" fill="none" stroke="#f59e0b22" stroke-width="1"/><circle cx="80" cy="45" r="20" fill="none" stroke="#f59e0b44" stroke-width="1"/><circle cx="80" cy="45" r="8" fill="#f59e0b55"/><line x1="80" y1="15" x2="80" y2="10" stroke="#f59e0b66" stroke-width="2"/><line x1="80" y1="75" x2="80" y2="80" stroke="#f59e0b66" stroke-width="2"/><line x1="50" y1="45" x2="45" y2="45" stroke="#f59e0b66" stroke-width="2"/><line x1="110" y1="45" x2="115" y2="45" stroke="#f59e0b66" stroke-width="2"/><rect x="160" y="20" width="120" height="15" rx="4" fill="#f59e0b22" stroke="#f59e0b33" stroke-width="1"/><rect x="160" y="42" width="90" height="10" rx="3" fill="#f59e0b11" stroke="#f59e0b22" stroke-width="1"/><rect x="160" y="58" width="100" height="10" rx="3" fill="#f59e0b11" stroke="#f59e0b22" stroke-width="1"/></svg>`,
-    5: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#080c18"/><stop offset="100%" stop-color="#081828"/></linearGradient></defs><rect width="400" height="90" fill="url(#g5)"/><text x="20" y="38" font-family="Courier New" font-size="11" fill="#c4b5fd77">&lt;div class=</text><text x="20" y="52" font-family="Courier New" font-size="11" fill="#86efac77">"hero-section"</text><text x="20" y="66" font-family="Courier New" font-size="11" fill="#c4b5fd77">&gt;</text><text x="180" y="35" font-family="Courier New" font-size="10" fill="#7dd3fc55">background:</text><text x="180" y="48" font-family="Courier New" font-size="10" fill="#86efac55">linear-gradient</text><text x="180" y="61" font-family="Courier New" font-size="10" fill="#c4b5fd55">border-radius:</text></svg>`,
-    6: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#180e28"/></linearGradient></defs><rect width="400" height="90" fill="url(#g6)"/><circle cx="50" cy="45" r="12" fill="#a78bfa22" stroke="#a78bfa55" stroke-width="1.5"/><line x1="62" y1="45" x2="88" y2="45" stroke="#a78bfa44" stroke-width="1.5" marker-end="url(#arr)"/><circle cx="100" cy="45" r="12" fill="#a78bfa22" stroke="#a78bfa55" stroke-width="1.5"/><line x1="112" y1="45" x2="138" y2="45" stroke="#a78bfa44" stroke-width="1.5"/><circle cx="150" cy="45" r="12" fill="#a78bfa33" stroke="#a78bfa77" stroke-width="1.5"/><line x1="162" y1="40" x2="188" y2="28" stroke="#10b98144" stroke-width="1.5"/><line x1="162" y1="50" x2="188" y2="62" stroke="#ef444444" stroke-width="1.5"/><circle cx="200" cy="25" r="10" fill="#10b98122" stroke="#10b98155" stroke-width="1.5"/><circle cx="200" cy="65" r="10" fill="#ef444422" stroke="#ef444455" stroke-width="1.5"/></svg>`,
-    7: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#180e14"/></linearGradient></defs><rect width="400" height="90" fill="url(#g7)"/><rect x="20" y="30" width="60" height="30" rx="6" fill="#f9730011" stroke="#f9730033" stroke-width="1"/><rect x="160" y="30" width="60" height="30" rx="6" fill="#f9730011" stroke="#f9730033" stroke-width="1"/><path d="M80 45 C 110 45 130 45 160 45" fill="none" stroke="#f9730055" stroke-width="1.5" stroke-dasharray="4,3"/><rect x="300" y="25" width="60" height="40" rx="6" fill="#f9730011" stroke="#f9730055" stroke-width="1"/><path d="M220 45 C 250 20 270 20 300 32" fill="none" stroke="#f9730044" stroke-width="1.5" stroke-dasharray="4,3"/><path d="M220 45 C 250 70 270 70 300 58" fill="none" stroke="#f9730033" stroke-width="1.5" stroke-dasharray="4,3"/></svg>`,
-    8: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1e0828"/></linearGradient></defs><rect width="400" height="90" fill="url(#g8)"/><rect x="20" y="20" width="50" height="55" rx="6" fill="#ec489922" stroke="#ec489944" stroke-width="1"/><rect x="80" y="28" width="50" height="47" rx="6" fill="#ec489922" stroke="#ec489944" stroke-width="1"/><rect x="140" y="34" width="50" height="41" rx="6" fill="#ec489933" stroke="#ec489966" stroke-width="1"/><rect x="200" y="40" width="50" height="35" rx="6" fill="#10b98122" stroke="#10b98144" stroke-width="1"/><rect x="260" y="30" width="50" height="10" rx="3" fill="#ef444433" stroke="#ef444455" stroke-width="1"/></svg>`,
-    9: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#081820"/></linearGradient></defs><rect width="400" height="90" fill="url(#g9)"/><rect x="20" y="15" width="160" height="65" rx="8" fill="#14b8a611" stroke="#14b8a633" stroke-width="1"/><line x1="20" y1="30" x2="180" y2="30" stroke="#14b8a622" stroke-width="1"/><line x1="60" y1="15" x2="60" y2="80" stroke="#14b8a622" stroke-width="1"/><line x1="100" y1="15" x2="100" y2="80" stroke="#14b8a622" stroke-width="1"/><line x1="140" y1="15" x2="140" y2="80" stroke="#14b8a622" stroke-width="1"/><circle cx="80" cy="50" r="10" fill="#14b8a633" stroke="#14b8a666" stroke-width="1.5"/><circle cx="120" cy="60" r="10" fill="#14b8a644" stroke="#14b8a688" stroke-width="1.5"/></svg>`,
-    10:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#0e0e28"/></linearGradient></defs><rect width="400" height="90" fill="url(#g10)"/><polyline points="30,70 70,50 110,55 150,30 190,40 230,20 270,35" fill="none" stroke="#6366f155" stroke-width="2"/><polyline points="30,70 70,50 110,55 150,30 190,40 230,20 270,35" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3,3"/><circle cx="150" cy="30" r="4" fill="#6366f1"/><circle cx="230" cy="20" r="4" fill="#6366f1"/></svg>`,
-    11:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g11" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#0e1808"/></linearGradient></defs><rect width="400" height="90" fill="url(#g11)"/><polygon points="60,75 100,15 140,75" fill="#84cc1611" stroke="#84cc1633" stroke-width="1.5"/><text x="88" y="58" font-family="Georgia,serif" font-size="14" fill="#84cc1666">V</text><line x1="175" y1="45" x2="250" y2="45" stroke="#84cc1644" stroke-width="1.5"/><text x="175" y="38" font-family="Georgia,serif" font-size="9" fill="#84cc1655">Outcome × Likelihood</text><line x1="175" y1="50" x2="250" y2="50" stroke="#ef444433" stroke-width="1"/><text x="175" y="62" font-family="Georgia,serif" font-size="9" fill="#ef444455">Delay × Effort</text></svg>`,
-    12:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g12" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#200810"/></linearGradient></defs><rect width="400" height="90" fill="url(#g12)"/><circle cx="80" cy="45" r="30" fill="none" stroke="#e11d4822" stroke-width="1"/><circle cx="80" cy="45" r="20" fill="none" stroke="#e11d4844" stroke-width="1"/><circle cx="80" cy="45" r="10" fill="#e11d4822" stroke="#e11d4866" stroke-width="1"/><line x1="80" y1="15" x2="80" y2="25" stroke="#e11d4866" stroke-width="2"/><line x1="56" y1="24" x2="63" y2="31" stroke="#e11d4855" stroke-width="1.5"/><line x1="56" y1="66" x2="63" y2="59" stroke="#e11d4855" stroke-width="1.5"/><line x1="80" y1="75" x2="80" y2="65" stroke="#e11d4866" stroke-width="2"/></svg>`,
-    13:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g13" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#081828"/></linearGradient></defs><rect width="400" height="90" fill="url(#g13)"/><rect x="20" y="25" width="30" height="40" rx="4" fill="#0ea5e922" stroke="#0ea5e955" stroke-width="1"/><line x1="50" y1="45" x2="75" y2="45" stroke="#0ea5e944" stroke-width="1.5" stroke-dasharray="3,2"/><rect x="75" y="25" width="30" height="40" rx="4" fill="#0ea5e922" stroke="#0ea5e955" stroke-width="1"/><line x1="105" y1="45" x2="130" y2="45" stroke="#0ea5e944" stroke-width="1.5" stroke-dasharray="3,2"/><rect x="130" y="25" width="30" height="40" rx="4" fill="#0ea5e933" stroke="#0ea5e977" stroke-width="1"/><line x1="160" y1="45" x2="185" y2="45" stroke="#0ea5e944" stroke-width="1.5" stroke-dasharray="3,2"/><rect x="185" y="25" width="30" height="40" rx="4" fill="#0ea5e944" stroke="#0ea5e988" stroke-width="1"/><circle cx="245" cy="45" r="14" fill="#0ea5e922" stroke="#0ea5e955" stroke-width="1"/><text x="240" y="50" font-family="Georgia,serif" font-size="16" fill="#0ea5e977">✓</text></svg>`,
-  };
-  return svgs[mod.id] || svgs[1];
-}
-
-// ==================== 8. GLOSSARY ====================
-const GLOSSARY = [
-  { term:'A2P 10DLC', cat:'Technical', color:'badge-yellow', def:'Application-to-Person 10-Digit Long Code. US carrier framework requiring SMS brand + campaign registration for compliant bulk messaging via Twilio/GHL.' },
-  { term:'Agency Account', cat:'Platform', color:'badge-blue', def:'The top-level GHL account that manages all client sub-accounts (locations). All billing, white-label settings, and team members are managed here.' },
-  { term:'Attribution', cat:'Analytics', color:'badge-purple', def:'Tracking which traffic source, ad, or campaign drove a lead or sale. GHL tracks attribution via UTM parameters attached to the lead source field on contact records.' },
-  { term:'Automation', cat:'Workflow', color:'badge-blue', def:'A GHL Workflow — a sequence of actions triggered by a specific event. Automations run asynchronously, processing multiple contacts simultaneously.' },
-  { term:'Calendar Widget', cat:'Calendar', color:'badge-green', def:'An embeddable booking page generated by GHL. Shared as a URL or embedded via iframe. Syncs with team calendars and triggers appointment confirmation automations.' },
-  { term:'Conversations Inbox', cat:'CRM', color:'badge-blue', def:'GHL\'s unified inbox consolidating SMS, email, Facebook Messenger, Instagram DMs, Google My Business, and WhatsApp messages into one threaded view per contact.' },
-  { term:'CRM', cat:'Platform', color:'badge-blue', def:'Customer Relationship Management. In GHL, the CRM includes Contacts, Pipelines, Smart Lists, Tags, Custom Fields, and conversation history.' },
-  { term:'Custom Fields', cat:'CRM', color:'badge-purple', def:'User-defined data fields on contact records. Types: text, number, date, checkbox, dropdown. Used for segmentation, personalization tokens, and structured data storage.' },
-  { term:'Custom Values', cat:'Technical', color:'badge-yellow', def:'GHL\'s template variables (also called merge fields) that dynamically insert contact data into messages, emails, and pages. Example: {{contact.first_name}}.' },
-  { term:'DNS', cat:'Technical', color:'badge-yellow', def:'Domain Name System. In GHL, DNS records (CNAME, A record) must be configured to point a custom domain to GHL\'s servers for funnel and website hosting.' },
-  { term:'Funnel', cat:'Builder', color:'badge-green', def:'A sequence of pages in GHL designed to guide a visitor toward a single conversion action. Unlike websites, funnels remove navigation and constrain visitor choice.' },
-  { term:'GHL', cat:'Platform', color:'badge-blue', def:'GoHighLevel. An all-in-one CRM, funnel builder, and marketing automation platform designed for digital agencies. Launched 2018 by Shaun Clark and Varun Vairavan.' },
-  { term:'If/Else Condition', cat:'Workflow', color:'badge-purple', def:'A workflow branching node that checks a condition and routes contacts down Yes or No paths. Examples: has tag, pipeline stage equals, appointment confirmed.' },
-  { term:'Lead Magnet', cat:'Strategy', color:'badge-green', def:'A free, high-value resource (guide, checklist, video) exchanged for a prospect\'s contact information. The gateway step of most GHL lead generation funnels.' },
-  { term:'Location', cat:'Platform', color:'badge-blue', def:'GHL\'s internal term for a sub-account. Each client has one Location. Contains all their data: contacts, funnels, automations, pipelines, calendars.' },
-  { term:'Membership', cat:'Feature', color:'badge-purple', def:'GHL\'s built-in course and membership portal. Allows creating gated content, drip lessons, and student progress tracking without third-party platforms.' },
-  { term:'Opportunity', cat:'CRM', color:'badge-yellow', def:'A deal record in GHL\'s pipeline. Linked to a contact, assigned a monetary value and pipeline stage. Powers revenue reporting and pipeline conversion analytics.' },
-  { term:'Opt-In Rate', cat:'Analytics', color:'badge-green', def:'Leads ÷ Page Visitors × 100. Measures landing page effectiveness. Benchmark: 30–50% for warm traffic. Below 20% signals a copy or offer problem.' },
-  { term:'Pipeline', cat:'CRM', color:'badge-blue', def:'A visual Kanban board showing deal stages. Each column is a stage (New Lead → Contacted → Proposal → Won/Lost). Tracks revenue and conversion rates.' },
-  { term:'Round Robin', cat:'Calendar', color:'badge-green', def:'A GHL calendar type distributing incoming bookings evenly across team members. Prevents overload and ensures fair lead distribution in sales teams.' },
-  { term:'SaaS Mode', cat:'Platform', color:'badge-purple', def:'A GHL feature allowing agencies to automatically provision sub-accounts and charge clients recurring fees, creating a fully white-labeled SaaS product.' },
-  { term:'Setup Fee', cat:'Business', color:'badge-yellow', def:'One-time payment for initial GHL configuration: funnel build, automations, CRM, and calendar. Typically $500–$3,000. Non-negotiable in professional engagements.' },
-  { term:'Show Rate', cat:'Analytics', color:'badge-green', def:'Attended appointments ÷ Booked appointments × 100. Industry benchmark: 70%+. Improved significantly by structured SMS/email reminder automations.' },
-  { term:'Smart List', cat:'CRM', color:'badge-blue', def:'A dynamic, auto-updating contact segment in GHL based on tags, custom fields, pipeline stage, or activity. Feeds directly into bulk actions and automation triggers.' },
-  { term:'Snapshot', cat:'Platform', color:'badge-purple', def:'A complete GHL sub-account blueprint (funnels, automations, pipelines, calendars) that can be cloned to new client accounts in minutes. Core delivery speed tool.' },
-  { term:'SOP', cat:'Delivery', color:'badge-yellow', def:'Standard Operating Procedure. A documented, repeatable process for client work. In GHL delivery, SOPs cover onboarding, build process, QA, launch, and handoff.' },
-  { term:'Sub-Account', cat:'Platform', color:'badge-blue', def:'An isolated client workspace inside your Agency Account. Has its own contacts, funnels, automations, pipelines, and calendar. Equivalent to a "Location".' },
-  { term:'Tag', cat:'CRM', color:'badge-green', def:'A label applied to contacts to indicate status, behavior, or source. Tags trigger automations, filter Smart Lists, and drive pipeline movement. Example: "lead-hot", "booked-call".' },
-  { term:'Trigger', cat:'Workflow', color:'badge-purple', def:'The event that enrolls a contact into a GHL workflow. 30+ trigger types including Form Submitted, Tag Added, Appointment Status Changed, Pipeline Stage Changed.' },
-  { term:'Twilio', cat:'Technical', color:'badge-yellow', def:'Telephony provider integrated with GHL for SMS delivery, receiving, and voice calls. Required for outbound calling, A2P compliance, and voicemail drops.' },
-  { term:'UTM Parameters', cat:'Analytics', color:'badge-purple', def:'URL tracking codes (utm_source, utm_medium, utm_campaign) that identify traffic sources. GHL reads UTMs at form submission and stores them in contact lead source fields.' },
-  { term:'Unified Inbox', cat:'CRM', color:'badge-blue', def:'GHL\'s Conversations section consolidating all channel messages (SMS, email, social) into one view per contact. Enables team collaboration on customer communications.' },
-  { term:'Value Equation', cat:'Strategy', color:'badge-green', def:'Alex Hormozi\'s offer framework: Value = (Dream Outcome × Perceived Likelihood) ÷ (Time Delay × Effort). Used to price and position GHL-powered service offers.' },
-  { term:'Voicemail Drop', cat:'Automation', color:'badge-purple', def:'A workflow action delivering a pre-recorded audio message to voicemail without ringing the phone. Requires Twilio. High open-rate communication channel.' },
-  { term:'Webhook', cat:'Technical', color:'badge-yellow', def:'HTTP POST request GHL sends to an external URL when an event occurs. JSON payload contains contact and event data. Used for third-party integrations.' },
-  { term:'White Label', cat:'Business', color:'badge-blue', def:'GHL\'s feature allowing agencies to rebrand the platform with their own logo, domain, and colors — presenting it as their proprietary software to clients.' },
-  { term:'Workflow', cat:'Automation', color:'badge-purple', def:'GHL\'s automation engine. A sequence of triggers → conditions → actions that runs automatically when contacts meet specified criteria. The core of GHL marketing automation.' },
-];
-
-function renderGlossary(filter) {
-  const list = document.getElementById('glossary-list');
-  if (!list) return;
-  const q = (filter||'').toLowerCase().trim();
-  const filtered = q ? GLOSSARY.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q) || g.cat.toLowerCase().includes(q)) : GLOSSARY;
-  if (!filtered.length) { list.innerHTML = `<div class="glossary-no-results">No terms found for "${filter}"<br><span style="font-size:var(--size-xs);">Try a shorter search</span></div>`; return; }
-  // Group by first letter
-  const grouped = {};
-  filtered.forEach(g => {
-    const letter = g.term[0].toUpperCase();
-    if (!grouped[letter]) grouped[letter] = [];
-    grouped[letter].push(g);
-  });
-  let html = '';
-  Object.keys(grouped).sort().forEach(letter => {
-    html += `<div class="glossary-letter">${letter}</div>`;
-    grouped[letter].forEach((g, idx) => {
-      const gid = `g_${letter}_${idx}`;
-      html += `<div class="glossary-item" onclick="toggleGlossaryItem('${gid}')">
-        <div class="glossary-term">
-          <span>${g.term}</span>
-          <span class="badge ${g.color}" style="font-size:9px;padding:2px 7px;">${g.cat}</span>
-        </div>
-        <div class="glossary-def" id="${gid}">${g.def}</div>
-      </div>`;
-    });
-  });
-  list.innerHTML = html;
-}
-function toggleGlossaryItem(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const isOpen = el.classList.contains('open');
-  document.querySelectorAll('.glossary-def.open').forEach(e => e.classList.remove('open'));
-  if (!isOpen) el.classList.add('open');
-}
-function filterGlossary(val) { renderGlossary(val); }
-
-// ==================== NAVIGATE UPDATE ====================
-function navigate(screen, fromQuickNav) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
-  const sc = document.getElementById('screen-' + screen);
-  if (sc) sc.classList.add('active');
-  const btn = document.getElementById('nav-' + screen);
-  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-current', 'page'); }
-  updateHeader(screen);
-  if (screen === 'progress') renderProgress();
-  if (screen === 'notes') renderNotes();
-  if (screen === 'dashboard') updateDashboard();
-  if (screen === 'glossary') renderGlossary('');
-  if (screen === 'settings') { updateSettingsContext(); updateStreakUI(); }
-}
 
 // ==================== 3. CONFETTI ENGINE ====================
 function launchConfetti() {
@@ -3518,13 +2745,10 @@ function _swipeTouchEnd(e) {
 // ==================== INIT ====================
 function init() {
   loadState();
-  updateStreak();        // record today's visit
-  updateStreakUI();      // render streak dots + count
   renderModulesList();
   updateDashboard();
   loadSettings();
   renderNotes();
-  renderGlossary('');
 
   // Splash
   setTimeout(() => { document.getElementById('splash').classList.add('hide'); }, 1400);
