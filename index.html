@@ -1702,23 +1702,23 @@ html, body {
         <div class="section-title" style="font-size:var(--size-md);">Daily Checklist</div>
       </div>
       <div class="card">
-        <div class="checklist-item" onclick="toggleCheck(this,event)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox" id="c1" aria-label="Review yesterday notes">
           <span>Review yesterday's notes</span>
         </div>
-        <div class="checklist-item" onclick="toggleCheck(this,event)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox" id="c2" aria-label="Complete one lesson">
           <span>Complete one lesson</span>
         </div>
-        <div class="checklist-item" onclick="toggleCheck(this,event)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox" id="c3" aria-label="Build or test a funnel step">
           <span>Build or test a funnel step</span>
         </div>
-        <div class="checklist-item" onclick="toggleCheck(this,event)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox" id="c4" aria-label="Write a reflection note">
           <span>Write a reflection note</span>
         </div>
-        <div class="checklist-item" onclick="toggleCheck(this,event)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox" id="c5" aria-label="Study one automation trigger">
           <span>Study one automation trigger</span>
         </div>
@@ -1754,14 +1754,6 @@ html, body {
     <section class="screen" id="screen-lab" aria-label="Practice Lab">
       <div class="section-title">Practice Lab</div>
       <div class="section-sub">Hands-on exercises and interactive tools.</div>
-      <div class="card" style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(79,142,247,0.06));border-color:rgba(124,58,237,0.25);margin-bottom:var(--s2);display:flex;align-items:center;gap:var(--s2);">
-        <div style="font-size:32px;">🃏</div>
-        <div style="flex:1;">
-          <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:3px;">Quick Review — All Modules</div>
-          <div style="font-size:var(--size-xs);color:var(--text3);">32 flashcards covering every module</div>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="openFlashcards(null)">Start →</button>
-      </div>
 
       <!-- Funnel Builder Board -->
       <div class="plan-board" style="margin-bottom:var(--s2);">
@@ -2129,11 +2121,11 @@ html, body {
         <div class="flashcard-back">
           <div class="fc-tag" style="color:var(--accent3);">Definition</div>
           <div class="fc-def" id="fc-def"></div>
-          <div class="fc-tap-hint" onclick="event.stopPropagation();unflipCard()">↺ tap to flip back</div>
+          <div class="fc-tap-hint">↺ tap to flip back</div>
         </div>
       </div>
     </div>
-    <div class="fc-result-row" id="fc-result-row" style="display:none;" onclick="event.stopPropagation()">
+    <div class="fc-result-row" id="fc-result-row" style="display:none;">
       <button class="btn btn-secondary" onclick="fcRate('again')" style="flex:1;flex-direction:column;gap:3px;height:52px;">
         <span style="font-size:18px;">🔁</span><span style="font-size:10px;">Again</span>
       </button>
@@ -2469,7 +2461,7 @@ const MODULES = [
   <span class="prop">"locationId"</span>: <span class="str">"loc_abc123"</span>,
   <span class="prop">"contact"</span>: {
     <span class="prop">"id"</span>: <span class="str">"ctc_xyz789"</span>,
-    <span class="prop">"email"</span>: <span class="str">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6aaa3a7a286a3bea7abb6aaa3e8a5a9ab">[email&#160;protected]</a>"</span>,
+    <span class="prop">"email"</span>: <span class="str">"lead@example.com"</span>,
     <span class="prop">"tags"</span>: [<span class="str">"lead-new"</span>],
     <span class="prop">"source"</span>: <span class="str">"landing-page"</span>
   }
@@ -2723,7 +2715,7 @@ function renderModulesList() {
         </div>
         <div class="progress-wrap" style="margin-bottom:var(--s2);"><div class="progress-bar" style="width:${pct}%;background:${m.color};box-shadow:none;"></div></div>
         <div style="display:flex;gap:var(--s1);">
-          <button class="btn btn-primary" style="flex:2;" onclick="openModule(${m.id})">
+          <button class="btn btn-primary" style="flex:2;background:${m.color};box-shadow:none;" onclick="openModule(${m.id})">
             ${pct === 0 ? 'Start →' : pct === 100 ? 'Review ✓' : 'Continue →'}
           </button>
           <button class="btn btn-secondary" style="flex:1;" onclick="openFlashcards(${m.id})" title="Quick Review flashcards">
@@ -2816,7 +2808,7 @@ function renderLesson(dir) {
   // ===== 2. SLIDE TRANSITION =====
   const body = document.getElementById('lesson-body');
   const slideIn = dir === 'left' ? 'lesson-slide-in-left' : 'lesson-slide-in-right';
-  body.innerHTML = `<div class="${slideIn}" style="padding:var(--s2) var(--s2) 100px;">` + progHTML + objectiveHTML + lesson.content + quizHTML + actionHTML + `</div>`;
+  body.innerHTML = `<div class="${slideIn}" style="padding:var(--s2) var(--s2) var(--s5);">` + progHTML + objectiveHTML + lesson.content + quizHTML + actionHTML + `</div>`;
   body.scrollTop = 0;
 
   // Nav buttons
@@ -2840,11 +2832,11 @@ function answerQuiz(qid, chosen, correct, fbId) {
     if (i === correct) el.classList.add('correct');
     if (i === chosen && chosen !== correct) el.classList.add('wrong');
   });
-  const passed = Object.entries(state.quizScores).filter(([qid2, v2]) => {
-    const p2 = qid2.split('_');
-    const mod2 = MODULES.find(m => m.id == p2[1]);
-    const lesson2 = mod2?.lessons[parseInt(p2[2])];
-    return lesson2?.quiz && v2 === lesson2.quiz.answer;
+  const passed = Object.values(state.quizScores).filter((v,k) => {
+    const parts = Object.keys(state.quizScores)[k].split('_');
+    const mod2 = MODULES.find(m => m.id == parts[1]);
+    const lesson2 = mod2?.lessons[parts[2]];
+    return v === lesson2?.quiz?.answer;
   }).length;
   if (passed >= 3) unlockAchievement('quiz');
   updateDashboard();
@@ -3055,13 +3047,8 @@ function clearBoard() {
 }
 
 // ==================== CHECKLIST ====================
-function toggleCheck(item, event) {
-  // Prevent double-fire when clicking directly on the checkbox input
+function toggleCheck(item) {
   const cb = item.querySelector('input[type="checkbox"]');
-  if (event && event.target === cb) {
-    item.classList.toggle('done', cb.checked);
-    return;
-  }
   cb.checked = !cb.checked;
   item.classList.toggle('done', cb.checked);
 }
@@ -3169,9 +3156,9 @@ function updateStreak() {
   if (!state.streak) state.streak = { count: 0, lastDay: null, history: [] };
   if (state.streak.lastDay === today) return; // already logged today
   if (state.streak.lastDay === yesterday) {
-    state.streak.count = (state.streak.count || 0) + 1; // extend streak
-  } else {
-    state.streak.count = 1; // streak broken or fresh start
+    state.streak.count++;
+  } else if (state.streak.lastDay !== today) {
+    state.streak.count = 1;
   }
   state.streak.lastDay = today;
   if (!state.streak.history.includes(today)) state.streak.history.push(today);
@@ -3196,9 +3183,7 @@ function updateStreakUI() {
       const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
       const isToday = key === today;
       const active = state.streak.history && state.streak.history.includes(key);
-      // Today's dot is always active if we have a streak (we just logged today in init)
-      const isActive = active || isToday;
-      dots.push(`<div class="streak-dot ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}" title="${key}"></div>`);
+      dots.push(`<div class="streak-dot ${active ? 'active' : ''} ${isToday ? 'today' : ''}" title="${key}"></div>`);
     }
     sd.innerHTML = dots.join('');
   }
@@ -3255,7 +3240,7 @@ let fcRatings = {};
 let fcModuleFilter = null;
 
 function openFlashcards(modId) {
-  fcModuleFilter = (modId && modId !== 'null') ? modId : null;
+  fcModuleFilter = modId || null;
   fcIndex = 0;
   fcFlipped = false;
   fcRatings = {};
@@ -3274,23 +3259,8 @@ function renderFlashcard() {
   if (!cards.length) return;
   const card = cards[fcIndex];
   fcFlipped = false;
-  // Restore fc-card structure if session-complete replaced it
-  const fcCard = document.getElementById('fc-card');
-  if (!document.getElementById('fc-inner')) {
-    fcCard.innerHTML = `<div class="flashcard-inner" id="fc-inner">
-      <div class="flashcard-front">
-        <div class="fc-tag" id="fc-tag"></div>
-        <div class="fc-term" id="fc-term"></div>
-        <div class="fc-hint">tap to reveal</div>
-      </div>
-      <div class="flashcard-back">
-        <div class="fc-tag" style="color:var(--accent3);">Definition</div>
-        <div class="fc-def" id="fc-def"></div>
-        <div class="fc-tap-hint" onclick="event.stopPropagation();unflipCard()">↺ tap to flip back</div>
-      </div>
-    </div>`;
-  }
-  fcCard.classList.remove('flipped');
+  document.getElementById('fc-inner').style.transform = '';
+  document.getElementById('fc-card').classList.remove('flipped');
   document.getElementById('fc-term').textContent = card.term;
   document.getElementById('fc-def').textContent = card.def;
   document.getElementById('fc-tag').textContent = `${card.tag} · Module ${card.mod}`;
@@ -3302,16 +3272,9 @@ function renderFlashcard() {
   document.getElementById('fc-prev').disabled = fcIndex === 0;
 }
 function flipCard() {
-  if (fcFlipped) return; // already flipped, don't toggle back via card click (use tap hint only)
-  fcFlipped = true;
-  document.getElementById('fc-card').classList.add('flipped');
-  document.getElementById('fc-result-row').style.display = 'flex';
-}
-function unflipCard() {
-  if (!fcFlipped) return;
-  fcFlipped = false;
-  document.getElementById('fc-card').classList.remove('flipped');
-  document.getElementById('fc-result-row').style.display = 'none';
+  fcFlipped = !fcFlipped;
+  document.getElementById('fc-card').classList.toggle('flipped', fcFlipped);
+  if (fcFlipped) document.getElementById('fc-result-row').style.display = 'flex';
 }
 function fcRate(rating) {
   const cards = getFCCards();
@@ -3327,7 +3290,7 @@ function fcRate(rating) {
       <div style="font-size:48px;">🧠</div>
       <div style="font-family:var(--font-display);font-size:var(--size-lg);font-weight:700;color:var(--text);">Review Complete!</div>
       <div style="font-size:var(--size-sm);color:var(--text2);text-align:center;">Easy: ${easy} · Good: ${good} · Hard: ${Object.values(fcRatings).filter(r=>r==='hard').length} · Again: ${Object.values(fcRatings).filter(r=>r==='again').length}</div>
-      <button class="btn btn-primary" onclick="openFlashcards(${fcModuleFilter === null ? 'null' : fcModuleFilter})" style="margin-top:var(--s1);">Review Again</button>
+      <button class="btn btn-primary" onclick="openFlashcards(${fcModuleFilter||'null'})" style="margin-top:var(--s1);">Review Again</button>
     </div>`;
     document.getElementById('fc-result-row').style.display = 'none';
   }
@@ -3343,7 +3306,6 @@ function fcPrev() {
 
 // ==================== 3. MODULE ILLUSTRATIONS (SVG) ====================
 function getModuleIllustration(mod) {
-  const uid = mod.id; // each module gets unique gradient id
   const svgs = {
     1: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1a2240"/></linearGradient></defs><rect width="400" height="90" fill="url(#g1)"/><circle cx="320" cy="20" r="40" fill="none" stroke="#4f8ef744" stroke-width="1"/><circle cx="320" cy="20" r="60" fill="none" stroke="#4f8ef722" stroke-width="1"/><rect x="30" y="25" width="50" height="40" rx="6" fill="#4f8ef722" stroke="#4f8ef744" stroke-width="1"/><rect x="95" y="30" width="50" height="35" rx="6" fill="#7c3aed22" stroke="#7c3aed44" stroke-width="1"/><rect x="160" y="20" width="50" height="45" rx="6" fill="#10b98122" stroke="#10b98144" stroke-width="1"/><line x1="80" y1="45" x2="95" y2="47" stroke="#4f8ef755" stroke-width="1.5"/><line x1="145" y1="47" x2="160" y2="42" stroke="#7c3aed55" stroke-width="1.5"/></svg>`,
     2: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1a1a40"/></linearGradient></defs><rect width="400" height="90" fill="url(#g2)"/><rect x="20" y="10" width="100" height="70" rx="8" fill="#7c3aed11" stroke="#7c3aed33" stroke-width="1"/><rect x="28" y="18" width="84" height="8" rx="3" fill="#7c3aed33"/><rect x="28" y="30" width="60" height="4" rx="2" fill="#4a5a80"/><rect x="28" y="38" width="74" height="4" rx="2" fill="#4a5a80"/><rect x="28" y="46" width="50" height="4" rx="2" fill="#4a5a80"/><circle cx="290" cy="45" r="28" fill="none" stroke="#7c3aed33" stroke-width="1"/><circle cx="290" cy="45" r="18" fill="none" stroke="#7c3aed55" stroke-width="1"/><circle cx="290" cy="45" r="5" fill="#7c3aed"/></svg>`,
@@ -3599,7 +3561,7 @@ if ('serviceWorker' in navigator) {
 </script>
 
 <!-- PWA Manifest inline -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const manifest = {
   name: "GHL Academy",
   short_name: "GHL Academy",
@@ -3614,4 +3576,11 @@ const manifest = {
     { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%230e1428'/%3E%3Ctext x='50%25' y='58%25' font-size='300' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-weight='bold' fill='%234f8ef7'%3EG%3C/text%3E%3C/svg%3E", sizes: "512x512", type: "image/svg+xml" }
   ]
 };
-const mblob = new Blob([JSON.str
+const mblob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+const mlink = document.createElement('link');
+mlink.rel = 'manifest';
+mlink.href = URL.createObjectURL(mblob);
+document.head.appendChild(mlink);
+</script>
+</body>
+</html>
