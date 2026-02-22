@@ -1,0 +1,3617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0f1e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GHL Academy">
+<title>GHL Academy — GoHighLevel Mastery</title>
+<style>
+@import url('data:text/css,');
+
+:root {
+  /* Colors */
+  --bg: #080c18;
+  --bg2: #0e1428;
+  --bg3: #141c35;
+  --surface: #1a2240;
+  --surface2: #1f2a4a;
+  --border: #2a3660;
+  --accent: #4f8ef7;
+  --accent2: #7c3aed;
+  --accent3: #10b981;
+  --accent4: #f59e0b;
+  --text: #e8edf8;
+  --text2: #8a9bc4;
+  --text3: #4a5a80;
+  --glow: rgba(79,142,247,0.4);
+  --glow2: rgba(124,58,237,0.3);
+  --danger: #ef4444;
+
+  /* Typography - 2 fonts, 4 sizes */
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Trebuchet MS', 'Lucida Sans', sans-serif;
+  --size-xs: 11px;
+  --size-sm: 13px;
+  --size-md: 16px;
+  --size-lg: 22px;
+  --size-xl: 32px;
+
+  /* Spacing - 8px base */
+  --s1: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 32px;
+  --s5: 40px;
+  --s6: 48px;
+
+  /* Nav */
+  --nav-h: 72px;
+  --icon: 24px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--size-md);
+  line-height: 1.6;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Focus rings - WCAG AAA */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* App shell */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  background: var(--bg);
+  box-shadow: 0 0 80px rgba(0,0,0,0.8);
+}
+
+/* Header */
+#header {
+  flex-shrink: 0;
+  padding: var(--s2) var(--s3);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+}
+#header h1 {
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+#header-sub {
+  font-size: var(--size-xs);
+  color: var(--text2);
+  font-family: var(--font-body);
+  -webkit-text-fill-color: unset;
+}
+.header-badge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: var(--size-xs);
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* Main content area */
+#content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: var(--nav-h);
+  scroll-behavior: smooth;
+}
+
+/* Screens */
+.screen {
+  display: none;
+  padding: var(--s2) var(--s2) var(--s3);
+  min-height: 100%;
+  animation: fadeIn 0.2s ease;
+}
+.screen.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section title */
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--s1);
+}
+.section-sub {
+  font-size: var(--size-sm);
+  color: var(--text2);
+  margin-bottom: var(--s3);
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--s2);
+  margin-bottom: var(--s2);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(79,142,247,0.1);
+}
+
+/* Progress bar */
+.progress-wrap {
+  background: var(--bg3);
+  border-radius: 99px;
+  height: 6px;
+  overflow: hidden;
+  margin: var(--s1) 0;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 99px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 8px var(--glow);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: var(--size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-blue { background: rgba(79,142,247,0.15); color: var(--accent); border: 1px solid rgba(79,142,247,0.3); }
+.badge-green { background: rgba(16,185,129,0.15); color: var(--accent3); border: 1px solid rgba(16,185,129,0.3); }
+.badge-yellow { background: rgba(245,158,11,0.15); color: var(--accent4); border: 1px solid rgba(245,158,11,0.3); }
+.badge-purple { background: rgba(124,58,237,0.15); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); }
+.badge-red { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s1);
+  min-height: 44px;
+  padding: 0 var(--s2);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(79,142,247,0.3);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,142,247,0.5); }
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn-full { width: 100%; }
+.btn-sm { min-height: 36px; padding: 0 var(--s2); font-size: var(--size-xs); }
+
+/* Expert Tip blocks */
+.expert-tip {
+  background: linear-gradient(135deg, rgba(79,142,247,0.08), rgba(124,58,237,0.08));
+  border: 1px solid rgba(79,142,247,0.25);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: var(--s2);
+  margin: var(--s2) 0;
+}
+.expert-tip-label {
+  font-size: var(--size-xs);
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--s1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.expert-tip p { font-size: var(--size-sm); color: var(--text2); }
+
+/* Code blocks */
+.code-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--s2);
+  font-family: 'Courier New', monospace;
+  font-size: var(--size-xs);
+  color: #a5f3fc;
+  overflow-x: auto;
+  margin: var(--s2) 0;
+  position: relative;
+}
+.code-label {
+  font-size: var(--size-xs);
+  color: var(--text3);
+  margin-bottom: var(--s1);
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.code-block .kw { color: #c4b5fd; }
+.code-block .str { color: #86efac; }
+.code-block .cm { color: #4a5a80; }
+.code-block .prop { color: #7dd3fc; }
+
+/* Quiz blocks */
+.quiz-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--s2);
+  margin: var(--s2) 0;
+}
+.quiz-q {
+  font-size: var(--size-sm);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--s2);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s1);
+}
+.quiz-q::before {
+  content: '?';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  background: var(--accent2);
+  color: #fff;
+  border-radius: 50%;
+  font-size: var(--size-xs);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: 44px;
+  padding: var(--s1) var(--s2);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: var(--size-sm);
+  color: var(--text);
+  margin-bottom: var(--s1);
+  transition: all 0.2s;
+  width: 100%;
+  text-align: left;
+}
+.quiz-option:hover { border-color: var(--accent); background: var(--surface2); }
+.quiz-option.correct { border-color: var(--accent3); background: rgba(16,185,129,0.1); color: var(--accent3); }
+.quiz-option.wrong { border-color: var(--danger); background: rgba(239,68,68,0.1); color: #f87171; }
+.quiz-option.disabled { cursor: default; pointer-events: none; }
+.quiz-feedback {
+  display: none;
+  font-size: var(--size-sm);
+  padding: var(--s1) var(--s2);
+  border-radius: 8px;
+  margin-top: var(--s1);
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.ok { background: rgba(16,185,129,0.1); color: var(--accent3); border: 1px solid rgba(16,185,129,0.3); }
+.quiz-feedback.fail { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+
+/* Checklist */
+.checklist-item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--s1) 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  justify-self: center;
+}
+.checklist-item input[type="checkbox"]:checked {
+  background: var(--accent3);
+  border-color: var(--accent3);
+}
+.checklist-item input[type="checkbox"]:checked::after {
+  content: '✓';
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+  text-align: center;
+  line-height: 1;
+}
+.checklist-item.done span { text-decoration: line-through; color: var(--text3); }
+.checklist-item span { font-size: var(--size-sm); color: var(--text2); }
+
+/* Expandable sections */
+.expand-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  cursor: pointer;
+  padding: var(--s1) 0;
+  font-weight: 700;
+  font-size: var(--size-sm);
+  color: var(--text);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+.expand-trigger .arrow {
+  transition: transform 0.25s;
+  color: var(--text2);
+  font-size: 16px;
+}
+.expand-trigger.open .arrow { transform: rotate(180deg); }
+.expand-content {
+  display: none;
+  padding-bottom: var(--s2);
+  font-size: var(--size-sm);
+  color: var(--text2);
+  line-height: 1.7;
+}
+.expand-content.open { display: block; }
+
+/* Diagram blocks (CSS-based) */
+.diagram {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--s2);
+  margin: var(--s2) 0;
+  overflow-x: auto;
+}
+.diagram-title {
+  font-size: var(--size-xs);
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--s2);
+  font-family: var(--font-body);
+}
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  flex-wrap: nowrap;
+  padding: var(--s1) 0;
+}
+.flow-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: var(--size-xs);
+  color: var(--text);
+  white-space: nowrap;
+  text-align: center;
+  min-width: 70px;
+}
+.flow-box.accent { border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,0.08); }
+.flow-box.green { border-color: var(--accent3); color: var(--accent3); background: rgba(16,185,129,0.08); }
+.flow-box.purple { border-color: #a78bfa; color: #a78bfa; background: rgba(124,58,237,0.08); }
+.flow-arrow { color: var(--text3); font-size: 14px; flex-shrink: 0; }
+
+/* Forms */
+.form-group {
+  margin-bottom: var(--s2);
+}
+.form-label {
+  display: block;
+  font-size: var(--size-sm);
+  font-weight: 700;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  min-height: 44px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 var(--s2);
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  color: var(--text);
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.form-textarea {
+  padding: var(--s1) var(--s2);
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.6;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79,142,247,0.15);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text3); }
+.select-wrap {
+  position: relative;
+}
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  right: var(--s2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--text2);
+  pointer-events: none;
+}
+.form-select { padding-right: 44px; cursor: pointer; }
+.form-select option { background: var(--bg3); color: var(--text); }
+
+/* Achievement badges */
+.achievement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--s2);
+  text-align: center;
+}
+.achievement-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 2px solid;
+}
+.achievement-icon.earned {
+  border-color: var(--accent4);
+  background: rgba(245,158,11,0.1);
+  box-shadow: 0 0 20px rgba(245,158,11,0.3);
+}
+.achievement-icon.locked {
+  border-color: var(--border);
+  background: var(--bg3);
+  filter: grayscale(1);
+  opacity: 0.4;
+}
+.achievement-name { font-size: var(--size-xs); font-weight: 700; color: var(--text); }
+.achievement-desc { font-size: var(--size-xs); color: var(--text3); }
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s1);
+  margin-bottom: var(--s3);
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: var(--s2) var(--s1);
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: var(--size-xl);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+.stat-label { font-size: var(--size-xs); color: var(--text3); margin-top: 2px; }
+
+/* Module list */
+.module-item {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: var(--s2);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 72px;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-body);
+  color: var(--text);
+}
+.module-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(79,142,247,0.08);
+  transform: translateX(2px);
+}
+.module-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.module-title { font-size: var(--size-sm); font-weight: 700; margin-bottom: 2px; }
+.module-sub { font-size: var(--size-xs); color: var(--text3); }
+.module-chevron { color: var(--text3); font-size: 18px; }
+
+/* Lesson view */
+#lesson-view {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  z-index: 100;
+  flex-direction: column;
+  overflow: hidden;
+}
+#lesson-view.active { display: flex; }
+#lesson-header {
+  flex-shrink: 0;
+  padding: var(--s2) var(--s3);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  min-height: 56px;
+}
+#lesson-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  min-height: 36px;
+  min-width: 36px;
+}
+#lesson-back:hover { border-color: var(--accent); color: var(--accent); }
+#lesson-title {
+  flex: 1;
+  font-size: var(--size-sm);
+  font-weight: 700;
+  color: var(--text);
+}
+#lesson-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  scroll-behavior: smooth;
+}
+#lesson-nav {
+  flex-shrink: 0;
+  padding: var(--s2);
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: var(--s1);
+}
+
+/* Notes */
+.note-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: var(--s2);
+  margin-bottom: var(--s2);
+}
+.note-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s1);
+}
+.note-module { font-size: var(--size-xs); color: var(--accent); font-weight: 700; }
+.note-date { font-size: var(--size-xs); color: var(--text3); }
+.note-text { font-size: var(--size-sm); color: var(--text2); line-height: 1.6; }
+.note-del {
+  background: none;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  min-height: 0;
+  transition: color 0.2s;
+}
+.note-del:hover { color: var(--danger); }
+
+/* Bottom nav */
+#nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: var(--nav-h);
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: stretch;
+  z-index: 50;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text3);
+  font-family: var(--font-body);
+  font-size: var(--size-xs);
+  font-weight: 700;
+  transition: color 0.2s;
+  padding: 0 var(--s1);
+  position: relative;
+  min-height: 44px;
+  border-top: 2px solid transparent;
+}
+.nav-btn svg {
+  width: var(--icon);
+  height: var(--icon);
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.2s;
+}
+.nav-btn.active {
+  color: var(--accent);
+  border-top-color: var(--accent);
+}
+.nav-btn.active .nav-icon-wrap {
+  background: rgba(79,142,247,0.12);
+  box-shadow: 0 0 12px rgba(79,142,247,0.2);
+}
+.nav-icon-wrap {
+  width: 36px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: var(--s2) 0;
+}
+
+/* Strategy diagram vertical */
+.strategy-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+.strategy-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+}
+.strategy-label {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: var(--size-xs);
+  color: var(--text);
+}
+.strategy-icon {
+  width: 32px;
+  text-align: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* Plan board */
+.plan-board {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--s2);
+}
+.plan-board-title {
+  font-size: var(--size-sm);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--s2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.plan-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s1);
+}
+.plan-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--s1);
+  min-height: 120px;
+}
+.plan-col-head {
+  font-size: var(--size-xs);
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--s1);
+  padding-bottom: var(--s1);
+  border-bottom: 1px solid var(--border);
+}
+.plan-card {
+  background: var(--bg2);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: var(--size-xs);
+  color: var(--text2);
+  margin-bottom: 6px;
+  cursor: pointer;
+  border-left: 2px solid var(--accent);
+  transition: all 0.2s;
+}
+.plan-card:hover { background: var(--bg3); }
+.plan-card.purple { border-left-color: #a78bfa; }
+.plan-card.green { border-left-color: var(--accent3); }
+
+/* Loading splash */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s;
+}
+#splash.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.splash-logo {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--s2);
+  letter-spacing: -2px;
+}
+.splash-sub {
+  font-size: var(--size-sm);
+  color: var(--text2);
+  margin-bottom: var(--s5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.splash-loader {
+  width: 48px;
+  height: 3px;
+  background: var(--bg3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.splash-loader-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 99px;
+  animation: load 1.2s ease forwards;
+}
+@keyframes load {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ===== JOURNAL ===== */
+.journal-entry {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: var(--s2);
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--border);
+}
+.journal-date-col {
+  text-align: center;
+}
+.journal-day {
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.journal-month {
+  font-size: var(--size-xs);
+  color: var(--text3);
+  text-transform: uppercase;
+}
+.journal-text { font-size: var(--size-sm); color: var(--text2); line-height: 1.6; }
+.journal-tag { font-size: var(--size-xs); color: var(--accent4); font-weight: 700; margin-bottom: 4px; }
+
+/* Toast */
+#toast {
+  position: fixed;
+  bottom: calc(var(--nav-h) + var(--s2));
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--s1) var(--s2);
+  font-size: var(--size-sm);
+  color: var(--text);
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 200;
+  white-space: nowrap;
+  pointer-events: none;
+  max-width: calc(480px - 32px);
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===== 1. BUTTON PRESS MICRO-ANIMATION ===== */
+.btn { transform: scale(1); }
+.btn:active { transform: scale(0.96); transition: transform 0.08s ease; }
+.module-item:active { transform: scale(0.985); transition: transform 0.08s ease; }
+.nav-btn:active .nav-icon-wrap { transform: scale(0.88); }
+.quiz-option:active { transform: scale(0.98); }
+.checklist-item:active { opacity: 0.7; }
+
+/* ===== 2. LESSON SLIDE TRANSITION ===== */
+#lesson-body {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.lesson-slide-in-right {
+  animation: slideInRight 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.lesson-slide-in-left {
+  animation: slideInLeft 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.lesson-slide-out-left {
+  animation: slideOutLeft 0.2s ease forwards;
+}
+.lesson-slide-out-right {
+  animation: slideOutRight 0.2s ease forwards;
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(48px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-48px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideOutLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-48px); }
+}
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(48px); }
+}
+
+/* ===== 3. LESSON COMPLETE CELEBRATION ===== */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9000;
+  display: none;
+}
+#confetti-canvas.active { display: block; }
+
+/* Module complete banner */
+#module-complete-banner {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  background: var(--bg2);
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  padding: 32px 40px;
+  text-align: center;
+  z-index: 9001;
+  box-shadow: 0 0 60px rgba(79,142,247,0.4), 0 24px 60px rgba(0,0,0,0.6);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 320px;
+  width: 90%;
+}
+#module-complete-banner.show {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.complete-emoji {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 12px;
+  animation: bounceEmoji 0.6s ease 0.3s both;
+}
+@keyframes bounceEmoji {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.complete-title {
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.complete-sub {
+  font-size: var(--size-sm);
+  color: var(--text2);
+  margin-bottom: 20px;
+}
+#complete-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 8999;
+  backdrop-filter: blur(4px);
+}
+#complete-overlay.show { display: block; }
+
+/* ===== 4. ACHIEVEMENT UNLOCK ANIMATION ===== */
+#achievement-popup {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: linear-gradient(135deg, #1a2240, #1f2a4a);
+  border: 1px solid var(--accent4);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 8000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 40px rgba(245,158,11,0.35), 0 8px 32px rgba(0,0,0,0.5);
+  max-width: 360px;
+  width: calc(100% - 48px);
+}
+#achievement-popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.ach-pop-icon {
+  font-size: 36px;
+  line-height: 1;
+  animation: achPop 0.5s ease;
+}
+@keyframes achPop {
+  0%   { transform: scale(0) rotate(-20deg); }
+  60%  { transform: scale(1.3) rotate(5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.ach-pop-label {
+  font-size: var(--size-xs);
+  color: var(--accent4);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+.ach-pop-name {
+  font-size: var(--size-md);
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Achievement icon sizing upgrade */
+.achievement-icon {
+  width: 72px !important;
+  height: 72px !important;
+  font-size: 32px !important;
+  border-width: 2px !important;
+}
+.achievement-icon.pop-anim {
+  animation: achIconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes achIconPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+/* ===== 5. PRE-LESSON OBJECTIVE CARD ===== */
+.objective-card {
+  background: linear-gradient(135deg, rgba(79,142,247,0.06), rgba(124,58,237,0.06));
+  border: 1px solid rgba(79,142,247,0.2);
+  border-radius: 12px;
+  padding: var(--s2);
+  margin-bottom: var(--s3);
+  position: relative;
+  overflow: hidden;
+}
+.objective-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+.objective-label {
+  font-size: var(--size-xs);
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.objective-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.objective-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+.objective-item::before {
+  content: '→';
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Font size upgrade for lesson body text */
+#lesson-body p,
+#lesson-body .expand-content,
+#lesson-body .strategy-label,
+#lesson-body .note-text {
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+}
+
+/* Stronger hover on cards */
+.card:hover {
+  box-shadow: 0 0 28px rgba(79,142,247,0.14) !important;
+  border-color: rgba(79,142,247,0.5) !important;
+}
+.module-item:hover {
+  box-shadow: 0 0 28px rgba(79,142,247,0.16) !important;
+  border-color: rgba(79,142,247,0.6) !important;
+  transform: translateX(4px) !important;
+}
+
+/* Checklist check animation */
+@keyframes checkPop {
+  0%   { transform: scale(0.5); }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.checklist-item input[type="checkbox"]:checked {
+  animation: checkPop 0.3s ease forwards;
+}
+
+/* Swipe hint on first open */
+.swipe-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: var(--size-xs);
+  color: var(--text3);
+  padding: 8px 0 0;
+  opacity: 0;
+  animation: fadeHint 2s ease 1.5s forwards;
+}
+@keyframes fadeHint {
+  0%   { opacity: 0; }
+  30%  { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ===== STREAK TRACKER ===== */
+.streak-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(239,68,68,0.06));
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 14px;
+  padding: var(--s2);
+  margin-bottom: var(--s2);
+  position: relative;
+  overflow: hidden;
+}
+.streak-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent4), #ef4444);
+}
+.streak-flame {
+  font-size: 36px;
+  line-height: 1;
+  animation: flicker 1.8s ease-in-out infinite alternate;
+  flex-shrink: 0;
+}
+@keyframes flicker {
+  0%   { transform: scale(1) rotate(-3deg); }
+  50%  { transform: scale(1.08) rotate(2deg); }
+  100% { transform: scale(0.96) rotate(-1deg); }
+}
+.streak-count {
+  font-family: var(--font-display);
+  font-size: var(--size-xl);
+  font-weight: 700;
+  color: var(--accent4);
+  line-height: 1;
+}
+.streak-label { font-size: var(--size-xs); color: var(--text2); margin-top: 2px; }
+.streak-days {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: var(--s1);
+}
+.streak-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg3);
+  transition: all 0.3s;
+}
+.streak-dot.active {
+  background: var(--accent4);
+  border-color: var(--accent4);
+  box-shadow: 0 0 6px rgba(245,158,11,0.5);
+}
+.streak-dot.today {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(79,142,247,0.6);
+  animation: pulseDot 1.5s ease infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* ===== FLASHCARD REVIEW OVERLAY ===== */
+#flashcard-view {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 110;
+  flex-direction: column;
+  overflow: hidden;
+}
+#flashcard-view.active { display: flex; }
+#fc-header {
+  flex-shrink: 0;
+  padding: var(--s2) var(--s3);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  min-height: 56px;
+}
+#fc-back {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  min-height: 36px; min-width: 36px;
+  flex-shrink: 0;
+}
+#fc-back:hover { border-color: var(--accent); color: var(--accent); }
+#fc-title { flex: 1; font-size: var(--size-sm); font-weight: 700; color: var(--text); }
+#fc-counter { font-size: var(--size-xs); color: var(--text3); }
+#fc-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s3) var(--s2);
+  overflow: hidden;
+}
+.flashcard {
+  width: 100%;
+  max-width: 400px;
+  perspective: 1000px;
+  cursor: pointer;
+  user-select: none;
+}
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  min-height: 240px;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 20px;
+}
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: var(--s3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flashcard-front {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.flashcard-back {
+  background: linear-gradient(135deg, rgba(79,142,247,0.12), rgba(124,58,237,0.1));
+  border: 1px solid rgba(79,142,247,0.3);
+  transform: rotateY(180deg);
+}
+.fc-tag {
+  font-size: var(--size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--s2);
+  color: var(--accent);
+}
+.fc-term {
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.fc-hint {
+  font-size: var(--size-xs);
+  color: var(--text3);
+  margin-top: var(--s2);
+}
+.fc-def {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.fc-tap-hint {
+  font-size: var(--size-xs);
+  color: var(--text3);
+  margin-top: var(--s2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#fc-nav {
+  flex-shrink: 0;
+  display: flex;
+  gap: var(--s1);
+  padding: var(--s2);
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+#fc-progress-wrap {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: var(--s2);
+}
+.fc-result-row {
+  display: flex;
+  gap: var(--s1);
+  margin-top: var(--s2);
+  width: 100%;
+  max-width: 400px;
+  justify-content: center;
+}
+
+/* ===== MODULE ILLUSTRATION HEADERS ===== */
+.module-illustration {
+  width: 100%;
+  height: 90px;
+  border-radius: 12px 12px 0 0;
+  margin: -var(--s2) -var(--s2) var(--s2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.module-illu-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.module-illu-label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: var(--size-xl);
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  letter-spacing: -1px;
+}
+
+/* ===== GLOSSARY SCREEN ===== */
+#screen-glossary { padding-bottom: calc(var(--nav-h) + var(--s2)); }
+.glossary-search-wrap {
+  position: relative;
+  margin-bottom: var(--s2);
+}
+.glossary-search-wrap .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  font-size: 16px;
+  pointer-events: none;
+}
+#glossary-search {
+  width: 100%;
+  min-height: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 var(--s2) 0 44px;
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+#glossary-search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79,142,247,0.15);
+}
+#glossary-search::placeholder { color: var(--text3); }
+.glossary-letter {
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  color: var(--accent);
+  margin: var(--s2) 0 var(--s1);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.glossary-item {
+  padding: var(--s2) 0;
+  border-bottom: 1px solid rgba(42,54,96,0.5);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.glossary-item:last-child { border-bottom: none; }
+.glossary-term {
+  font-size: var(--size-sm);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.glossary-def {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.65;
+  display: none;
+}
+.glossary-def.open { display: block; }
+.glossary-cat {
+  font-size: var(--size-xs);
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-weight: 700;
+}
+.glossary-no-results {
+  text-align: center;
+  padding: var(--s5) var(--s2);
+  color: var(--text3);
+  font-size: var(--size-sm);
+}
+
+/* ===== SETTINGS UPGRADE — Streak in settings ===== */
+.settings-streak-card {
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(239,68,68,0.04));
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 14px;
+  padding: var(--s2);
+  margin-bottom: var(--s2);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+.settings-context-card {
+  background: linear-gradient(135deg, rgba(79,142,247,0.07), rgba(124,58,237,0.05));
+  border: 1px solid rgba(79,142,247,0.2);
+  border-radius: 12px;
+  padding: var(--s2);
+  margin-bottom: var(--s2);
+}
+.context-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: var(--size-sm);
+  border-bottom: 1px solid rgba(42,54,96,0.4);
+}
+.context-row:last-child { border-bottom: none; }
+.context-label { color: var(--text3); }
+.context-val { color: var(--text); font-weight: 700; }
+
+/* nav 6-slot shrink */
+#nav .nav-btn { font-size: 10px; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  #app { max-width: 100%; }
+  #nav { max-width: 100%; }
+  #toast { max-width: calc(100vw - 32px); }
+}
+</style>
+</head>
+<body>
+
+<!-- Splash -->
+<div id="splash">
+  <div class="splash-logo">GHL</div>
+  <div class="splash-sub">Academy</div>
+  <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+</div>
+
+<!-- Toast -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Module Complete Banner -->
+<div id="complete-overlay" onclick="dismissComplete()"></div>
+<div id="module-complete-banner" role="dialog" aria-modal="true" aria-label="Module complete">
+  <span class="complete-emoji" id="complete-emoji">🎉</span>
+  <div class="complete-title" id="complete-title">Module Complete!</div>
+  <div class="complete-sub" id="complete-sub">You finished this module.</div>
+  <button class="btn btn-primary btn-full" onclick="dismissComplete()" style="margin-bottom:8px;">Continue Learning →</button>
+  <button class="btn btn-secondary btn-full" onclick="dismissComplete();navigate('modules')">Back to Modules</button>
+</div>
+
+<!-- Achievement Popup -->
+<div id="achievement-popup" role="status" aria-live="polite">
+  <div class="ach-pop-icon" id="ach-pop-icon">🏆</div>
+  <div>
+    <div class="ach-pop-label">Achievement Unlocked</div>
+    <div class="ach-pop-name" id="ach-pop-name">First Step</div>
+  </div>
+</div>
+
+<!-- App -->
+<div id="app">
+  <!-- Header -->
+  <header id="header" role="banner">
+    <div>
+      <h1>GHL Academy</h1>
+      <div id="header-sub" style="font-size:var(--size-xs);color:var(--text2);-webkit-text-fill-color:unset;">GoHighLevel Mastery</div>
+    </div>
+    <div class="header-badge" id="header-progress-badge">0% Complete</div>
+  </header>
+
+  <!-- Content -->
+  <main id="content" role="main">
+
+    <!-- ===== DASHBOARD ===== -->
+    <section class="screen active" id="screen-dashboard" aria-label="Dashboard">
+      <div style="margin-bottom:var(--s2);">
+        <div class="section-title" id="dash-greeting">Welcome Back</div>
+        <div class="section-sub">Track your progress to GHL mastery.</div>
+      </div>
+
+      <!-- STREAK BAR -->
+      <div class="streak-bar" id="streak-bar">
+        <div class="streak-flame">🔥</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:baseline;gap:6px;">
+            <div class="streak-count" id="streak-count">0</div>
+            <div style="font-size:var(--size-sm);color:var(--text2);font-weight:700;">day streak</div>
+          </div>
+          <div class="streak-label" id="streak-label">Open the app daily to build your streak</div>
+          <div class="streak-days" id="streak-dots"></div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-lessons">0</div>
+          <div class="stat-label">Lessons Done</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-modules">0</div>
+          <div class="stat-label">Modules Started</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-score">0</div>
+          <div class="stat-label">Quiz Score</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:var(--s2);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s1);">
+          <span style="font-size:var(--size-sm);font-weight:700;">Overall Progress</span>
+          <span id="dash-pct" style="font-size:var(--size-xs);color:var(--accent);">0%</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="dash-progress" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Continue learning -->
+      <div class="card" style="background:linear-gradient(135deg,rgba(79,142,247,0.1),rgba(124,58,237,0.08));border-color:rgba(79,142,247,0.3);">
+        <div style="font-size:var(--size-xs);color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:var(--s1);">▶ Continue Learning</div>
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s1);" id="continue-module">Module 1: GHL Ecosystem</div>
+        <button class="btn btn-primary btn-sm" onclick="goToModules()">Go to Modules →</button>
+      </div>
+
+      <div style="margin-top:var(--s3);margin-bottom:var(--s1);">
+        <div class="section-title" style="font-size:var(--size-md);">Daily Checklist</div>
+      </div>
+      <div class="card">
+        <div class="checklist-item" onclick="toggleCheck(this,event)">
+          <input type="checkbox" id="c1" aria-label="Review yesterday notes">
+          <span>Review yesterday's notes</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this,event)">
+          <input type="checkbox" id="c2" aria-label="Complete one lesson">
+          <span>Complete one lesson</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this,event)">
+          <input type="checkbox" id="c3" aria-label="Build or test a funnel step">
+          <span>Build or test a funnel step</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this,event)">
+          <input type="checkbox" id="c4" aria-label="Write a reflection note">
+          <span>Write a reflection note</span>
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this,event)">
+          <input type="checkbox" id="c5" aria-label="Study one automation trigger">
+          <span>Study one automation trigger</span>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--s3);margin-bottom:var(--s1);">
+        <div class="section-title" style="font-size:var(--size-md);">Quick Path</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s1);">
+        <button class="btn btn-secondary" style="flex-direction:column;gap:4px;height:64px;" onclick="navigate('modules')">
+          <span style="font-size:20px;">📚</span><span>Modules</span>
+        </button>
+        <button class="btn btn-secondary" style="flex-direction:column;gap:4px;height:64px;" onclick="navigate('lab')">
+          <span style="font-size:20px;">🛠</span><span>Lab</span>
+        </button>
+        <button class="btn btn-secondary" style="flex-direction:column;gap:4px;height:64px;" onclick="navigate('notes')">
+          <span style="font-size:20px;">📝</span><span>Notes</span>
+        </button>
+        <button class="btn btn-secondary" style="flex-direction:column;gap:4px;height:64px;" onclick="navigate('progress')">
+          <span style="font-size:20px;">🏆</span><span>Progress</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== MODULES ===== -->
+    <section class="screen" id="screen-modules" aria-label="Learning Modules">
+      <div class="section-title">Curriculum</div>
+      <div class="section-sub">13 modules. Each module builds on the last.</div>
+      <div id="modules-list"></div>
+    </section>
+
+    <!-- ===== LAB ===== -->
+    <section class="screen" id="screen-lab" aria-label="Practice Lab">
+      <div class="section-title">Practice Lab</div>
+      <div class="section-sub">Hands-on exercises and interactive tools.</div>
+      <div class="card" style="background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(79,142,247,0.06));border-color:rgba(124,58,237,0.25);margin-bottom:var(--s2);display:flex;align-items:center;gap:var(--s2);">
+        <div style="font-size:32px;">🃏</div>
+        <div style="flex:1;">
+          <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:3px;">Quick Review — All Modules</div>
+          <div style="font-size:var(--size-xs);color:var(--text3);">32 flashcards covering every module</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openFlashcards(null)">Start →</button>
+      </div>
+
+      <!-- Funnel Builder Board -->
+      <div class="plan-board" style="margin-bottom:var(--s2);">
+        <div class="plan-board-title">
+          <span>Funnel Planning Board</span>
+          <button class="btn btn-sm btn-secondary" onclick="clearBoard()">Reset</button>
+        </div>
+        <div class="plan-columns">
+          <div class="plan-col">
+            <div class="plan-col-head">⚡ Ideas</div>
+            <div id="col-ideas">
+              <div class="plan-card" draggable="true">Lead Magnet</div>
+              <div class="plan-card purple" draggable="true">Opt-In Page</div>
+              <div class="plan-card green" draggable="true">Thank You</div>
+            </div>
+          </div>
+          <div class="plan-col">
+            <div class="plan-col-head">🔨 Building</div>
+            <div id="col-building">
+              <div class="plan-card" draggable="true">Sales Page</div>
+            </div>
+          </div>
+          <div class="plan-col">
+            <div class="plan-col-head">✅ Done</div>
+            <div id="col-done">
+              <div class="plan-card green" draggable="true">Offer Draft</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Brief Exercise -->
+      <div class="card" style="margin-bottom:var(--s2);">
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s2);">🧾 Simulated Client Brief</div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:var(--s2);margin-bottom:var(--s2);">
+          <div style="font-size:var(--size-xs);color:var(--text3);margin-bottom:var(--s1);">CLIENT BRIEF</div>
+          <div style="font-size:var(--size-sm);color:var(--text2);line-height:1.7;">
+            <strong style="color:var(--text);">Client:</strong> Dubai-based fitness coach<br>
+            <strong style="color:var(--text);">Goal:</strong> Generate 50 leads/month for 1:1 coaching<br>
+            <strong style="color:var(--text);">Budget:</strong> $500 setup + $200 retainer<br>
+            <strong style="color:var(--text);">Timeline:</strong> 2 weeks to launch<br>
+            <strong style="color:var(--text);">Assets:</strong> Logo, headshot, testimonials<br>
+            <strong style="color:var(--text);">Tech level:</strong> Non-technical
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="brief-plan">Your Funnel Plan Response</label>
+          <textarea class="form-textarea" id="brief-plan" placeholder="Describe your funnel architecture, automation plan, and delivery timeline..." rows="5"></textarea>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="saveBriefPlan()">Save Response</button>
+      </div>
+
+      <!-- Automation challenge -->
+      <div class="card">
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s1);">⚙️ Automation Design Challenge</div>
+        <div style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Design a lead nurture sequence for the client above. Map each trigger and action.</div>
+        <div class="diagram">
+          <div class="diagram-title">Workflow Template</div>
+          <div class="flow-row">
+            <div class="flow-box accent">Form Submit</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">Tag Added</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box purple">SMS + Email</div>
+          </div>
+          <div class="flow-row" style="padding-left:80px;">
+            <div class="flow-arrow">↓</div>
+          </div>
+          <div class="flow-row">
+            <div class="flow-box">Wait 1 Day</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box purple">Follow-Up</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box green">Book Call</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:var(--s2);">
+          <label class="form-label" for="auto-design">Your Automation Design</label>
+          <textarea class="form-textarea" id="auto-design" placeholder="Step 1: Trigger = ..&#10;Step 2: Action = ..&#10;Step 3: Delay = .." rows="4"></textarea>
+        </div>
+        <button class="btn btn-secondary btn-full" onclick="saveAutoDesign()">Save Design</button>
+      </div>
+    </section>
+
+    <!-- ===== NOTES ===== -->
+    <section class="screen" id="screen-notes" aria-label="Notes">
+      <div class="section-title">Notes</div>
+      <div class="section-sub">Your saved study notes and journal.</div>
+
+      <div class="card" style="margin-bottom:var(--s2);">
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s2);">Add Note</div>
+        <div class="form-group">
+          <label class="form-label" for="note-module-sel">Module</label>
+          <div class="select-wrap">
+            <select class="form-select" id="note-module-sel">
+              <option value="General">General</option>
+              <option value="Module 1">Module 1: GHL Ecosystem</option>
+              <option value="Module 2">Module 2: Interface & Tools</option>
+              <option value="Module 3">Module 3: Funnels</option>
+              <option value="Module 4">Module 4: Conversion Design</option>
+              <option value="Module 5">Module 5: HTML/CSS</option>
+              <option value="Module 6">Module 6: Automation</option>
+              <option value="Module 7">Module 7: Integrations</option>
+              <option value="Module 8">Module 8: CRM</option>
+              <option value="Module 9">Module 9: Calendar</option>
+              <option value="Module 10">Module 10: Reporting</option>
+              <option value="Module 11">Module 11: Strategy</option>
+              <option value="Module 12">Module 12: Capstone</option>
+              <option value="Module 13">Module 13: Client Delivery</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="note-text">Note</label>
+          <textarea class="form-textarea" id="note-text" placeholder="Type your note..." rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="addNote()">Save Note</button>
+      </div>
+
+      <div id="notes-list">
+        <div style="text-align:center;padding:var(--s4);color:var(--text3);font-size:var(--size-sm);">No notes yet. Add your first note above.</div>
+      </div>
+    </section>
+
+    <!-- ===== PROGRESS ===== -->
+    <section class="screen" id="screen-progress" aria-label="Progress & Achievements">
+      <div class="section-title">Progress</div>
+      <div class="section-sub">Your learning journey and achievements.</div>
+
+      <div class="card" style="margin-bottom:var(--s2);">
+        <div style="display:flex;justify-content:space-between;margin-bottom:var(--s1);">
+          <span style="font-weight:700;font-size:var(--size-sm);">Curriculum Progress</span>
+          <span id="prog-pct" style="color:var(--accent);font-size:var(--size-sm);font-weight:700;">0%</span>
+        </div>
+        <div class="progress-wrap" style="height:10px;">
+          <div class="progress-bar" id="prog-bar" style="width:0%"></div>
+        </div>
+        <div style="font-size:var(--size-xs);color:var(--text3);margin-top:var(--s1);" id="prog-label">0 of 13 modules started</div>
+      </div>
+
+      <!-- Module progress list -->
+      <div class="card" style="margin-bottom:var(--s3);">
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s2);">Module Completion</div>
+        <div id="module-progress-list"></div>
+      </div>
+
+      <!-- Achievements -->
+      <div class="section-title" style="font-size:var(--size-md);margin-bottom:var(--s2);">Achievements</div>
+      <div class="card">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-first" style="border-color:var(--border);background:var(--bg3);font-size:22px;">🚀</div>
+            <div class="achievement-name">First Step</div>
+            <div class="achievement-desc">Open first module</div>
+          </div>
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-quiz" style="border-color:var(--border);background:var(--bg3);font-size:22px;">🧠</div>
+            <div class="achievement-name">Quiz Ace</div>
+            <div class="achievement-desc">Pass 3 quizzes</div>
+          </div>
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-notes" style="border-color:var(--border);background:var(--bg3);font-size:22px;">📝</div>
+            <div class="achievement-name">Note Taker</div>
+            <div class="achievement-desc">Save 5 notes</div>
+          </div>
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-half" style="border-color:var(--border);background:var(--bg3);font-size:22px;">⚡</div>
+            <div class="achievement-name">Halfway</div>
+            <div class="achievement-desc">50% complete</div>
+          </div>
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-funnel" style="border-color:var(--border);background:var(--bg3);font-size:22px;">🏗️</div>
+            <div class="achievement-name">Funnel Pro</div>
+            <div class="achievement-desc">Complete Module 3</div>
+          </div>
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-auto" style="border-color:var(--border);background:var(--bg3);font-size:22px;">⚙️</div>
+            <div class="achievement-name">Automator</div>
+            <div class="achievement-desc">Complete Module 6</div>
+          </div>
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-brief" style="border-color:var(--border);background:var(--bg3);font-size:22px;">🧾</div>
+            <div class="achievement-name">Client Ready</div>
+            <div class="achievement-desc">Save a brief plan</div>
+          </div>
+          <div class="achievement">
+            <div class="achievement-icon" id="ach-complete" style="border-color:var(--border);background:var(--bg3);font-size:22px;">🎓</div>
+            <div class="achievement-name">GHL Expert</div>
+            <div class="achievement-desc">Finish all modules</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--s3);">
+        <button class="btn btn-secondary btn-full" onclick="resetProgress()" style="color:var(--danger);border-color:var(--danger);">Reset All Progress</button>
+      </div>
+    </section>
+
+    <!-- ===== SETTINGS ===== -->
+    <section class="screen" id="screen-settings" aria-label="Settings">
+      <div class="section-title">Settings</div>
+      <div class="section-sub">Your learning profile and preferences.</div>
+
+      <!-- Streak card in settings -->
+      <div class="settings-streak-card">
+        <div style="font-size:40px;animation:flicker 1.8s ease-in-out infinite alternate;">🔥</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:baseline;gap:6px;">
+            <div style="font-family:var(--font-display);font-size:var(--size-xl);font-weight:700;color:var(--accent4);" id="set-streak-count">0</div>
+            <div style="font-size:var(--size-sm);color:var(--text2);font-weight:700;">day streak</div>
+          </div>
+          <div style="font-size:var(--size-xs);color:var(--text3);" id="set-streak-msg">Start your streak — open the app daily</div>
+        </div>
+      </div>
+
+      <!-- Context card (live stats) -->
+      <div class="settings-context-card" id="set-context-card">
+        <div style="font-size:var(--size-xs);color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:var(--s1);">Your Learning Context</div>
+        <div class="context-row"><span class="context-label">Name</span><span class="context-val" id="ctx-name">—</span></div>
+        <div class="context-row"><span class="context-label">Goal</span><span class="context-val" id="ctx-goal">—</span></div>
+        <div class="context-row"><span class="context-label">Daily Target</span><span class="context-val" id="ctx-pace">—</span></div>
+        <div class="context-row"><span class="context-label">Lessons Done</span><span class="context-val" id="ctx-lessons">0</span></div>
+        <div class="context-row"><span class="context-label">Quizzes Passed</span><span class="context-val" id="ctx-quizzes">0</span></div>
+        <div class="context-row"><span class="context-label">Notes Saved</span><span class="context-val" id="ctx-notes">0</span></div>
+      </div>
+
+      <div class="card" style="margin-bottom:var(--s2);">
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s2);">Learning Profile</div>
+        <div class="form-group">
+          <label class="form-label" for="set-name">Your Name</label>
+          <input type="text" class="form-input" id="set-name" placeholder="e.g. Ahmed Al-Rashid">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="set-goal">Primary Goal</label>
+          <div class="select-wrap">
+            <select class="form-select" id="set-goal">
+              <option value="">Select goal...</option>
+              <option value="Freelancer / Agency Owner">Freelancer / Agency Owner</option>
+              <option value="GHL Platform Employee">GHL Platform Employee</option>
+              <option value="In-house Marketer">In-house Marketer</option>
+              <option value="SaaS Reseller">SaaS Reseller</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="set-pace">Daily Study Time</label>
+          <div class="select-wrap">
+            <select class="form-select" id="set-pace">
+              <option value="30 min">30 minutes</option>
+              <option value="1 hour" selected>1 hour</option>
+              <option value="1.5 hours">1.5 hours</option>
+              <option value="2+ hours">2+ hours</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="saveSettings()">Save Profile</button>
+      </div>
+
+      <div class="card" style="margin-bottom:var(--s2);">
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s2);">Install App</div>
+        <div style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Install GHL Academy as a PWA for offline access and a native app experience.</div>
+        <button class="btn btn-secondary btn-full" id="install-btn" onclick="installPWA()">Install on This Device</button>
+      </div>
+
+      <div class="card" style="margin-bottom:var(--s2);">
+        <div style="font-size:var(--size-sm);font-weight:700;margin-bottom:var(--s1);">About</div>
+        <div style="font-size:var(--size-sm);color:var(--text2);line-height:1.7;">
+          GHL Academy v2.0<br>
+          A structured learning app for GoHighLevel mastery.<br>
+          <span style="color:var(--text3);">All data stored locally. No account required.</span>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-secondary btn-full" onclick="resetProgress()" style="color:var(--danger);border-color:var(--danger);">Reset All Progress</button>
+      </div>
+    </section>
+
+    <!-- ===== GLOSSARY ===== -->
+    <section class="screen" id="screen-glossary" aria-label="GHL Glossary">
+      <div class="section-title">GHL Glossary</div>
+      <div class="section-sub">47 essential GoHighLevel terms. Tap any to expand.</div>
+      <div class="glossary-search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="glossary-search" placeholder="Search terms…" oninput="filterGlossary(this.value)" autocomplete="off" spellcheck="false" aria-label="Search glossary">
+      </div>
+      <div id="glossary-list"></div>
+    </section>
+
+  </main><!-- end content -->
+
+  <!-- Bottom nav -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <button class="nav-btn active" id="nav-dashboard" onclick="navigate('dashboard')" aria-current="page" aria-label="Dashboard">
+      <div class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </div>
+      Home
+    </button>
+    <button class="nav-btn" id="nav-modules" onclick="navigate('modules')" aria-label="Modules">
+      <div class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      Learn
+    </button>
+    <button class="nav-btn" id="nav-lab" onclick="navigate('lab')" aria-label="Practice Lab">
+      <div class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0-4 8h14l-4-8M9 14h6"/></svg>
+      </div>
+      Lab
+    </button>
+    <button class="nav-btn" id="nav-glossary" onclick="navigate('glossary')" aria-label="Glossary">
+      <div class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      Glossary
+    </button>
+    <button class="nav-btn" id="nav-notes" onclick="navigate('notes')" aria-label="Notes">
+      <div class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      Notes
+    </button>
+    <button class="nav-btn" id="nav-progress" onclick="navigate('progress')" aria-label="Progress">
+      <div class="nav-icon-wrap">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      Progress
+    </button>
+  </nav>
+</div><!-- end app -->
+
+<!-- Lesson View Overlay -->
+<div id="lesson-view" role="dialog" aria-modal="true" aria-label="Lesson">
+  <header id="lesson-header">
+    <button id="lesson-back" onclick="closeLesson()" aria-label="Back to modules">←</button>
+    <div id="lesson-title">Lesson</div>
+    <span class="badge badge-blue" id="lesson-badge">Intro</span>
+  </header>
+  <div id="lesson-body"></div>
+  <footer id="lesson-nav">
+    <button class="btn btn-secondary" id="lesson-prev" onclick="lessonPrev()" style="flex:1;">← Prev</button>
+    <button class="btn btn-primary" id="lesson-next" onclick="lessonNext()" style="flex:2;">Next →</button>
+  </footer>
+</div>
+
+<!-- Flashcard Quick Review Overlay -->
+<div id="flashcard-view" role="dialog" aria-modal="true" aria-label="Quick Review">
+  <header id="fc-header">
+    <button id="fc-back" onclick="closeFlashcards()" aria-label="Close review">←</button>
+    <div id="fc-title">Quick Review</div>
+    <span id="fc-counter" style="font-size:var(--size-xs);color:var(--text3);"></span>
+  </header>
+  <div id="fc-body">
+    <div id="fc-progress-wrap">
+      <div class="progress-wrap"><div class="progress-bar" id="fc-progress-bar" style="width:0%"></div></div>
+    </div>
+    <div class="flashcard" id="fc-card" onclick="flipCard()">
+      <div class="flashcard-inner" id="fc-inner">
+        <div class="flashcard-front">
+          <div class="fc-tag" id="fc-tag">Term</div>
+          <div class="fc-term" id="fc-term">Loading...</div>
+          <div class="fc-hint">tap to reveal</div>
+        </div>
+        <div class="flashcard-back">
+          <div class="fc-tag" style="color:var(--accent3);">Definition</div>
+          <div class="fc-def" id="fc-def"></div>
+          <div class="fc-tap-hint" onclick="event.stopPropagation();unflipCard()">↺ tap to flip back</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-result-row" id="fc-result-row" style="display:none;" onclick="event.stopPropagation()">
+      <button class="btn btn-secondary" onclick="fcRate('again')" style="flex:1;flex-direction:column;gap:3px;height:52px;">
+        <span style="font-size:18px;">🔁</span><span style="font-size:10px;">Again</span>
+      </button>
+      <button class="btn btn-secondary" onclick="fcRate('hard')" style="flex:1;flex-direction:column;gap:3px;height:52px;border-color:rgba(239,68,68,0.4);color:#f87171;">
+        <span style="font-size:18px;">😓</span><span style="font-size:10px;">Hard</span>
+      </button>
+      <button class="btn btn-secondary" onclick="fcRate('good')" style="flex:1;flex-direction:column;gap:3px;height:52px;border-color:rgba(79,142,247,0.4);color:var(--accent);">
+        <span style="font-size:18px;">👍</span><span style="font-size:10px;">Good</span>
+      </button>
+      <button class="btn btn-secondary" onclick="fcRate('easy')" style="flex:1;flex-direction:column;gap:3px;height:52px;border-color:rgba(16,185,129,0.4);color:var(--accent3);">
+        <span style="font-size:18px;">⚡</span><span style="font-size:10px;">Easy</span>
+      </button>
+    </div>
+  </div>
+  <footer id="fc-nav">
+    <button class="btn btn-secondary" onclick="fcPrev()" id="fc-prev" style="flex:1;">← Prev</button>
+    <button class="btn btn-primary" onclick="fcNext()" id="fc-next" style="flex:2;">Next →</button>
+  </footer>
+</div>
+const MODULES = [
+  {
+    id: 1, title: "GHL Ecosystem", color: "#4f8ef7",
+    desc: "Understand the platform architecture and core value proposition.",
+    badge: "Foundation", lessons: [
+      {
+        title: "What is GoHighLevel?",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GoHighLevel (GHL) is an all-in-one CRM, marketing automation, and funnel platform built specifically for agencies and marketing professionals.</p>
+        <div class="diagram"><div class="diagram-title">GHL Core Components</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">🌐</div><div class="strategy-label"><strong>Funnels & Websites</strong> — Drag-and-drop page builders with conversion-optimized templates</div></div>
+            <div class="strategy-row"><div class="strategy-icon">⚙️</div><div class="strategy-label"><strong>Automation</strong> — Workflow triggers, SMS, email, voicemail drops</div></div>
+            <div class="strategy-row"><div class="strategy-icon">👥</div><div class="strategy-label"><strong>CRM</strong> — Contact management, pipelines, deal tracking</div></div>
+            <div class="strategy-row"><div class="strategy-icon">📅</div><div class="strategy-label"><strong>Calendar</strong> — Booking pages, round-robin scheduling</div></div>
+            <div class="strategy-row"><div class="strategy-icon">📊</div><div class="strategy-label"><strong>Reporting</strong> — Attribution, revenue reporting, call tracking</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>GHL's white-label capability is what makes it uniquely valuable. Agencies resell it under their own brand, creating recurring SaaS revenue without building software.</p></div>
+        <p style="font-size:var(--size-sm);color:var(--text2);">Unlike Clickfunnels or ActiveCampaign as standalone tools, GHL replaces 6–12 separate software subscriptions — giving agencies massive cost efficiency and a single data layer.</p>`
+      },
+      {
+        title: "Account Structure",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL has a two-tier structure: the Agency Account and Sub-Accounts (clients).</p>
+        <div class="diagram"><div class="diagram-title">Account Hierarchy</div>
+          <div class="flow-row"><div class="flow-box accent" style="width:100%;text-align:center;">Agency Account (You)</div></div>
+          <div style="display:flex;justify-content:center;padding:4px 0;color:var(--text3);">↓ manages ↓</div>
+          <div class="flow-row">
+            <div class="flow-box">Client A</div>
+            <div class="flow-box">Client B</div>
+            <div class="flow-box">Client C</div>
+          </div>
+        </div>
+        <p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Each sub-account is fully isolated — contacts, funnels, automations, and calendars belong to that client only. You can snapshot and replicate successful setups across clients.</p>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Use Snapshots to clone an entire sub-account setup to a new client in minutes. This is your core delivery speed advantage.</p></div>`,
+        quiz: { q: "What is the primary advantage of GHL's white-label feature?", options: ["Free hosting","Agencies can resell it as their own SaaS product","It removes the need for DNS","Built-in design templates"], answer: 1, explain: "White-labeling lets agencies brand GHL as their own product and charge monthly fees, creating recurring SaaS revenue." }
+      },
+      {
+        title: "Platform Pricing Tiers",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Understanding GHL's own pricing is important for client conversations and positioning your service fees correctly.</p>
+        <div class="card" style="margin-bottom:var(--s1);border-color:rgba(79,142,247,0.3);">
+          <div style="font-weight:700;font-size:var(--size-sm);color:var(--accent);">Starter — $97/mo</div>
+          <div style="font-size:var(--size-xs);color:var(--text2);margin-top:4px;">Single location, core CRM + funnels. No white-label.</div>
+        </div>
+        <div class="card" style="margin-bottom:var(--s1);border-color:rgba(124,58,237,0.3);">
+          <div style="font-weight:700;font-size:var(--size-sm);color:#a78bfa;">Unlimited — $297/mo</div>
+          <div style="font-size:var(--size-xs);color:var(--text2);margin-top:4px;">Unlimited sub-accounts, white-label desktop app, SaaS mode available.</div>
+        </div>
+        <div class="card" style="margin-bottom:var(--s2);border-color:rgba(245,158,11,0.3);">
+          <div style="font-weight:700;font-size:var(--size-sm);color:var(--accent4);">SaaS Pro — $497/mo</div>
+          <div style="font-size:var(--size-xs);color:var(--text2);margin-top:4px;">Full SaaS mode, automated sub-account creation, rebilling, AI features.</div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Most serious agency operators run on Unlimited ($297). The ROI is immediate once you have 2+ paying clients.</p></div>`,
+        quiz: { q: "Which GHL plan allows unlimited sub-accounts and white-label?", options: ["Starter","Unlimited","Basic","Enterprise"], answer: 1, explain: "The Unlimited plan at $297/mo includes unlimited client sub-accounts and white-label branding." }
+      }
+    ]
+  },
+  {
+    id: 2, title: "Interface & Core Tools", color: "#7c3aed",
+    desc: "Navigate GHL confidently and understand every core section.",
+    badge: "Navigation", lessons: [
+      {
+        title: "GHL Dashboard Overview",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">The GHL left sidebar is your primary navigation. Each icon maps to a core platform function.</p>
+        <div class="diagram"><div class="diagram-title">Left Sidebar Map</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">🏠</div><div class="strategy-label"><strong>Dashboard</strong> — KPI summary, pipeline overview</div></div>
+            <div class="strategy-row"><div class="strategy-icon">👥</div><div class="strategy-label"><strong>Contacts</strong> — Full CRM, tags, segments</div></div>
+            <div class="strategy-row"><div class="strategy-icon">💬</div><div class="strategy-label"><strong>Conversations</strong> — Unified inbox (SMS/email/FB/IG)</div></div>
+            <div class="strategy-row"><div class="strategy-icon">📅</div><div class="strategy-label"><strong>Calendars</strong> — Booking, slots, groups</div></div>
+            <div class="strategy-row"><div class="strategy-icon">🌐</div><div class="strategy-label"><strong>Sites</strong> — Funnels, websites, blogs</div></div>
+            <div class="strategy-row"><div class="strategy-icon">⚙️</div><div class="strategy-label"><strong>Automation</strong> — Workflows, triggers</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Memorize the keyboard shortcut <code style="background:var(--bg);padding:2px 6px;border-radius:4px;">G + C</code> to jump to Conversations instantly — this is where client communication lives.</p></div>`
+      },
+      {
+        title: "Conversations Inbox",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">The Conversations inbox is GHL's unified communication hub. Every channel feeds into one thread per contact.</p>
+        <p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Channels supported: SMS, Email, Facebook Messenger, Instagram DMs, Google My Business, WhatsApp (via Twilio integration), Live Chat widget.</p>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Train clients to only use the GHL Conversations inbox — never go outside the platform. This ensures all communication is logged in the CRM automatically.</p></div>`,
+        quiz: { q: "Which section of GHL shows SMS, email, and social messages in one view?", options: ["Dashboard","Contacts","Conversations","Automation"], answer: 2, explain: "Conversations is the unified inbox that consolidates all communication channels into a single contact thread." }
+      },
+      {
+        title: "Contact Management",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Contacts are the core data object in GHL. Every interaction, tag, and value is attached to a contact record.</p>
+        <div class="diagram"><div class="diagram-title">Contact Record Structure</div>
+          <div class="flow-row">
+            <div class="flow-box accent">Contact</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">Tags</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box purple">Workflows</div>
+          </div>
+          <div class="flow-row" style="margin-top:var(--s1);">
+            <div class="flow-box">Pipeline Stage</div>
+            <div class="flow-arrow">+</div>
+            <div class="flow-box">Value</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box green">Revenue</div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Use Smart Lists to create dynamic contact segments. Segment by tag, source, pipeline stage, or any custom field. These segments feed directly into automation triggers.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 3, title: "Funnels & Landing Pages", color: "#10b981",
+    desc: "Architect high-converting funnels and build them efficiently.",
+    badge: "Core Skill", lessons: [
+      {
+        title: "Funnel Architecture Principles",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">A funnel is a deliberately constrained path that guides a visitor toward a single conversion action. Every page removes distractions and increases commitment.</p>
+        <div class="diagram"><div class="diagram-title">Standard Lead Generation Funnel</div>
+          <div class="flow-row">
+            <div class="flow-box accent">Traffic Source</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">Opt-In Page</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box green">Thank You</div>
+          </div>
+          <div style="display:flex;justify-content:center;padding:4px 0;color:var(--text3);">↓</div>
+          <div class="flow-row">
+            <div class="flow-box purple">Email/SMS Sequence</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">Book Call</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box accent">Sale</div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Remove all navigation from funnel pages. Every external link is a leak. The only action should be the CTA you want them to take.</p></div>`,
+        quiz: { q: "What is the primary rule for funnel page design?", options: ["Include all navigation options","Have multiple CTAs","Remove all navigation to eliminate distractions","Use video backgrounds always"], answer: 2, explain: "Funnels work because they constrain choice. Navigation links create exits — remove them entirely on funnel pages." }
+      },
+      {
+        title: "GHL Page Builder",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL's page builder uses a row → column → element structure. Understanding this hierarchy is essential for efficient building.</p>
+        <div class="diagram"><div class="diagram-title">Builder Hierarchy</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon" style="font-size:14px;">ROW</div><div class="strategy-label" style="border-color:rgba(79,142,247,0.3);color:var(--accent);">Full-width container. Controls background, padding, responsive behavior.</div></div>
+            <div class="strategy-row"><div class="strategy-icon" style="font-size:14px;">COL</div><div class="strategy-label" style="border-color:rgba(124,58,237,0.3);color:#a78bfa;">Column inside a row. Set widths (1/2, 1/3 etc). Contains elements.</div></div>
+            <div class="strategy-row"><div class="strategy-icon" style="font-size:14px;">EL</div><div class="strategy-label" style="border-color:rgba(16,185,129,0.3);color:var(--accent3);">Elements: Headline, Image, Button, Form, Video, Countdown, etc.</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Always build on the "Desktop" view but immediately check mobile. GHL's responsive behavior is column-stacking by default — test every row's mobile layout before publishing.</p></div>`
+      },
+      {
+        title: "High-Converting Page Structure",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Every effective opt-in or sales page follows a proven structure that addresses objections in a logical sequence.</p>
+        <div class="diagram"><div class="diagram-title">Opt-In Page Anatomy</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">1</div><div class="strategy-label"><strong>Headline</strong> — Specific promise + audience identification</div></div>
+            <div class="strategy-row"><div class="strategy-icon">2</div><div class="strategy-label"><strong>Sub-headline</strong> — Supporting context, amplify the promise</div></div>
+            <div class="strategy-row"><div class="strategy-icon">3</div><div class="strategy-label"><strong>Bullet Benefits</strong> — 3–5 outcome-focused bullets (not features)</div></div>
+            <div class="strategy-row"><div class="strategy-icon">4</div><div class="strategy-label"><strong>Form + CTA</strong> — Minimal fields, action-oriented button text</div></div>
+            <div class="strategy-row"><div class="strategy-icon">5</div><div class="strategy-label"><strong>Social Proof</strong> — Logo bar or testimonial snippet below fold</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Button text should complete the sentence "I want to ___". "Download My Free Guide" converts better than "Submit".</p></div>`,
+        quiz: { q: "Which button text follows conversion copywriting best practice?", options: ["Submit","Click Here","Get My Free Strategy Session","Continue"], answer: 2, explain: "Outcome-specific CTA copy ('Get My Free Strategy Session') converts significantly better than generic verbs like 'Submit'." }
+      }
+    ]
+  },
+  {
+    id: 4, title: "Conversion-Focused Design", color: "#f59e0b",
+    desc: "Apply UX/UI principles that drive measurable conversions.",
+    badge: "Design", lessons: [
+      {
+        title: "Conversion Rate Optimization Fundamentals",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">CRO is the discipline of increasing the percentage of visitors who complete a desired action. Every design decision should be measured against its conversion impact.</p>
+        <div class="diagram"><div class="diagram-title">CRO Priority Framework</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">🔴</div><div class="strategy-label"><strong>High Impact:</strong> Headline, primary CTA, form fields, above-fold layout</div></div>
+            <div class="strategy-row"><div class="strategy-icon">🟡</div><div class="strategy-label"><strong>Medium Impact:</strong> Social proof, trust signals, benefit copy</div></div>
+            <div class="strategy-row"><div class="strategy-icon">🟢</div><div class="strategy-label"><strong>Lower Impact:</strong> Color choices, font size, image selection</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Most amateurs fix colors first. Professionals test the headline first — it has 5x more conversion impact than any visual element.</p></div>`
+      },
+      {
+        title: "Visual Hierarchy & Attention Flow",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Visitors scan pages in an F-pattern or Z-pattern depending on content type. Design your layout to align with natural eye movement toward the CTA.</p>
+        <p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Use size, contrast, and spacing to create a visual hierarchy that guides the eye from Problem → Solution → CTA without cognitive friction.</p>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>The "squint test": squint at your page until it blurs. Whatever stands out is what gets attention first. If your CTA button doesn't stand out, it needs more contrast or size.</p></div>`,
+        quiz: { q: "What is the most impactful element to test first on a landing page?", options: ["Background color","The headline","Font size","Footer design"], answer: 1, explain: "Headlines have the highest conversion impact. A headline change can double opt-in rates without changing anything else." }
+      }
+    ]
+  },
+  {
+    id: 5, title: "HTML & CSS in GHL", color: "#06b6d4",
+    desc: "Customize GHL pages beyond what the builder allows.",
+    badge: "Technical", lessons: [
+      {
+        title: "Where to Add Custom Code",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL provides multiple injection points for custom code. Understanding where each one executes is critical to avoid conflicts.</p>
+        <div class="diagram"><div class="diagram-title">Code Injection Points</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">📄</div><div class="strategy-label"><strong>Page Settings → Header</strong> — Runs on every page load. Use for global CSS overrides, meta tags, tracking scripts.</div></div>
+            <div class="strategy-row"><div class="strategy-icon">📦</div><div class="strategy-label"><strong>Element → Custom HTML Block</strong> — Inline within the page. Use for specific sections requiring custom layout.</div></div>
+            <div class="strategy-row"><div class="strategy-icon">⚙️</div><div class="strategy-label"><strong>Funnel Settings → Tracking Code</strong> — Applied to all steps in a funnel. Use for funnel-wide analytics.</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Always wrap your custom CSS in a <code style="background:var(--bg);padding:2px 6px;border-radius:4px;">&lt;style&gt;</code> tag with a unique class prefix to prevent conflicts with GHL's default styles.</p></div>`
+      },
+      {
+        title: "CSS Override Techniques",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL's page builder outputs specific class names. Use browser DevTools to inspect and override them precisely.</p>
+        <div class="code-label">CSS Override Example</div>
+        <div class="code-block"><span class="cm">/* Override GHL button styles */</span>
+<span class="prop">.ghl-btn-primary</span> {
+  <span class="kw">background</span>: <span class="str">#FF6B2B</span> !important;
+  <span class="kw">border-radius</span>: <span class="str">4px</span> !important;
+  <span class="kw">font-weight</span>: <span class="str">700</span> !important;
+  <span class="kw">letter-spacing</span>: <span class="str">1px</span> !important;
+}
+
+<span class="cm">/* Custom section background */</span>
+<span class="prop">.custom-hero-section</span> {
+  <span class="kw">background</span>: <span class="str">linear-gradient(135deg, #1a1a2e, #16213e)</span>;
+  <span class="kw">padding</span>: <span class="str">80px 40px</span>;
+}</div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Prefer adding a custom class to the element in the builder, then targeting that class in CSS. Avoid targeting GHL's internal class names as they may change.</p></div>`,
+        quiz: { q: "What is the safest way to apply custom CSS to a GHL element?", options: ["Use !important on GHL's internal class names","Add a custom class in the builder, then target that class","Edit the exported page HTML directly","Use inline styles only"], answer: 1, explain: "Adding your own custom class to elements in the builder ensures your CSS targets are stable and won't break if GHL updates its internal class names." }
+      },
+      {
+        title: "Advanced HTML Customization",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Custom HTML blocks let you embed complex structures that the drag-and-drop builder cannot produce.</p>
+        <div class="code-label">Pricing Table Example</div>
+        <div class="code-block"><span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"custom-pricing"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"plan featured"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h3&gt;</span>Growth Plan<span class="kw">&lt;/h3&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"price"</span><span class="kw">&gt;</span>$997/mo<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;ul&gt;</span>
+      <span class="kw">&lt;li&gt;</span>Unlimited funnels<span class="kw">&lt;/li&gt;</span>
+      <span class="kw">&lt;li&gt;</span>Full CRM + Automation<span class="kw">&lt;/li&gt;</span>
+    <span class="kw">&lt;/ul&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Build complex HTML sections in a local editor like VS Code, test in a browser, then paste into GHL. Never write complex HTML directly in GHL's code block editor.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 6, title: "Automation Workflows", color: "#a78bfa",
+    desc: "Build intelligent automation systems that scale client results.",
+    badge: "Automation", lessons: [
+      {
+        title: "Workflow Architecture",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Every GHL automation is a Workflow. Workflows have a single trigger and a sequence of actions. They run asynchronously — multiple contacts can be in different stages simultaneously.</p>
+        <div class="diagram"><div class="diagram-title">Workflow Anatomy</div>
+          <div class="flow-row"><div class="flow-box accent" style="flex:1;text-align:center;">Trigger</div></div>
+          <div style="text-align:center;color:var(--text3);padding:2px;">↓ enrolls contact ↓</div>
+          <div class="flow-row"><div class="flow-box" style="flex:1;text-align:center;">Action 1 (Send SMS)</div></div>
+          <div style="text-align:center;color:var(--text3);padding:2px;">↓</div>
+          <div class="flow-row"><div class="flow-box" style="flex:1;text-align:center;">Wait Step (1 Hour)</div></div>
+          <div style="text-align:center;color:var(--text3);padding:2px;">↓</div>
+          <div class="flow-row"><div class="flow-box purple" style="flex:1;text-align:center;">Condition (Replied?)</div></div>
+          <div class="flow-row" style="margin-top:4px;">
+            <div class="flow-box green" style="flex:1;text-align:center;">Yes → Book Call</div>
+            <div class="flow-box" style="flex:1;text-align:center;">No → Follow-Up</div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Always add a "Remove from workflow" action at the end, or when a contact converts. Running duplicate contacts through workflows wastes SMS/email credits and confuses clients.</p></div>`
+      },
+      {
+        title: "Trigger Types",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL supports 30+ trigger types. The most commonly used in agency work are:</p>
+        <div class="strategy-stack">
+          <div class="strategy-row"><div class="strategy-icon">📝</div><div class="strategy-label"><strong>Form Submitted</strong> — Most common lead gen trigger</div></div>
+          <div class="strategy-row"><div class="strategy-icon">🏷️</div><div class="strategy-label"><strong>Tag Added/Removed</strong> — Highly flexible, use as manual trigger</div></div>
+          <div class="strategy-row"><div class="strategy-icon">📅</div><div class="strategy-label"><strong>Appointment Status</strong> — Confirmed, cancelled, no-show sequences</div></div>
+          <div class="strategy-row"><div class="strategy-icon">💬</div><div class="strategy-label"><strong>SMS/Email Replied</strong> — Conversation-based branching</div></div>
+          <div class="strategy-row"><div class="strategy-icon">💰</div><div class="strategy-label"><strong>Pipeline Stage Changed</strong> — Trigger actions based on sales progress</div></div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Tag-based triggers are the most flexible system. Build a tagging taxonomy first (e.g., "lead-hot", "lead-nurture", "client-active") and use tags as the universal trigger across all workflows.</p></div>`,
+        quiz: { q: "Which trigger type provides the most flexibility for manual automation control?", options: ["Form Submitted","Calendar Booked","Tag Added/Removed","Payment Received"], answer: 2, explain: "Tag-based triggers can be applied manually or by automation, giving you precise control over which workflow a contact enters." }
+      },
+      {
+        title: "Building a Lead Nurture Sequence",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">A lead nurture sequence is a timed series of touchpoints that moves a cold lead toward booking or purchasing. Best practice: Day 0, 1, 3, 7, 14.</p>
+        <div class="diagram"><div class="diagram-title">7-Day Nurture Sequence</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">D0</div><div class="strategy-label">Immediate: Welcome SMS + Email (deliver lead magnet)</div></div>
+            <div class="strategy-row"><div class="strategy-icon">D1</div><div class="strategy-label">Value email: One actionable tip. No pitch.</div></div>
+            <div class="strategy-row"><div class="strategy-icon">D3</div><div class="strategy-label">Case study or testimonial. Social proof.</div></div>
+            <div class="strategy-row"><div class="strategy-icon">D5</div><div class="strategy-label">Soft offer: "I have one slot available..."</div></div>
+            <div class="strategy-row"><div class="strategy-icon">D7</div><div class="strategy-label">Direct booking link + urgency (limited slots)</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Always include an if/else condition: if the contact has already booked, remove them from the nurture sequence. Nothing damages trust faster than pitching an existing client.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 7, title: "Integrations & API", color: "#f97316",
+    desc: "Connect GHL to external tools and leverage API fundamentals.",
+    badge: "Technical", lessons: [
+      {
+        title: "Native Integrations",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL has native (built-in) integrations that require minimal setup. These are your first-choice connections before resorting to Zapier.</p>
+        <div class="strategy-stack">
+          <div class="strategy-row"><div class="strategy-icon">📞</div><div class="strategy-label"><strong>Twilio</strong> — SMS/Voice. Required for outbound calling and A2P messaging.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">📧</div><div class="strategy-label"><strong>Mailgun / SendGrid</strong> — Email delivery. SMTP relay for deliverability.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">💳</div><div class="strategy-label"><strong>Stripe</strong> — Payments, products, subscriptions in GHL checkout.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">📱</div><div class="strategy-label"><strong>Facebook / Instagram</strong> — Lead forms, messaging, ad attribution.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">📊</div><div class="strategy-label"><strong>Google Analytics / Ads</strong> — Conversion tracking, audience sync.</div></div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Set up Twilio under the Agency account and rebill SMS usage to clients. This creates an additional revenue stream on top of your retainer.</p></div>`
+      },
+      {
+        title: "Webhooks & API Basics",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL webhooks send data to external URLs when events occur. The GHL REST API allows you to create, read, and update data programmatically.</p>
+        <div class="code-label">Webhook Payload Example (Contact Created)</div>
+        <div class="code-block">{
+  <span class="prop">"type"</span>: <span class="str">"ContactCreate"</span>,
+  <span class="prop">"locationId"</span>: <span class="str">"loc_abc123"</span>,
+  <span class="prop">"contact"</span>: {
+    <span class="prop">"id"</span>: <span class="str">"ctc_xyz789"</span>,
+    <span class="prop">"email"</span>: <span class="str">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6aaa3a7a286a3bea7abb6aaa3e8a5a9ab">[email&#160;protected]</a>"</span>,
+    <span class="prop">"tags"</span>: [<span class="str">"lead-new"</span>],
+    <span class="prop">"source"</span>: <span class="str">"landing-page"</span>
+  }
+}</div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Use Zapier only as a last resort. Native webhooks + Make (Integromat) give you more control at lower cost. For high-volume agencies, build custom Node.js webhook handlers.</p></div>`,
+        quiz: { q: "What is the recommended alternative to Zapier for GHL integrations?", options: ["IFTTT","Power Automate","Make (Integromat) + Native Webhooks","Google Apps Script"], answer: 2, explain: "Make.com combined with GHL's native webhooks provides more flexibility, better error handling, and lower cost than Zapier at scale." }
+      }
+    ]
+  },
+  {
+    id: 8, title: "CRM & Pipeline Management", color: "#ec4899",
+    desc: "Manage contacts, deals, and pipeline stages for client revenue.",
+    badge: "CRM", lessons: [
+      {
+        title: "Pipeline Architecture",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">A Pipeline is a visual board of deal stages. Each Opportunity represents a contact's progress toward becoming a paying client.</p>
+        <div class="diagram"><div class="diagram-title">Standard Sales Pipeline</div>
+          <div class="flow-row">
+            <div class="flow-box">New Lead</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box purple">Contacted</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box accent">Call Booked</div>
+          </div>
+          <div class="flow-row" style="margin-top:4px;">
+            <div class="flow-box">Proposal Sent</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box green">Won</div>
+            <div class="flow-arrow">+</div>
+            <div class="flow-box" style="border-color:var(--danger);color:#f87171;">Lost</div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Never delete lost opportunities. Tag them "lost-{reason}" and enroll in a 90-day re-engagement automation. 20% of lost leads convert within 3 months if followed up correctly.</p></div>`
+      },
+      {
+        title: "Custom Fields & Tags Strategy",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Custom fields store structured data on contact records. Tags store behavioral and status data. Both are searchable and trigger-compatible.</p>
+        <div class="strategy-stack">
+          <div class="strategy-row"><div class="strategy-icon">📋</div><div class="strategy-label"><strong>Custom Fields:</strong> Budget, industry, location, project type — structured data for segmentation</div></div>
+          <div class="strategy-row"><div class="strategy-icon">🏷️</div><div class="strategy-label"><strong>Tags:</strong> lead-hot, call-no-show, client-active, reactivation — status and behavior</div></div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Create a tag naming convention before you build: prefix all source tags with "src-", behavior tags with "act-", and status tags with "st-". This prevents tag chaos as the contact list grows.</p></div>`,
+        quiz: { q: "Which is best practice for storing a contact's monthly budget?", options: ["A Tag","A Custom Field","A Pipeline Note","A Conversation","A Workflow"], answer: 1, explain: "Custom Fields store structured, typed data (text, number, date) that can be used in formulas, filters, and custom values in templates." }
+      }
+    ]
+  },
+  {
+    id: 9, title: "Calendar & Appointment Systems", color: "#14b8a6",
+    desc: "Build seamless booking systems that convert and reduce no-shows.",
+    badge: "Bookings", lessons: [
+      {
+        title: "Calendar Types in GHL",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">GHL supports multiple calendar types, each suited to different use cases. Choosing the wrong type is a common setup error.</p>
+        <div class="strategy-stack">
+          <div class="strategy-row"><div class="strategy-icon">👤</div><div class="strategy-label"><strong>Personal Calendar</strong> — Single team member, direct booking. Used for 1:1 consultation calls.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">👥</div><div class="strategy-label"><strong>Round Robin</strong> — Distributes bookings evenly across team members. Best for sales teams.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">🔁</div><div class="strategy-row"><div class="strategy-label"><strong>Collective</strong> — All team members must be available for the booking to show. For group events.</div></div></div>
+          <div class="strategy-row"><div class="strategy-icon">🎟️</div><div class="strategy-label"><strong>Class Booking</strong> — Multiple attendees per slot. Used for webinars or group sessions.</div></div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Always connect Google Calendar (two-way sync) to each team member's GHL calendar. This prevents double-bookings when they have personal events not in GHL.</p></div>`
+      },
+      {
+        title: "No-Show Reduction System",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">A structured reminder sequence can reduce no-show rates by 40–60%. Build this automation for every client with a calendar.</p>
+        <div class="diagram"><div class="diagram-title">Appointment Reminder Sequence</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">✅</div><div class="strategy-label"><strong>Instant Confirmation</strong> — SMS + Email with date/time, location/Zoom link</div></div>
+            <div class="strategy-row"><div class="strategy-icon">-24h</div><div class="strategy-label"><strong>24-Hour Reminder</strong> — SMS with reschedule link if needed</div></div>
+            <div class="strategy-row"><div class="strategy-icon">-2h</div><div class="strategy-label"><strong>2-Hour Reminder</strong> — SMS with Zoom/address link and "Reply STOP to cancel"</div></div>
+            <div class="strategy-row"><div class="strategy-icon">+5m</div><div class="strategy-label"><strong>Post-No-Show</strong> — Auto-SMS: "We missed you. Click to rebook."</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Include a "Reply 1 to confirm your attendance" in the 24-hour reminder. Contacts who reply are 85% less likely to no-show.</p></div>`,
+        quiz: { q: "What is the best action to take in the post-no-show automation step?", options: ["Remove the contact","Send an invoice","Auto-SMS with a rebook link","Mark as lost"], answer: 2, explain: "An immediate rebook SMS captures intent while the contact still has your service top of mind, recovering a significant portion of no-shows." }
+      }
+    ]
+  },
+  {
+    id: 10, title: "Reporting & Optimization", color: "#6366f1",
+    desc: "Track KPIs, interpret data, and optimize for results.",
+    badge: "Analytics", lessons: [
+      {
+        title: "Key Metrics to Track",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Reporting is only valuable when tied to business outcomes. Know which metrics drive revenue decisions.</p>
+        <div class="strategy-stack">
+          <div class="strategy-row"><div class="strategy-icon">📊</div><div class="strategy-label"><strong>Opt-In Rate</strong> — Leads ÷ Page Visitors. Target: 30–50% for warm traffic</div></div>
+          <div class="strategy-row"><div class="strategy-icon">📅</div><div class="strategy-label"><strong>Show Rate</strong> — Appointments attended ÷ Booked. Target: 70%+</div></div>
+          <div class="strategy-row"><div class="strategy-icon">💰</div><div class="strategy-label"><strong>Close Rate</strong> — Sales ÷ Calls taken. Target varies by offer/price</div></div>
+          <div class="strategy-row"><div class="strategy-icon">💵</div><div class="strategy-label"><strong>Cost Per Lead</strong> — Ad spend ÷ Leads. Benchmark by industry</div></div>
+          <div class="strategy-row"><div class="strategy-icon">🔄</div><div class="strategy-label"><strong>Email Open Rate</strong> — Target 30%+ (indicates list health)</div></div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Present clients with a monthly "Metrics Summary" showing exactly 5 KPIs. More than 5 creates confusion. Fewer than 3 looks lazy. Frame every number against last month's performance.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 11, title: "Funnel Strategy & Offer Positioning", color: "#84cc16",
+    desc: "Design high-converting offers and position them strategically.",
+    badge: "Strategy", lessons: [
+      {
+        title: "Offer Architecture",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">The offer is the core of your funnel. Weak offers cannot be fixed by design or traffic. Strong offers convert even with poor design.</p>
+        <div class="diagram"><div class="diagram-title">Value Equation</div>
+          <div style="background:var(--surface);border-radius:8px;padding:var(--s2);font-size:var(--size-sm);color:var(--text2);text-align:center;line-height:2;">
+            <span style="color:var(--accent);">(Dream Outcome × Perceived Likelihood)</span>
+            <br>÷<br>
+            <span style="color:var(--danger);">(Time Delay × Effort & Sacrifice)</span>
+            <br>=<br>
+            <span style="color:var(--accent3);font-weight:700;">Perceived Value</span>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>To increase conversions without changing price: increase perceived likelihood (testimonials, guarantees) and reduce perceived time (fast results promise) before touching the price point.</p></div>`,
+        quiz: { q: "According to the Value Equation, what can increase perceived offer value WITHOUT lowering price?", options: ["Better font choices","Adding testimonials and a money-back guarantee","Longer sales page","More features"], answer: 1, explain: "Testimonials increase 'Perceived Likelihood of Success' while guarantees reduce 'Perceived Risk' — both directly improve the value equation." }
+      }
+    ]
+  },
+  {
+    id: 12, title: "Capstone Project Simulation", color: "#e11d48",
+    desc: "Apply everything learned to build a complete funnel system.",
+    badge: "Capstone", lessons: [
+      {
+        title: "Project Brief & Requirements",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">This capstone requires you to design and document a complete GHL funnel system for a real-world scenario.</p>
+        <div class="card" style="background:var(--bg);border-color:rgba(225,29,72,0.3);">
+          <div style="font-size:var(--size-xs);color:#f87171;font-weight:700;margin-bottom:var(--s1);">CAPSTONE SCENARIO</div>
+          <div style="font-size:var(--size-sm);color:var(--text2);line-height:1.8;">
+            <strong style="color:var(--text);">Client:</strong> Life coach targeting corporate executives<br>
+            <strong style="color:var(--text);">Offer:</strong> 3-month 1:1 coaching program at $3,000<br>
+            <strong style="color:var(--text);">Traffic:</strong> LinkedIn ads<br>
+            <strong style="color:var(--text);">Goal:</strong> 10 new clients per month<br>
+            <strong style="color:var(--text);">Deliverables needed:</strong><br>
+            1. Opt-in funnel architecture<br>
+            2. 7-day automation sequence<br>
+            3. Pipeline stages<br>
+            4. KPI tracking plan<br>
+            5. HTML/CSS customization plan
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Document your work as if handing it to a team member. A GHL setup with no documentation is a liability — your value as a professional includes the clarity of your delivery.</p></div>`
+      }
+    ]
+  },
+  {
+    id: 13, title: "Client Delivery Systems", color: "#0ea5e9",
+    desc: "Systematize onboarding, communication, and handoffs.",
+    badge: "Professional", lessons: [
+      {
+        title: "Client Onboarding Workflow",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">A professional onboarding process sets expectations, builds trust, and reduces revision requests. Every element should be templated and repeatable.</p>
+        <div class="diagram"><div class="diagram-title">Standard Onboarding Process</div>
+          <div class="strategy-stack">
+            <div class="strategy-row"><div class="strategy-icon">1</div><div class="strategy-label"><strong>Kickoff Call</strong> — Brand assets, offer clarity, access credentials, timeline confirmation</div></div>
+            <div class="strategy-row"><div class="strategy-icon">2</div><div class="strategy-label"><strong>Sub-Account Setup</strong> — Apply snapshot, configure DNS, connect Twilio + Stripe</div></div>
+            <div class="strategy-row"><div class="strategy-icon">3</div><div class="strategy-label"><strong>Build Phase</strong> — Funnel, automation, calendar, CRM pipeline</div></div>
+            <div class="strategy-row"><div class="strategy-icon">4</div><div class="strategy-label"><strong>Review Call</strong> — Walkthrough, revisions, approval</div></div>
+            <div class="strategy-row"><div class="strategy-icon">5</div><div class="strategy-label"><strong>Launch</strong> — DNS live, test submission, monitoring checklist</div></div>
+            <div class="strategy-row"><div class="strategy-icon">6</div><div class="strategy-label"><strong>Handoff Doc</strong> — Loom walkthrough + written SOPs for the client</div></div>
+          </div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Record every client walkthrough as a Loom video and link it in a shared Notion SOP doc. This eliminates 80% of "how do I...?" support requests after launch.</p></div>`,
+        quiz: { q: "What is the most effective way to reduce post-launch client support requests?", options: ["Charge for support calls","Provide a recorded Loom walkthrough and written SOPs","Email PDFs of documentation","Only respond to Tier 1 issues"], answer: 1, explain: "A recorded Loom walkthrough + written SOP doc empowers clients to self-serve answers, dramatically reducing support overhead." }
+      },
+      {
+        title: "Pricing & Retainer Structures",
+        content: `<p style="font-size:var(--size-sm);color:var(--text2);margin-bottom:var(--s2);">Pricing structure determines your agency's profitability, client retention, and workload. Get this wrong early and scaling becomes painful.</p>
+        <div class="strategy-stack">
+          <div class="strategy-row"><div class="strategy-icon">💰</div><div class="strategy-label"><strong>Setup Fee:</strong> One-time build cost. Non-negotiable. Covers initial configuration, funnel, and automations. Typically $500–$3,000.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">🔄</div><div class="strategy-label"><strong>Monthly Retainer:</strong> Ongoing maintenance, optimization, reporting. Typically $200–$1,500/mo depending on scope.</div></div>
+          <div class="strategy-row"><div class="strategy-icon">📈</div><div class="strategy-label"><strong>Performance Fees:</strong> % of revenue generated. High-trust, high-value. Usually 5–15% of attributed revenue.</div></div>
+        </div>
+        <div class="expert-tip"><div class="expert-tip-label">⚡ Expert Tip</div><p>Never waive the setup fee. It filters out serious clients and funds your time properly. Clients who don't pay setup fees consistently request the most changes and pay retainers late.</p></div>`
+      }
+    ]
+  }
+];
+
+// ==================== STATE ====================
+let state = {
+  completedLessons: {},
+  quizScores: {},
+  notes: [],
+  settings: {},
+  achievements: {},
+  currentModule: null,
+  currentLesson: 0,
+  totalLessons: 0
+};
+
+// Count total lessons
+MODULES.forEach(m => { state.totalLessons += m.lessons.length; });
+
+// ==================== STORAGE ====================
+function saveState() {
+  try { localStorage.setItem('ghl_state', JSON.stringify(state)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const s = localStorage.getItem('ghl_state');
+    if (s) {
+      const parsed = JSON.parse(s);
+      state = { ...state, ...parsed };
+    }
+  } catch(e) {}
+}
+
+// ==================== NAVIGATION ====================
+function navigate(screen, fromQuickNav) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  document.getElementById('screen-' + screen).classList.add('active');
+  const btn = document.getElementById('nav-' + screen);
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-current', 'page'); }
+  updateHeader(screen);
+  if (screen === 'progress') renderProgress();
+  if (screen === 'notes') renderNotes();
+  if (screen === 'dashboard') updateDashboard();
+}
+function updateHeader(screen) {
+  const titles = { dashboard:'GHL Academy', modules:'Curriculum', lab:'Practice Lab', notes:'Notes', progress:'Progress', settings:'Settings', glossary:'GHL Glossary' };
+  const subs = { dashboard:'GoHighLevel Mastery', modules:'13 Core Modules', lab:'Hands-On Exercises', notes:'Study Notes', progress:'Your Journey', settings:'Profile & Preferences', glossary:'47 Essential Terms' };
+  document.querySelector('#header h1').textContent = titles[screen] || 'GHL Academy';
+  document.getElementById('header-sub').textContent = subs[screen] || '';
+}
+function goToModules() { navigate('modules'); }
+
+// ==================== MODULES LIST ====================
+function renderModulesList() {
+  const list = document.getElementById('modules-list');
+  list.innerHTML = MODULES.map(m => {
+    const done = Object.keys(state.completedLessons).filter(k => k.startsWith('m' + m.id + '_')).length;
+    const pct = Math.round((done / m.lessons.length) * 100);
+    const illu = getModuleIllustration(m);
+    return `<div class="card" style="padding:0;overflow:hidden;margin-bottom:var(--s2);">
+      <div style="position:relative;height:72px;overflow:hidden;">
+        ${illu}
+        <div style="position:absolute;bottom:10px;left:var(--s2);display:flex;align-items:center;gap:var(--s1);">
+          <div style="width:32px;height:32px;border-radius:8px;background:${m.color}33;border:1px solid ${m.color}55;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:var(--size-md);font-weight:700;color:${m.color};">${m.id}</div>
+          <div>
+            <div style="font-size:var(--size-sm);font-weight:700;color:var(--text);">${m.title}</div>
+            <div style="font-size:var(--size-xs);color:var(--text3);">${m.desc}</div>
+          </div>
+        </div>
+        <div style="position:absolute;top:10px;right:var(--s2);">
+          <span class="badge badge-blue" style="font-size:9px;">${m.badge}</span>
+        </div>
+      </div>
+      <div style="padding:var(--s2);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-size:var(--size-xs);color:var(--text3);">${m.lessons.length} lessons · ${done} done</span>
+          <span style="font-size:var(--size-xs);font-weight:700;color:${m.color};">${pct}%</span>
+        </div>
+        <div class="progress-wrap" style="margin-bottom:var(--s2);"><div class="progress-bar" style="width:${pct}%;background:${m.color};box-shadow:none;"></div></div>
+        <div style="display:flex;gap:var(--s1);">
+          <button class="btn btn-primary" style="flex:2;" onclick="openModule(${m.id})">
+            ${pct === 0 ? 'Start →' : pct === 100 ? 'Review ✓' : 'Continue →'}
+          </button>
+          <button class="btn btn-secondary" style="flex:1;" onclick="openFlashcards(${m.id})" title="Quick Review flashcards">
+            🃏 Cards
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ==================== LESSON VIEW ====================
+function openModule(id) {
+  state.currentModule = id;
+  state.currentLesson = 0;
+  saveState();
+  unlockAchievement('first');
+  if (id === 3) unlockAchievement('funnel');
+  if (id === 6) unlockAchievement('auto');
+  renderLesson('right');
+  document.getElementById('lesson-view').classList.add('active');
+  document.getElementById('lesson-view').focus();
+  setupSwipe();
+  updateDashboard();
+  renderModulesList();
+}
+
+let _lessonDir = 'right'; // slide direction
+
+function renderLesson(dir) {
+  const mod = MODULES.find(m => m.id === state.currentModule);
+  if (!mod) return;
+  const lesson = mod.lessons[state.currentLesson];
+  if (!lesson) return;
+
+  document.getElementById('lesson-title').textContent = `M${mod.id}: ${lesson.title}`;
+  document.getElementById('lesson-badge').textContent = mod.badge;
+  document.getElementById('lesson-badge').className = `badge badge-blue`;
+
+  const key = `m${mod.id}_l${state.currentLesson}`;
+  if (!state.completedLessons[key]) {
+    state.completedLessons[key] = true;
+    saveState();
+    checkAchievements();
+    updateDashboard();
+  }
+
+  // ===== 5. PRE-LESSON OBJECTIVE CARD =====
+  const objectives = lesson.objectives || [`Understand ${lesson.title.toLowerCase()}`, `Apply this concept in a real GHL setup`, `Pass the knowledge check below`];
+  const objectiveHTML = `<div class="objective-card">
+    <div class="objective-label">🎯 After this lesson you will be able to</div>
+    <div class="objective-items">
+      ${objectives.map(o => `<div class="objective-item">${o}</div>`).join('')}
+    </div>
+  </div>`;
+
+  // Render quiz if exists
+  let quizHTML = '';
+  if (lesson.quiz) {
+    const q = lesson.quiz;
+    const qid = `q_${mod.id}_${state.currentLesson}`;
+    const prev = state.quizScores[qid];
+    quizHTML = `<div class="quiz-block">
+      <div class="quiz-q">${q.q}</div>
+      ${q.options.map((o,i) => `<button class="quiz-option ${prev !== undefined ? (i === q.answer ? 'correct disabled' : (prev === i ? 'wrong disabled' : 'disabled')) : ''}" onclick="answerQuiz('${qid}',${i},${q.answer},'${qid}_fb')" ${prev !== undefined ? 'disabled' : ''}>${o}</button>`).join('')}
+      <div class="quiz-feedback ${prev !== undefined ? 'show ' + (prev === q.answer ? 'ok' : 'fail') : ''}" id="${qid}_fb">
+        ${prev !== undefined ? (prev === q.answer ? '✅ Correct! ' : '❌ Incorrect. ') + q.explain : ''}
+      </div>
+    </div>`;
+  }
+
+  const actionHTML = `<div class="card" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.04);margin-top:var(--s2);">
+    <div style="font-size:var(--size-xs);color:var(--accent3);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:var(--s1);">✍ Action Task</div>
+    <div style="font-size:15px;color:var(--text2);">Apply what you've learned: Write one implementation step in your Notes for "${lesson.title}".</div>
+    <button class="btn btn-sm" style="background:rgba(16,185,129,0.1);color:var(--accent3);border:1px solid rgba(16,185,129,0.3);margin-top:var(--s1);" onclick="navigate('notes')">Open Notes →</button>
+  </div>`;
+
+  // Dot indicators for lesson position
+  const dots = mod.lessons.map((_,i) => `<div style="width:${i===state.currentLesson?'20px':'7px'};height:7px;border-radius:99px;background:${i===state.currentLesson?'var(--accent)':'var(--border)'};transition:all 0.3s;flex-shrink:0;"></div>`).join('');
+  const progHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s1);padding-bottom:var(--s1);">
+    <div>
+      <span class="badge badge-purple" style="margin-right:6px;">Module ${mod.id}</span>
+      <span style="font-size:var(--size-xs);color:var(--text3);">Lesson ${state.currentLesson+1} of ${mod.lessons.length}</span>
+    </div>
+    <div style="font-size:var(--size-xs);color:var(--accent);font-weight:700;">${Math.round(((state.currentLesson+1)/mod.lessons.length)*100)}%</div>
+  </div>
+  <div class="progress-wrap" style="margin-bottom:10px;"><div class="progress-bar" style="width:${Math.round(((state.currentLesson+1)/mod.lessons.length)*100)}%"></div></div>
+  <div style="display:flex;align-items:center;gap:5px;margin-bottom:var(--s3);justify-content:center;">${dots}</div>`;
+
+  // ===== 2. SLIDE TRANSITION =====
+  const body = document.getElementById('lesson-body');
+  const slideIn = dir === 'left' ? 'lesson-slide-in-left' : 'lesson-slide-in-right';
+  body.innerHTML = `<div class="${slideIn}" style="padding:var(--s2) var(--s2) 100px;">` + progHTML + objectiveHTML + lesson.content + quizHTML + actionHTML + `</div>`;
+  body.scrollTop = 0;
+
+  // Nav buttons
+  document.getElementById('lesson-prev').disabled = state.currentLesson === 0;
+  document.getElementById('lesson-prev').style.opacity = state.currentLesson === 0 ? '0.3' : '1';
+  const isLast = state.currentLesson >= mod.lessons.length - 1;
+  document.getElementById('lesson-next').textContent = isLast ? 'Complete Module ✓' : 'Next Lesson →';
+}
+
+function answerQuiz(qid, chosen, correct, fbId) {
+  state.quizScores[qid] = chosen;
+  saveState();
+  const fb = document.getElementById(fbId);
+  const mod = MODULES.find(m => m.id === state.currentModule);
+  const lesson = mod.lessons[state.currentLesson];
+  fb.textContent = (chosen === correct ? '✅ Correct! ' : '❌ Incorrect. ') + lesson.quiz.explain;
+  fb.className = `quiz-feedback show ${chosen === correct ? 'ok' : 'fail'}`;
+  document.querySelectorAll('.quiz-option').forEach((el, i) => {
+    el.disabled = true;
+    el.classList.add('disabled');
+    if (i === correct) el.classList.add('correct');
+    if (i === chosen && chosen !== correct) el.classList.add('wrong');
+  });
+  const passed = Object.entries(state.quizScores).filter(([qid2, v2]) => {
+    const p2 = qid2.split('_');
+    const mod2 = MODULES.find(m => m.id == p2[1]);
+    const lesson2 = mod2?.lessons[parseInt(p2[2])];
+    return lesson2?.quiz && v2 === lesson2.quiz.answer;
+  }).length;
+  if (passed >= 3) unlockAchievement('quiz');
+  updateDashboard();
+}
+
+function lessonNext() {
+  const mod = MODULES.find(m => m.id === state.currentModule);
+  if (state.currentLesson < mod.lessons.length - 1) {
+    state.currentLesson++;
+    renderLesson('right');
+  } else {
+    // ===== 3. MODULE COMPLETE CELEBRATION =====
+    checkAchievements();
+    showModuleComplete(mod);
+  }
+}
+function lessonPrev() {
+  if (state.currentLesson > 0) { state.currentLesson--; renderLesson('left'); }
+}
+function closeLesson() {
+  document.getElementById('lesson-view').classList.remove('active');
+  renderModulesList();
+  updateDashboard();
+}
+
+// ==================== DASHBOARD ====================
+function updateDashboard() {
+  const total = state.totalLessons;
+  const done = Object.keys(state.completedLessons).length;
+  const pct = Math.round((done / total) * 100);
+
+  document.getElementById('stat-lessons').textContent = done;
+  document.getElementById('stat-modules').textContent = new Set(Object.keys(state.completedLessons).map(k => k.split('_')[0])).size;
+  
+  // Count correct quiz answers
+  let correctCount = 0;
+  Object.entries(state.quizScores).forEach(([qid, chosen]) => {
+    const parts = qid.split('_');
+    const mod = MODULES.find(m => m.id == parts[1]);
+    const lesson = mod?.lessons[parts[2]];
+    if (lesson?.quiz && chosen === lesson.quiz.answer) correctCount++;
+  });
+  document.getElementById('stat-score').textContent = correctCount;
+  
+  document.getElementById('dash-progress').style.width = pct + '%';
+  document.getElementById('dash-pct').textContent = pct + '%';
+  document.getElementById('header-progress-badge').textContent = pct + '% Complete';
+
+  // Find next incomplete module
+  const nextMod = MODULES.find(m => {
+    const done2 = m.lessons.filter((_,i) => state.completedLessons[`m${m.id}_l${i}`]).length;
+    return done2 < m.lessons.length;
+  });
+  if (nextMod) document.getElementById('continue-module').textContent = `Module ${nextMod.id}: ${nextMod.title}`;
+
+  updateStreakUI();
+  updateSettingsContext();
+}
+
+// ==================== PROGRESS ====================
+function renderProgress() {
+  const total = state.totalLessons;
+  const done = Object.keys(state.completedLessons).length;
+  const pct = Math.round((done / total) * 100);
+  const modsDone = new Set(Object.keys(state.completedLessons).map(k => k.split('_')[0])).size;
+
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `${done} of ${total} lessons completed`;
+
+  const list = document.getElementById('module-progress-list');
+  list.innerHTML = MODULES.map(m => {
+    const doneLessons = m.lessons.filter((_,i) => state.completedLessons[`m${m.id}_l${i}`]).length;
+    const mpct = Math.round((doneLessons/m.lessons.length)*100);
+    return `<div style="margin-bottom:var(--s2);">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-size:var(--size-xs);color:var(--text2);">M${m.id}: ${m.title}</span>
+        <span style="font-size:var(--size-xs);color:${m.color};">${mpct}%</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" style="width:${mpct}%;background:${m.color};box-shadow:none;"></div></div>
+    </div>`;
+  }).join('');
+
+  renderAchievements();
+}
+
+function checkAchievements() {
+  const done = Object.keys(state.completedLessons).length;
+  const total = state.totalLessons;
+  const pct = Math.round((done/total)*100);
+  if (pct >= 50) unlockAchievement('half');
+  if (pct >= 100) unlockAchievement('complete');
+  if (state.notes && state.notes.length >= 5) unlockAchievement('notes');
+}
+
+// ===== 4. ACHIEVEMENT UNLOCK ANIMATION =====
+const ACHIEVEMENT_META = {
+  first:    { icon: '🚀', name: 'First Step' },
+  quiz:     { icon: '🧠', name: 'Quiz Ace' },
+  notes:    { icon: '📝', name: 'Note Taker' },
+  half:     { icon: '⚡', name: 'Halfway There!' },
+  funnel:   { icon: '🏗️', name: 'Funnel Pro' },
+  auto:     { icon: '⚙️', name: 'Automator' },
+  brief:    { icon: '🧾', name: 'Client Ready' },
+  complete: { icon: '🎓', name: 'GHL Expert' }
+};
+let achPopTimer;
+function unlockAchievement(id) {
+  if (!state.achievements[id]) {
+    state.achievements[id] = true;
+    saveState();
+    const meta = ACHIEVEMENT_META[id] || { icon: '🏆', name: id };
+    // Show animated popup
+    document.getElementById('ach-pop-icon').textContent = meta.icon;
+    document.getElementById('ach-pop-name').textContent = meta.name;
+    const popup = document.getElementById('achievement-popup');
+    popup.classList.add('show');
+    clearTimeout(achPopTimer);
+    achPopTimer = setTimeout(() => popup.classList.remove('show'), 3500);
+    renderAchievements();
+  }
+}
+
+function renderAchievements() {
+  const map = { 'ach-first':'first','ach-quiz':'quiz','ach-notes':'notes','ach-half':'half','ach-funnel':'funnel','ach-auto':'auto','ach-brief':'brief','ach-complete':'complete' };
+  Object.entries(map).forEach(([elId, achId]) => {
+    const el = document.getElementById(elId);
+    if (el) {
+      if (state.achievements[achId]) {
+        const wasLocked = el.style.filter === 'grayscale(1)' || el.style.opacity === '0.4';
+        el.style.borderColor = 'var(--accent4)';
+        el.style.background = 'rgba(245,158,11,0.12)';
+        el.style.boxShadow = '0 0 20px rgba(245,158,11,0.4), 0 0 40px rgba(245,158,11,0.15)';
+        el.style.filter = '';
+        el.style.opacity = '';
+        if (wasLocked) {
+          el.classList.remove('pop-anim');
+          void el.offsetWidth; // reflow
+          el.classList.add('pop-anim');
+        }
+      } else {
+        el.style.borderColor = 'var(--border)';
+        el.style.background = 'var(--bg3)';
+        el.style.boxShadow = '';
+        el.style.filter = 'grayscale(1)';
+        el.style.opacity = '0.4';
+      }
+    }
+  });
+}
+
+// ==================== NOTES ====================
+function addNote() {
+  const mod = document.getElementById('note-module-sel').value;
+  const text = document.getElementById('note-text').value.trim();
+  if (!text) { showToast('Please write something first.'); return; }
+  state.notes.unshift({ module: mod, text, date: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short'}) });
+  saveState();
+  document.getElementById('note-text').value = '';
+  renderNotes();
+  checkAchievements();
+  showToast('Note saved.');
+}
+function deleteNote(i) {
+  state.notes.splice(i, 1);
+  saveState();
+  renderNotes();
+}
+function renderNotes() {
+  const list = document.getElementById('notes-list');
+  if (!state.notes || !state.notes.length) {
+    list.innerHTML = '<div style="text-align:center;padding:var(--s4);color:var(--text3);font-size:var(--size-sm);">No notes yet. Add your first note above.</div>';
+    return;
+  }
+  list.innerHTML = state.notes.map((n,i) => `<div class="note-card">
+    <div class="note-meta">
+      <div style="display:flex;gap:var(--s1);align-items:center;">
+        <span class="note-module">${n.module}</span>
+        <span class="note-date">${n.date}</span>
+      </div>
+      <button class="note-del" onclick="deleteNote(${i})" aria-label="Delete note" style="background:none;border:none;cursor:pointer;font-size:16px;">✕</button>
+    </div>
+    <div class="note-text">${n.text.replace(/\n/g,'<br>')}</div>
+  </div>`).join('');
+}
+
+// ==================== LAB ====================
+function saveBriefPlan() {
+  const text = document.getElementById('brief-plan').value.trim();
+  if (!text) { showToast('Write your plan first.'); return; }
+  state.notes.unshift({ module:'Lab - Brief', text, date: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short'}) });
+  saveState();
+  unlockAchievement('brief');
+  showToast('Client brief response saved to Notes.');
+}
+function saveAutoDesign() {
+  const text = document.getElementById('auto-design').value.trim();
+  if (!text) { showToast('Write your automation design first.'); return; }
+  state.notes.unshift({ module:'Lab - Automation', text, date: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short'}) });
+  saveState();
+  showToast('Automation design saved to Notes.');
+}
+function clearBoard() {
+  document.getElementById('col-ideas').innerHTML = `<div class="plan-card" draggable="true">Lead Magnet</div><div class="plan-card purple" draggable="true">Opt-In Page</div><div class="plan-card green" draggable="true">Thank You</div>`;
+  document.getElementById('col-building').innerHTML = `<div class="plan-card" draggable="true">Sales Page</div>`;
+  document.getElementById('col-done').innerHTML = `<div class="plan-card green" draggable="true">Offer Draft</div>`;
+  showToast('Board reset.');
+}
+
+// ==================== CHECKLIST ====================
+function toggleCheck(item, event) {
+  // Prevent double-fire when clicking directly on the checkbox input
+  const cb = item.querySelector('input[type="checkbox"]');
+  if (event && event.target === cb) {
+    item.classList.toggle('done', cb.checked);
+    return;
+  }
+  cb.checked = !cb.checked;
+  item.classList.toggle('done', cb.checked);
+}
+
+// ==================== SETTINGS ====================
+const GOAL_LABELS = { 'Freelancer / Agency Owner':'Freelancer / Agency Owner', 'GHL Platform Employee':'GHL Platform Employee', 'In-house Marketer':'In-house Marketer', 'SaaS Reseller':'SaaS Reseller' };
+function saveSettings() {
+  state.settings.name = document.getElementById('set-name').value.trim();
+  state.settings.goal = document.getElementById('set-goal').value;
+  state.settings.pace = document.getElementById('set-pace').value;
+  saveState();
+  updateSettingsContext();
+  const name = state.settings.name;
+  showToast(name ? `Profile saved. Welcome, ${name}!` : 'Profile saved.');
+}
+function loadSettings() {
+  if (state.settings.name) document.getElementById('set-name').value = state.settings.name;
+  if (state.settings.goal) document.getElementById('set-goal').value = state.settings.goal;
+  if (state.settings.pace) document.getElementById('set-pace').value = state.settings.pace;
+  updateSettingsContext();
+}
+function updateSettingsContext() {
+  const s = state.settings;
+  const done = Object.keys(state.completedLessons).length;
+  let correct = 0;
+  Object.entries(state.quizScores).forEach(([qid, chosen]) => {
+    const parts = qid.split('_');
+    const mod = MODULES.find(m => m.id == parts[1]);
+    const lesson = mod?.lessons[parts[2]];
+    if (lesson?.quiz && chosen === lesson.quiz.answer) correct++;
+  });
+  if (document.getElementById('ctx-name')) {
+    document.getElementById('ctx-name').textContent = s.name || '—';
+    document.getElementById('ctx-goal').textContent = s.goal || '—';
+    document.getElementById('ctx-pace').textContent = s.pace || '—';
+    document.getElementById('ctx-lessons').textContent = done;
+    document.getElementById('ctx-quizzes').textContent = correct;
+    document.getElementById('ctx-notes').textContent = (state.notes||[]).length;
+  }
+}
+
+// ==================== RESET ====================
+function resetProgress() {
+  if (!confirm('Reset all progress, notes, and achievements? This cannot be undone.')) return;
+  state.completedLessons = {};
+  state.quizScores = {};
+  state.notes = [];
+  state.achievements = {};
+  saveState();
+  updateDashboard();
+  renderModulesList();
+  renderNotes();
+  renderProgress();
+  updateStreakUI();
+  showToast('Progress reset.');
+}
+
+// ==================== PWA INSTALL ====================
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(r => { if (r.outcome === 'accepted') showToast('App installed!'); deferredPrompt = null; });
+  } else {
+    showToast('To install: use browser menu → Add to Home Screen');
+  }
+}
+
+// ==================== TOAST ====================
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ==================== EXPANDABLES ====================
+document.addEventListener('click', e => {
+  const trigger = e.target.closest('.expand-trigger');
+  if (trigger) {
+    trigger.classList.toggle('open');
+    const content = trigger.nextElementSibling;
+    if (content && content.classList.contains('expand-content')) content.classList.toggle('open');
+  }
+});
+
+// ==================== 6. STREAK TRACKER ====================
+function getTodayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function getYesterdayKey() {
+  const d = new Date(); d.setDate(d.getDate()-1);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function updateStreak() {
+  const today = getTodayKey();
+  const yesterday = getYesterdayKey();
+  if (!state.streak) state.streak = { count: 0, lastDay: null, history: [] };
+  if (state.streak.lastDay === today) return; // already logged today
+  if (state.streak.lastDay === yesterday) {
+    state.streak.count = (state.streak.count || 0) + 1; // extend streak
+  } else {
+    state.streak.count = 1; // streak broken or fresh start
+  }
+  state.streak.lastDay = today;
+  if (!state.streak.history.includes(today)) state.streak.history.push(today);
+  if (state.streak.history.length > 30) state.streak.history = state.streak.history.slice(-30);
+  saveState();
+}
+function updateStreakUI() {
+  if (!state.streak) state.streak = { count: 0, lastDay: null, history: [] };
+  const count = state.streak.count || 0;
+  // Dashboard streak
+  const sc = document.getElementById('streak-count');
+  const sl = document.getElementById('streak-label');
+  const sd = document.getElementById('streak-dots');
+  if (sc) sc.textContent = count;
+  if (sl) sl.textContent = count === 0 ? 'Open the app daily to build your streak' : count === 1 ? 'Great start! Come back tomorrow.' : `${count} days strong — keep it up!`;
+  // 14-day dot grid
+  if (sd) {
+    const today = getTodayKey();
+    const dots = [];
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate()-i);
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      const isToday = key === today;
+      const active = state.streak.history && state.streak.history.includes(key);
+      // Today's dot is always active if we have a streak (we just logged today in init)
+      const isActive = active || isToday;
+      dots.push(`<div class="streak-dot ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}" title="${key}"></div>`);
+    }
+    sd.innerHTML = dots.join('');
+  }
+  // Settings streak
+  const ssc = document.getElementById('set-streak-count');
+  const ssm = document.getElementById('set-streak-msg');
+  if (ssc) ssc.textContent = count;
+  if (ssm) ssm.textContent = count >= 7 ? '🏆 7+ day streak — you are consistent!' : count > 0 ? `${count} day${count>1?'s':''} — keep the momentum` : 'Start your streak — open the app daily';
+  // Dashboard greeting with name
+  const g = document.getElementById('dash-greeting');
+  if (g && state.settings && state.settings.name) g.textContent = `Welcome back, ${state.settings.name.split(' ')[0]}`;
+}
+
+// ==================== 7. FLASHCARD SYSTEM ====================
+// Flashcard data — one per module keyed to key concepts
+const FLASHCARDS = [
+  { mod:1, tag:'Platform', term:'GoHighLevel (GHL)', def:'An all-in-one CRM, funnel builder, and marketing automation platform built for digital agencies. Replaces tools like Clickfunnels, ActiveCampaign, and Calendly in a single white-labeled platform.' },
+  { mod:1, tag:'Account', term:'Sub-Account', def:'An isolated client workspace inside your Agency Account. Each sub-account has its own contacts, funnels, automations, pipelines, and calendar. Also called a "Location".' },
+  { mod:1, tag:'Feature', term:'Snapshot', def:'A blueprint of a complete GHL sub-account setup (funnels, automations, pipelines) that can be instantly applied to a new client sub-account. Your core delivery speed tool.' },
+  { mod:1, tag:'Business', term:'SaaS Mode', def:'A GHL feature (Unlimited/Pro plans) that lets agencies automatically provision sub-accounts and charge clients recurring fees, creating a fully automated SaaS billing system.' },
+  { mod:2, tag:'Interface', term:'Unified Conversations Inbox', def:'GHL\'s single inbox that consolidates SMS, email, Facebook Messenger, Instagram DMs, Google My Business, and WhatsApp messages into one threaded view per contact.' },
+  { mod:2, tag:'CRM', term:'Smart Lists', def:'Dynamic, auto-updating contact segments in GHL based on tags, custom fields, pipeline stage, or activity. Smart Lists feed directly into automation triggers and bulk actions.' },
+  { mod:3, tag:'Funnel', term:'Funnel Step', def:'A single page within a GHL funnel. Each step is a distinct URL and can have its own layout, tracking, and automation triggers. Steps are ordered and visitors progress linearly.' },
+  { mod:3, tag:'Design', term:'Opt-In Rate', def:'The percentage of page visitors who complete the lead capture form. Formula: Leads ÷ Visitors × 100. A well-optimized opt-in page targeting warm traffic achieves 30–50%.' },
+  { mod:3, tag:'Builder', term:'Page Builder Row', def:'The top-level structural container in GHL\'s page builder. Rows span full width and control background, padding, and visibility. Columns and elements nest inside rows.' },
+  { mod:4, tag:'CRO', term:'Above the Fold', def:'The portion of a web page visible without scrolling. This zone contains your highest-impact elements: headline, subheadline, and primary CTA. Most visitors never scroll past it.' },
+  { mod:4, tag:'CRO', term:'F-Pattern Scanning', def:'Eye-tracking research shows users scan pages in an F-shape: strong attention on the first horizontal line, moderate on the second, then a vertical scan down the left edge.' },
+  { mod:5, tag:'Code', term:'Custom HTML Block', def:'A GHL page builder element that accepts raw HTML/CSS/JS. Used to create complex layouts, embed third-party widgets, or add custom interactive sections beyond the drag-and-drop builder\'s capabilities.' },
+  { mod:5, tag:'Code', term:'Page Header Code Injection', def:'A GHL field in funnel/page settings that injects code into the <head> of every page. Used for global CSS overrides, meta tags, tracking pixels, and font imports.' },
+  { mod:6, tag:'Automation', term:'Workflow Trigger', def:'The event that enrolls a contact into a GHL workflow. Includes Form Submitted, Tag Added, Appointment Booked, Pipeline Stage Changed, and 30+ other event types.' },
+  { mod:6, tag:'Automation', term:'If/Else Condition', def:'A workflow branching node that checks a condition (e.g., "has tag X?", "appointment status = confirmed?") and routes contacts down different action paths based on true/false.' },
+  { mod:6, tag:'Automation', term:'Voicemail Drop', def:'A GHL workflow action that delivers a pre-recorded audio message directly to a contact\'s voicemail without ringing their phone. Requires Twilio integration.' },
+  { mod:7, tag:'Integration', term:'Twilio', def:'The telephony provider integrated with GHL for SMS sending/receiving and phone calls. Required for outbound calling, A2P 10DLC messaging compliance, and voicemail drops.' },
+  { mod:7, tag:'Technical', term:'Webhook', def:'An HTTP POST request GHL sends to an external URL when a specified event occurs. The payload contains contact and event data in JSON format. Used to connect GHL to any external system.' },
+  { mod:7, tag:'Technical', term:'A2P 10DLC', def:'Application-to-Person 10-Digit Long Code. The US carrier framework requiring SMS senders to register their brand and campaigns. Required for compliant bulk SMS via Twilio/GHL.' },
+  { mod:8, tag:'CRM', term:'Pipeline', def:'A visual Kanban-style board in GHL showing deal stages for opportunities. Each column is a stage (e.g., New Lead → Contacted → Proposal → Won). Tracks revenue and conversion rates.' },
+  { mod:8, tag:'CRM', term:'Opportunity', def:'A deal record in GHL\'s pipeline. Linked to a contact, assigned a monetary value and pipeline stage. Moving opportunities through stages triggers automation and revenue reporting.' },
+  { mod:8, tag:'CRM', term:'Custom Fields', def:'User-defined data fields attached to contact records in GHL. Types include text, number, date, checkbox, dropdown. Used for segmentation, personalization tokens, and reporting.' },
+  { mod:9, tag:'Calendar', term:'Round Robin Calendar', def:'A GHL calendar type that distributes incoming bookings evenly across multiple team members based on availability. Prevents one person from being overloaded with appointments.' },
+  { mod:9, tag:'Calendar', term:'Calendar Widget', def:'An embeddable booking page or iframe generated by GHL. Can be added to any funnel page, website, or shared as a standalone URL for direct booking.' },
+  { mod:10, tag:'Analytics', term:'Attribution', def:'The process of crediting a revenue source or conversion to the correct traffic channel or campaign. GHL tracks source attribution at the contact level through UTM parameters and lead source fields.' },
+  { mod:10, tag:'Analytics', term:'Show Rate', def:'The percentage of booked appointments where the contact actually attended. Formula: Attended ÷ Booked × 100. Industry benchmark is 70%+. Improved by reminder automations.' },
+  { mod:11, tag:'Strategy', term:'Value Equation', def:'Alex Hormozi\'s framework: Value = (Dream Outcome × Perceived Likelihood) ÷ (Time Delay × Effort). Increasing the numerator or decreasing the denominator increases offer value without changing price.' },
+  { mod:11, tag:'Strategy', term:'Lead Magnet', def:'A free, high-value resource offered in exchange for contact information. Effective lead magnets are specific, immediately useful, and directly related to the paid offer.' },
+  { mod:12, tag:'Capstone', term:'Funnel Architecture Document', def:'A deliverable that maps out all funnel steps, page URLs, automation sequences, CRM pipelines, and KPIs for a client project. Professional agencies always produce this before building.' },
+  { mod:13, tag:'Delivery', term:'Onboarding SOP', def:'A Standard Operating Procedure document that guides the setup of a new GHL client sub-account from kickoff call through launch. Reduces errors, sets client expectations, and scales delivery.' },
+  { mod:13, tag:'Business', term:'Setup Fee', def:'A one-time payment charged to cover the initial GHL build (funnel, automations, CRM, calendar). Non-negotiable in professional agency engagements. Typically $500–$3,000.' },
+  { mod:13, tag:'Business', term:'Monthly Retainer', def:'Recurring monthly payment for ongoing GHL management, optimization, reporting, and support. Typically $200–$1,500/mo depending on scope and deliverables.' },
+];
+
+let fcIndex = 0;
+let fcFlipped = false;
+let fcRatings = {};
+let fcModuleFilter = null;
+
+function openFlashcards(modId) {
+  fcModuleFilter = (modId && modId !== 'null') ? modId : null;
+  fcIndex = 0;
+  fcFlipped = false;
+  fcRatings = {};
+  document.getElementById('flashcard-view').classList.add('active');
+  document.getElementById('fc-title').textContent = modId ? `Module ${modId} Review` : 'Full Review';
+  renderFlashcard();
+}
+function closeFlashcards() {
+  document.getElementById('flashcard-view').classList.remove('active');
+}
+function getFCCards() {
+  return fcModuleFilter ? FLASHCARDS.filter(c => c.mod === fcModuleFilter) : FLASHCARDS;
+}
+function renderFlashcard() {
+  const cards = getFCCards();
+  if (!cards.length) return;
+  const card = cards[fcIndex];
+  fcFlipped = false;
+  // Restore fc-card structure if session-complete replaced it
+  const fcCard = document.getElementById('fc-card');
+  if (!document.getElementById('fc-inner')) {
+    fcCard.innerHTML = `<div class="flashcard-inner" id="fc-inner">
+      <div class="flashcard-front">
+        <div class="fc-tag" id="fc-tag"></div>
+        <div class="fc-term" id="fc-term"></div>
+        <div class="fc-hint">tap to reveal</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="fc-tag" style="color:var(--accent3);">Definition</div>
+        <div class="fc-def" id="fc-def"></div>
+        <div class="fc-tap-hint" onclick="event.stopPropagation();unflipCard()">↺ tap to flip back</div>
+      </div>
+    </div>`;
+  }
+  fcCard.classList.remove('flipped');
+  document.getElementById('fc-term').textContent = card.term;
+  document.getElementById('fc-def').textContent = card.def;
+  document.getElementById('fc-tag').textContent = `${card.tag} · Module ${card.mod}`;
+  document.getElementById('fc-counter').textContent = `${fcIndex+1} / ${cards.length}`;
+  document.getElementById('fc-progress-bar').style.width = `${((fcIndex+1)/cards.length)*100}%`;
+  document.getElementById('fc-result-row').style.display = 'none';
+  document.getElementById('fc-next').style.opacity = '1';
+  document.getElementById('fc-prev').style.opacity = fcIndex === 0 ? '0.3' : '1';
+  document.getElementById('fc-prev').disabled = fcIndex === 0;
+}
+function flipCard() {
+  if (fcFlipped) return; // already flipped, don't toggle back via card click (use tap hint only)
+  fcFlipped = true;
+  document.getElementById('fc-card').classList.add('flipped');
+  document.getElementById('fc-result-row').style.display = 'flex';
+}
+function unflipCard() {
+  if (!fcFlipped) return;
+  fcFlipped = false;
+  document.getElementById('fc-card').classList.remove('flipped');
+  document.getElementById('fc-result-row').style.display = 'none';
+}
+function fcRate(rating) {
+  const cards = getFCCards();
+  fcRatings[fcIndex] = rating;
+  if (fcIndex < cards.length - 1) {
+    fcIndex++;
+    renderFlashcard();
+  } else {
+    // Session complete
+    const easy = Object.values(fcRatings).filter(r=>r==='easy').length;
+    const good = Object.values(fcRatings).filter(r=>r==='good').length;
+    document.getElementById('fc-card').innerHTML = `<div class="flashcard-inner" style="min-height:200px;background:var(--surface);border:1px solid var(--border);border-radius:20px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:var(--s2);padding:var(--s3);">
+      <div style="font-size:48px;">🧠</div>
+      <div style="font-family:var(--font-display);font-size:var(--size-lg);font-weight:700;color:var(--text);">Review Complete!</div>
+      <div style="font-size:var(--size-sm);color:var(--text2);text-align:center;">Easy: ${easy} · Good: ${good} · Hard: ${Object.values(fcRatings).filter(r=>r==='hard').length} · Again: ${Object.values(fcRatings).filter(r=>r==='again').length}</div>
+      <button class="btn btn-primary" onclick="openFlashcards(${fcModuleFilter === null ? 'null' : fcModuleFilter})" style="margin-top:var(--s1);">Review Again</button>
+    </div>`;
+    document.getElementById('fc-result-row').style.display = 'none';
+  }
+}
+function fcNext() {
+  const cards = getFCCards();
+  if (!fcFlipped) { flipCard(); return; }
+  if (fcIndex < cards.length - 1) { fcIndex++; renderFlashcard(); }
+}
+function fcPrev() {
+  if (fcIndex > 0) { fcIndex--; renderFlashcard(); }
+}
+
+// ==================== 3. MODULE ILLUSTRATIONS (SVG) ====================
+function getModuleIllustration(mod) {
+  const uid = mod.id; // each module gets unique gradient id
+  const svgs = {
+    1: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1a2240"/></linearGradient></defs><rect width="400" height="90" fill="url(#g1)"/><circle cx="320" cy="20" r="40" fill="none" stroke="#4f8ef744" stroke-width="1"/><circle cx="320" cy="20" r="60" fill="none" stroke="#4f8ef722" stroke-width="1"/><rect x="30" y="25" width="50" height="40" rx="6" fill="#4f8ef722" stroke="#4f8ef744" stroke-width="1"/><rect x="95" y="30" width="50" height="35" rx="6" fill="#7c3aed22" stroke="#7c3aed44" stroke-width="1"/><rect x="160" y="20" width="50" height="45" rx="6" fill="#10b98122" stroke="#10b98144" stroke-width="1"/><line x1="80" y1="45" x2="95" y2="47" stroke="#4f8ef755" stroke-width="1.5"/><line x1="145" y1="47" x2="160" y2="42" stroke="#7c3aed55" stroke-width="1.5"/></svg>`,
+    2: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1a1a40"/></linearGradient></defs><rect width="400" height="90" fill="url(#g2)"/><rect x="20" y="10" width="100" height="70" rx="8" fill="#7c3aed11" stroke="#7c3aed33" stroke-width="1"/><rect x="28" y="18" width="84" height="8" rx="3" fill="#7c3aed33"/><rect x="28" y="30" width="60" height="4" rx="2" fill="#4a5a80"/><rect x="28" y="38" width="74" height="4" rx="2" fill="#4a5a80"/><rect x="28" y="46" width="50" height="4" rx="2" fill="#4a5a80"/><circle cx="290" cy="45" r="28" fill="none" stroke="#7c3aed33" stroke-width="1"/><circle cx="290" cy="45" r="18" fill="none" stroke="#7c3aed55" stroke-width="1"/><circle cx="290" cy="45" r="5" fill="#7c3aed"/></svg>`,
+    3: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#0e2018"/></linearGradient></defs><rect width="400" height="90" fill="url(#g3)"/><polygon points="40,75 80,15 120,75" fill="#10b98111" stroke="#10b98133" stroke-width="1.5"/><polygon points="130,75 165,25 200,75" fill="#10b98111" stroke="#10b98155" stroke-width="1.5"/><polygon points="210,75 240,35 270,75" fill="#10b98122" stroke="#10b98177" stroke-width="2"/><line x1="40" y1="75" x2="270" y2="75" stroke="#10b98133" stroke-width="1"/></svg>`,
+    4: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#201808"/></linearGradient></defs><rect width="400" height="90" fill="url(#g4)"/><circle cx="80" cy="45" r="30" fill="none" stroke="#f59e0b22" stroke-width="1"/><circle cx="80" cy="45" r="20" fill="none" stroke="#f59e0b44" stroke-width="1"/><circle cx="80" cy="45" r="8" fill="#f59e0b55"/><line x1="80" y1="15" x2="80" y2="10" stroke="#f59e0b66" stroke-width="2"/><line x1="80" y1="75" x2="80" y2="80" stroke="#f59e0b66" stroke-width="2"/><line x1="50" y1="45" x2="45" y2="45" stroke="#f59e0b66" stroke-width="2"/><line x1="110" y1="45" x2="115" y2="45" stroke="#f59e0b66" stroke-width="2"/><rect x="160" y="20" width="120" height="15" rx="4" fill="#f59e0b22" stroke="#f59e0b33" stroke-width="1"/><rect x="160" y="42" width="90" height="10" rx="3" fill="#f59e0b11" stroke="#f59e0b22" stroke-width="1"/><rect x="160" y="58" width="100" height="10" rx="3" fill="#f59e0b11" stroke="#f59e0b22" stroke-width="1"/></svg>`,
+    5: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#080c18"/><stop offset="100%" stop-color="#081828"/></linearGradient></defs><rect width="400" height="90" fill="url(#g5)"/><text x="20" y="38" font-family="Courier New" font-size="11" fill="#c4b5fd77">&lt;div class=</text><text x="20" y="52" font-family="Courier New" font-size="11" fill="#86efac77">"hero-section"</text><text x="20" y="66" font-family="Courier New" font-size="11" fill="#c4b5fd77">&gt;</text><text x="180" y="35" font-family="Courier New" font-size="10" fill="#7dd3fc55">background:</text><text x="180" y="48" font-family="Courier New" font-size="10" fill="#86efac55">linear-gradient</text><text x="180" y="61" font-family="Courier New" font-size="10" fill="#c4b5fd55">border-radius:</text></svg>`,
+    6: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#180e28"/></linearGradient></defs><rect width="400" height="90" fill="url(#g6)"/><circle cx="50" cy="45" r="12" fill="#a78bfa22" stroke="#a78bfa55" stroke-width="1.5"/><line x1="62" y1="45" x2="88" y2="45" stroke="#a78bfa44" stroke-width="1.5" marker-end="url(#arr)"/><circle cx="100" cy="45" r="12" fill="#a78bfa22" stroke="#a78bfa55" stroke-width="1.5"/><line x1="112" y1="45" x2="138" y2="45" stroke="#a78bfa44" stroke-width="1.5"/><circle cx="150" cy="45" r="12" fill="#a78bfa33" stroke="#a78bfa77" stroke-width="1.5"/><line x1="162" y1="40" x2="188" y2="28" stroke="#10b98144" stroke-width="1.5"/><line x1="162" y1="50" x2="188" y2="62" stroke="#ef444444" stroke-width="1.5"/><circle cx="200" cy="25" r="10" fill="#10b98122" stroke="#10b98155" stroke-width="1.5"/><circle cx="200" cy="65" r="10" fill="#ef444422" stroke="#ef444455" stroke-width="1.5"/></svg>`,
+    7: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#180e14"/></linearGradient></defs><rect width="400" height="90" fill="url(#g7)"/><rect x="20" y="30" width="60" height="30" rx="6" fill="#f9730011" stroke="#f9730033" stroke-width="1"/><rect x="160" y="30" width="60" height="30" rx="6" fill="#f9730011" stroke="#f9730033" stroke-width="1"/><path d="M80 45 C 110 45 130 45 160 45" fill="none" stroke="#f9730055" stroke-width="1.5" stroke-dasharray="4,3"/><rect x="300" y="25" width="60" height="40" rx="6" fill="#f9730011" stroke="#f9730055" stroke-width="1"/><path d="M220 45 C 250 20 270 20 300 32" fill="none" stroke="#f9730044" stroke-width="1.5" stroke-dasharray="4,3"/><path d="M220 45 C 250 70 270 70 300 58" fill="none" stroke="#f9730033" stroke-width="1.5" stroke-dasharray="4,3"/></svg>`,
+    8: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#1e0828"/></linearGradient></defs><rect width="400" height="90" fill="url(#g8)"/><rect x="20" y="20" width="50" height="55" rx="6" fill="#ec489922" stroke="#ec489944" stroke-width="1"/><rect x="80" y="28" width="50" height="47" rx="6" fill="#ec489922" stroke="#ec489944" stroke-width="1"/><rect x="140" y="34" width="50" height="41" rx="6" fill="#ec489933" stroke="#ec489966" stroke-width="1"/><rect x="200" y="40" width="50" height="35" rx="6" fill="#10b98122" stroke="#10b98144" stroke-width="1"/><rect x="260" y="30" width="50" height="10" rx="3" fill="#ef444433" stroke="#ef444455" stroke-width="1"/></svg>`,
+    9: `<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#081820"/></linearGradient></defs><rect width="400" height="90" fill="url(#g9)"/><rect x="20" y="15" width="160" height="65" rx="8" fill="#14b8a611" stroke="#14b8a633" stroke-width="1"/><line x1="20" y1="30" x2="180" y2="30" stroke="#14b8a622" stroke-width="1"/><line x1="60" y1="15" x2="60" y2="80" stroke="#14b8a622" stroke-width="1"/><line x1="100" y1="15" x2="100" y2="80" stroke="#14b8a622" stroke-width="1"/><line x1="140" y1="15" x2="140" y2="80" stroke="#14b8a622" stroke-width="1"/><circle cx="80" cy="50" r="10" fill="#14b8a633" stroke="#14b8a666" stroke-width="1.5"/><circle cx="120" cy="60" r="10" fill="#14b8a644" stroke="#14b8a688" stroke-width="1.5"/></svg>`,
+    10:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#0e0e28"/></linearGradient></defs><rect width="400" height="90" fill="url(#g10)"/><polyline points="30,70 70,50 110,55 150,30 190,40 230,20 270,35" fill="none" stroke="#6366f155" stroke-width="2"/><polyline points="30,70 70,50 110,55 150,30 190,40 230,20 270,35" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3,3"/><circle cx="150" cy="30" r="4" fill="#6366f1"/><circle cx="230" cy="20" r="4" fill="#6366f1"/></svg>`,
+    11:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g11" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#0e1808"/></linearGradient></defs><rect width="400" height="90" fill="url(#g11)"/><polygon points="60,75 100,15 140,75" fill="#84cc1611" stroke="#84cc1633" stroke-width="1.5"/><text x="88" y="58" font-family="Georgia,serif" font-size="14" fill="#84cc1666">V</text><line x1="175" y1="45" x2="250" y2="45" stroke="#84cc1644" stroke-width="1.5"/><text x="175" y="38" font-family="Georgia,serif" font-size="9" fill="#84cc1655">Outcome × Likelihood</text><line x1="175" y1="50" x2="250" y2="50" stroke="#ef444433" stroke-width="1"/><text x="175" y="62" font-family="Georgia,serif" font-size="9" fill="#ef444455">Delay × Effort</text></svg>`,
+    12:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g12" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#200810"/></linearGradient></defs><rect width="400" height="90" fill="url(#g12)"/><circle cx="80" cy="45" r="30" fill="none" stroke="#e11d4822" stroke-width="1"/><circle cx="80" cy="45" r="20" fill="none" stroke="#e11d4844" stroke-width="1"/><circle cx="80" cy="45" r="10" fill="#e11d4822" stroke="#e11d4866" stroke-width="1"/><line x1="80" y1="15" x2="80" y2="25" stroke="#e11d4866" stroke-width="2"/><line x1="56" y1="24" x2="63" y2="31" stroke="#e11d4855" stroke-width="1.5"/><line x1="56" y1="66" x2="63" y2="59" stroke="#e11d4855" stroke-width="1.5"/><line x1="80" y1="75" x2="80" y2="65" stroke="#e11d4866" stroke-width="2"/></svg>`,
+    13:`<svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;"><defs><linearGradient id="g13" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e1428"/><stop offset="100%" stop-color="#081828"/></linearGradient></defs><rect width="400" height="90" fill="url(#g13)"/><rect x="20" y="25" width="30" height="40" rx="4" fill="#0ea5e922" stroke="#0ea5e955" stroke-width="1"/><line x1="50" y1="45" x2="75" y2="45" stroke="#0ea5e944" stroke-width="1.5" stroke-dasharray="3,2"/><rect x="75" y="25" width="30" height="40" rx="4" fill="#0ea5e922" stroke="#0ea5e955" stroke-width="1"/><line x1="105" y1="45" x2="130" y2="45" stroke="#0ea5e944" stroke-width="1.5" stroke-dasharray="3,2"/><rect x="130" y="25" width="30" height="40" rx="4" fill="#0ea5e933" stroke="#0ea5e977" stroke-width="1"/><line x1="160" y1="45" x2="185" y2="45" stroke="#0ea5e944" stroke-width="1.5" stroke-dasharray="3,2"/><rect x="185" y="25" width="30" height="40" rx="4" fill="#0ea5e944" stroke="#0ea5e988" stroke-width="1"/><circle cx="245" cy="45" r="14" fill="#0ea5e922" stroke="#0ea5e955" stroke-width="1"/><text x="240" y="50" font-family="Georgia,serif" font-size="16" fill="#0ea5e977">✓</text></svg>`,
+  };
+  return svgs[mod.id] || svgs[1];
+}
+
+// ==================== 8. GLOSSARY ====================
+const GLOSSARY = [
+  { term:'A2P 10DLC', cat:'Technical', color:'badge-yellow', def:'Application-to-Person 10-Digit Long Code. US carrier framework requiring SMS brand + campaign registration for compliant bulk messaging via Twilio/GHL.' },
+  { term:'Agency Account', cat:'Platform', color:'badge-blue', def:'The top-level GHL account that manages all client sub-accounts (locations). All billing, white-label settings, and team members are managed here.' },
+  { term:'Attribution', cat:'Analytics', color:'badge-purple', def:'Tracking which traffic source, ad, or campaign drove a lead or sale. GHL tracks attribution via UTM parameters attached to the lead source field on contact records.' },
+  { term:'Automation', cat:'Workflow', color:'badge-blue', def:'A GHL Workflow — a sequence of actions triggered by a specific event. Automations run asynchronously, processing multiple contacts simultaneously.' },
+  { term:'Calendar Widget', cat:'Calendar', color:'badge-green', def:'An embeddable booking page generated by GHL. Shared as a URL or embedded via iframe. Syncs with team calendars and triggers appointment confirmation automations.' },
+  { term:'Conversations Inbox', cat:'CRM', color:'badge-blue', def:'GHL\'s unified inbox consolidating SMS, email, Facebook Messenger, Instagram DMs, Google My Business, and WhatsApp messages into one threaded view per contact.' },
+  { term:'CRM', cat:'Platform', color:'badge-blue', def:'Customer Relationship Management. In GHL, the CRM includes Contacts, Pipelines, Smart Lists, Tags, Custom Fields, and conversation history.' },
+  { term:'Custom Fields', cat:'CRM', color:'badge-purple', def:'User-defined data fields on contact records. Types: text, number, date, checkbox, dropdown. Used for segmentation, personalization tokens, and structured data storage.' },
+  { term:'Custom Values', cat:'Technical', color:'badge-yellow', def:'GHL\'s template variables (also called merge fields) that dynamically insert contact data into messages, emails, and pages. Example: {{contact.first_name}}.' },
+  { term:'DNS', cat:'Technical', color:'badge-yellow', def:'Domain Name System. In GHL, DNS records (CNAME, A record) must be configured to point a custom domain to GHL\'s servers for funnel and website hosting.' },
+  { term:'Funnel', cat:'Builder', color:'badge-green', def:'A sequence of pages in GHL designed to guide a visitor toward a single conversion action. Unlike websites, funnels remove navigation and constrain visitor choice.' },
+  { term:'GHL', cat:'Platform', color:'badge-blue', def:'GoHighLevel. An all-in-one CRM, funnel builder, and marketing automation platform designed for digital agencies. Launched 2018 by Shaun Clark and Varun Vairavan.' },
+  { term:'If/Else Condition', cat:'Workflow', color:'badge-purple', def:'A workflow branching node that checks a condition and routes contacts down Yes or No paths. Examples: has tag, pipeline stage equals, appointment confirmed.' },
+  { term:'Lead Magnet', cat:'Strategy', color:'badge-green', def:'A free, high-value resource (guide, checklist, video) exchanged for a prospect\'s contact information. The gateway step of most GHL lead generation funnels.' },
+  { term:'Location', cat:'Platform', color:'badge-blue', def:'GHL\'s internal term for a sub-account. Each client has one Location. Contains all their data: contacts, funnels, automations, pipelines, calendars.' },
+  { term:'Membership', cat:'Feature', color:'badge-purple', def:'GHL\'s built-in course and membership portal. Allows creating gated content, drip lessons, and student progress tracking without third-party platforms.' },
+  { term:'Opportunity', cat:'CRM', color:'badge-yellow', def:'A deal record in GHL\'s pipeline. Linked to a contact, assigned a monetary value and pipeline stage. Powers revenue reporting and pipeline conversion analytics.' },
+  { term:'Opt-In Rate', cat:'Analytics', color:'badge-green', def:'Leads ÷ Page Visitors × 100. Measures landing page effectiveness. Benchmark: 30–50% for warm traffic. Below 20% signals a copy or offer problem.' },
+  { term:'Pipeline', cat:'CRM', color:'badge-blue', def:'A visual Kanban board showing deal stages. Each column is a stage (New Lead → Contacted → Proposal → Won/Lost). Tracks revenue and conversion rates.' },
+  { term:'Round Robin', cat:'Calendar', color:'badge-green', def:'A GHL calendar type distributing incoming bookings evenly across team members. Prevents overload and ensures fair lead distribution in sales teams.' },
+  { term:'SaaS Mode', cat:'Platform', color:'badge-purple', def:'A GHL feature allowing agencies to automatically provision sub-accounts and charge clients recurring fees, creating a fully white-labeled SaaS product.' },
+  { term:'Setup Fee', cat:'Business', color:'badge-yellow', def:'One-time payment for initial GHL configuration: funnel build, automations, CRM, and calendar. Typically $500–$3,000. Non-negotiable in professional engagements.' },
+  { term:'Show Rate', cat:'Analytics', color:'badge-green', def:'Attended appointments ÷ Booked appointments × 100. Industry benchmark: 70%+. Improved significantly by structured SMS/email reminder automations.' },
+  { term:'Smart List', cat:'CRM', color:'badge-blue', def:'A dynamic, auto-updating contact segment in GHL based on tags, custom fields, pipeline stage, or activity. Feeds directly into bulk actions and automation triggers.' },
+  { term:'Snapshot', cat:'Platform', color:'badge-purple', def:'A complete GHL sub-account blueprint (funnels, automations, pipelines, calendars) that can be cloned to new client accounts in minutes. Core delivery speed tool.' },
+  { term:'SOP', cat:'Delivery', color:'badge-yellow', def:'Standard Operating Procedure. A documented, repeatable process for client work. In GHL delivery, SOPs cover onboarding, build process, QA, launch, and handoff.' },
+  { term:'Sub-Account', cat:'Platform', color:'badge-blue', def:'An isolated client workspace inside your Agency Account. Has its own contacts, funnels, automations, pipelines, and calendar. Equivalent to a "Location".' },
+  { term:'Tag', cat:'CRM', color:'badge-green', def:'A label applied to contacts to indicate status, behavior, or source. Tags trigger automations, filter Smart Lists, and drive pipeline movement. Example: "lead-hot", "booked-call".' },
+  { term:'Trigger', cat:'Workflow', color:'badge-purple', def:'The event that enrolls a contact into a GHL workflow. 30+ trigger types including Form Submitted, Tag Added, Appointment Status Changed, Pipeline Stage Changed.' },
+  { term:'Twilio', cat:'Technical', color:'badge-yellow', def:'Telephony provider integrated with GHL for SMS delivery, receiving, and voice calls. Required for outbound calling, A2P compliance, and voicemail drops.' },
+  { term:'UTM Parameters', cat:'Analytics', color:'badge-purple', def:'URL tracking codes (utm_source, utm_medium, utm_campaign) that identify traffic sources. GHL reads UTMs at form submission and stores them in contact lead source fields.' },
+  { term:'Unified Inbox', cat:'CRM', color:'badge-blue', def:'GHL\'s Conversations section consolidating all channel messages (SMS, email, social) into one view per contact. Enables team collaboration on customer communications.' },
+  { term:'Value Equation', cat:'Strategy', color:'badge-green', def:'Alex Hormozi\'s offer framework: Value = (Dream Outcome × Perceived Likelihood) ÷ (Time Delay × Effort). Used to price and position GHL-powered service offers.' },
+  { term:'Voicemail Drop', cat:'Automation', color:'badge-purple', def:'A workflow action delivering a pre-recorded audio message to voicemail without ringing the phone. Requires Twilio. High open-rate communication channel.' },
+  { term:'Webhook', cat:'Technical', color:'badge-yellow', def:'HTTP POST request GHL sends to an external URL when an event occurs. JSON payload contains contact and event data. Used for third-party integrations.' },
+  { term:'White Label', cat:'Business', color:'badge-blue', def:'GHL\'s feature allowing agencies to rebrand the platform with their own logo, domain, and colors — presenting it as their proprietary software to clients.' },
+  { term:'Workflow', cat:'Automation', color:'badge-purple', def:'GHL\'s automation engine. A sequence of triggers → conditions → actions that runs automatically when contacts meet specified criteria. The core of GHL marketing automation.' },
+];
+
+function renderGlossary(filter) {
+  const list = document.getElementById('glossary-list');
+  if (!list) return;
+  const q = (filter||'').toLowerCase().trim();
+  const filtered = q ? GLOSSARY.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q) || g.cat.toLowerCase().includes(q)) : GLOSSARY;
+  if (!filtered.length) { list.innerHTML = `<div class="glossary-no-results">No terms found for "${filter}"<br><span style="font-size:var(--size-xs);">Try a shorter search</span></div>`; return; }
+  // Group by first letter
+  const grouped = {};
+  filtered.forEach(g => {
+    const letter = g.term[0].toUpperCase();
+    if (!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(g);
+  });
+  let html = '';
+  Object.keys(grouped).sort().forEach(letter => {
+    html += `<div class="glossary-letter">${letter}</div>`;
+    grouped[letter].forEach((g, idx) => {
+      const gid = `g_${letter}_${idx}`;
+      html += `<div class="glossary-item" onclick="toggleGlossaryItem('${gid}')">
+        <div class="glossary-term">
+          <span>${g.term}</span>
+          <span class="badge ${g.color}" style="font-size:9px;padding:2px 7px;">${g.cat}</span>
+        </div>
+        <div class="glossary-def" id="${gid}">${g.def}</div>
+      </div>`;
+    });
+  });
+  list.innerHTML = html;
+}
+function toggleGlossaryItem(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.glossary-def.open').forEach(e => e.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+function filterGlossary(val) { renderGlossary(val); }
+
+// ==================== NAVIGATE UPDATE ====================
+function navigate(screen, fromQuickNav) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  const sc = document.getElementById('screen-' + screen);
+  if (sc) sc.classList.add('active');
+  const btn = document.getElementById('nav-' + screen);
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-current', 'page'); }
+  updateHeader(screen);
+  if (screen === 'progress') renderProgress();
+  if (screen === 'notes') renderNotes();
+  if (screen === 'dashboard') updateDashboard();
+  if (screen === 'glossary') renderGlossary('');
+  if (screen === 'settings') { updateSettingsContext(); updateStreakUI(); }
+}
+
+// ==================== 3. CONFETTI ENGINE ====================
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.classList.add('active');
+  const ctx = canvas.getContext('2d');
+  const colors = ['#4f8ef7','#7c3aed','#10b981','#f59e0b','#ec4899','#06b6d4','#ffffff'];
+  const pieces = Array.from({length: 110}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height * 0.5 - 20,
+    r: Math.random() * 6 + 4,
+    d: Math.random() * 3 + 2,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    tilt: Math.random() * 10 - 5,
+    tiltAngleIncrement: (Math.random() * 0.07 + 0.05) * (Math.random() < 0.5 ? 1 : -1),
+    tiltAngle: 0,
+    opacity: 1,
+    shape: Math.random() < 0.5 ? 'rect' : 'circle'
+  }));
+  let frame = 0;
+  const MAX_FRAMES = 180;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.tiltAngle += p.tiltAngleIncrement;
+      p.y += p.d;
+      p.tilt = Math.sin(p.tiltAngle) * 12;
+      p.opacity = Math.max(0, 1 - (frame / MAX_FRAMES) * 0.6);
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      if (p.shape === 'rect') {
+        ctx.save();
+        ctx.translate(p.x + p.r, p.y + p.r);
+        ctx.rotate(p.tiltAngle);
+        ctx.fillRect(-p.r, -p.r * 0.5, p.r * 2, p.r);
+        ctx.restore();
+      } else {
+        ctx.arc(p.x, p.y, p.r * 0.7, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    frame++;
+    if (frame < MAX_FRAMES) requestAnimationFrame(draw);
+    else { ctx.clearRect(0, 0, canvas.width, canvas.height); canvas.classList.remove('active'); }
+  }
+  draw();
+}
+
+// ==================== MODULE COMPLETE BANNER ====================
+function showModuleComplete(mod) {
+  const emojis = { 1:'🚀',2:'🗺️',3:'🏗️',4:'🎨',5:'💻',6:'⚙️',7:'🔌',8:'👥',9:'📅',10:'📊',11:'🎯',12:'🏁',13:'🏆' };
+  document.getElementById('complete-emoji').textContent = emojis[mod.id] || '🎉';
+  document.getElementById('complete-title').textContent = `Module ${mod.id} Complete!`;
+  document.getElementById('complete-sub').textContent = `"${mod.title}" — ${mod.lessons.length} lessons done.`;
+  document.getElementById('complete-overlay').classList.add('show');
+  requestAnimationFrame(() => {
+    document.getElementById('module-complete-banner').classList.add('show');
+  });
+  launchConfetti();
+  renderModulesList();
+}
+function dismissComplete() {
+  document.getElementById('module-complete-banner').classList.remove('show');
+  document.getElementById('complete-overlay').classList.remove('show');
+  setTimeout(() => closeLesson(), 300);
+  navigate('modules');
+}
+
+// ==================== 1. SWIPE GESTURES ====================
+let _swipeSX = null, _swipeSY = null, _swipeStarted = false;
+function setupSwipe() {
+  const body = document.getElementById('lesson-view');
+  body.removeEventListener('touchstart', _swipeTouchStart);
+  body.removeEventListener('touchend', _swipeTouchEnd);
+  body.addEventListener('touchstart', _swipeTouchStart, { passive: true });
+  body.addEventListener('touchend', _swipeTouchEnd, { passive: true });
+}
+function _swipeTouchStart(e) {
+  _swipeSX = e.touches[0].clientX;
+  _swipeSY = e.touches[0].clientY;
+  _swipeStarted = true;
+}
+function _swipeTouchEnd(e) {
+  if (!_swipeStarted || _swipeSX === null) return;
+  const dx = e.changedTouches[0].clientX - _swipeSX;
+  const dy = e.changedTouches[0].clientY - _swipeSY;
+  _swipeStarted = false;
+  // Only horizontal swipes > 55px that are more horizontal than vertical
+  if (Math.abs(dx) < 55 || Math.abs(dy) > Math.abs(dx) * 0.8) return;
+  if (dx < 0) lessonNext();      // swipe left → next
+  else         lessonPrev();     // swipe right → prev
+  _swipeSX = null;
+}
+
+// ==================== INIT ====================
+function init() {
+  loadState();
+  updateStreak();        // record today's visit
+  updateStreakUI();      // render streak dots + count
+  renderModulesList();
+  updateDashboard();
+  loadSettings();
+  renderNotes();
+  renderGlossary('');
+
+  // Splash
+  setTimeout(() => { document.getElementById('splash').classList.add('hide'); }, 1400);
+}
+
+init();
+
+// ==================== SERVICE WORKER ====================
+const SW_CODE = `
+const CACHE = 'ghl-v1';
+const ASSETS = [location.pathname || '/'];
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).then(res => {
+    const clone = res.clone();
+    caches.open(CACHE).then(c => c.put(e.request, clone));
+    return res;
+  }).catch(() => caches.match(e.request))));
+});
+`;
+
+if ('serviceWorker' in navigator) {
+  const blob = new Blob([SW_CODE], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
+}
+</script>
+
+<!-- PWA Manifest inline -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const manifest = {
+  name: "GHL Academy",
+  short_name: "GHL Academy",
+  description: "GoHighLevel Mastery — Structured Learning App",
+  start_url: "./",
+  display: "standalone",
+  background_color: "#080c18",
+  theme_color: "#0a0f1e",
+  orientation: "portrait",
+  icons: [
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%230e1428'/%3E%3Ctext x='50%25' y='58%25' font-size='110' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-weight='bold' fill='%234f8ef7'%3EG%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" },
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%230e1428'/%3E%3Ctext x='50%25' y='58%25' font-size='300' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-weight='bold' fill='%234f8ef7'%3EG%3C/text%3E%3C/svg%3E", sizes: "512x512", type: "image/svg+xml" }
+  ]
+};
+const mblob = new Blob([JSON.str
